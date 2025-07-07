@@ -1,0 +1,18 @@
+{
+  "unique_id": "1234abc",
+  "timestamp": "2025-07-07T14:32:00Z",
+  "username": "j.smith@test.com",
+  "email_body": "text...",
+  "tags": {
+    "macro": true,
+    "macro_event": ["INTR", "Trade War"]
+    "country": ["US", "UK"]
+    "asset_class": "FX",
+    "financial_instrument": "USDGBP",
+    "future_trade": true,
+  },
+  "signal": {
+    "action": "BUY",
+    "instrument": "USDGBP"
+	}
+}
