@@ -47,7 +47,7 @@
 						  "GBP/JPY", "GBP/CHF", "GBP/AUD",
 						  "AUD/JPY", "AUD/NZD", "AUD/CAD",
 						  "NZD/JPY", "NZD/CAD", "EUR/AUD",
-						  "CAD/JPY", "CHF/JPY", "USD/CHF",]
+						  "CAD/JPY", "CHF/JPY", "USD/CHF"]
     },
     "Fixed Income": {
       "Sovereign Bonds": {
