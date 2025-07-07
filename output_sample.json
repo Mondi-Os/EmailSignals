@@ -2,7 +2,6 @@
   "unique_id": "5001",
   "timestamp": "2025-07-07T14:32:00Z",
   "username": "j.smith@test.com",
-  "email_body": "text...",
   "tags": {
     "macro": true,
     "macro_event": ["INTR", "Trade War"]
