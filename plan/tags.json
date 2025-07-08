@@ -1,0 +1,98 @@
+{
+  "macro": {
+    "macro_event": {
+      "Inflation": ["CPI", "Core CPI", "PPI"],
+      "Employment": ["NFP", "Unemployment Rate", "Jobless Claims"],
+      "Growth": ["GDP", "PMI", "ISM Manufacturing", "ISM Services"],
+      "Central Bank": [
+        "Fed Decision",
+        "ECB Meeting",
+        "BoE Meeting",
+        "BoJ Meeting",
+	"Interest Rate",
+        "Interest Rate Hike",
+        "Interest Rate Cut",
+        "Quantitative Easing (QE)",
+        "Quantitative Tightening (QT)"
+      ],
+      "Fiscal Policy": ["Tax Cuts", "Government Spending", "Debt Ceiling"],
+      "Geopolitical": [
+        "Sanctions",
+        "Trade War",
+        "Conflict",
+        "Elections",
+        "Political Risk"
+      ]
+    },
+    "country": [
+      "US", "UK", "EU", "Emerging Markets",
+	  "Greece", "India", "Indonesia", "Argentina", "Chile"
+	  "Italy", "France", "Portugal", "Ireland",
+	  "Spain", "Belgium", "Netherlands", "Austria", 
+	  "Germany", "Switzerland", "Poland", "Brazil"
+	  "Norway", "Finland", "Sweden", "Denmark",
+	  "Australia", "Japan", "China",
+    ]
+  },
+  
+  
+  "asset_class": {
+    "Equities": {
+      "Sector": ["Tech", "Financials", "Energy", "Healthcare"],
+      "Instrument": ["S&P 500", "Nasdaq", "FAANG Stocks", "Single Tickers"]
+    },
+    "FX": {
+      "Currency Pair": [  "EUR/USD", "USD/JPY", "GBP/USD", 
+						  "AUD/USD", "NZD/USD", "USD/CAD",
+						  "EUR/GBP", "EUR/JPY", "EUR/CHF", 
+						  "GBP/JPY", "GBP/CHF", "GBP/AUD",
+						  "AUD/JPY", "AUD/NZD", "AUD/CAD",
+						  "NZD/JPY", "NZD/CAD", "EUR/AUD",
+						  "CAD/JPY", "CHF/JPY", "USD/CHF"]
+    },
+    "Fixed Income": {
+      "Sovereign Bonds": {
+        "US Treasuries": ["T-Bill", "T-Note", "T-Bond"],
+        "Other": ["Bunds", "Gilts", "JGB"]
+      },
+      "Corporate Bonds": ["Investment Grade", "High Yield"],
+      "Inflation-linked": ["TIPS"]
+    },
+    "Commodities": {
+      "Energy": ["Crude Oil (WTI)", "Crude Oil (Brent)", "Natural Gas"],
+      "Metals": ["Gold", "Silver", "Copper"],
+      "Agriculture": ["Wheat", "Soybeans"]
+    },
+    "Derivatives": {
+      "Options": ["Call", "Put"],
+      "Futures": ["ES", "CL", "ZN"],
+      "Swaps": ["Interest Rate Swaps", "Currency Swaps"]
+    }
+  },
+  
+  
+  "trade_context": {
+    "type": ["Future Trade", "Past Trade"],
+    "signal_direction": ["Buy", "Sell"],
+    "trade_size": ["Small", "Medium", "Large"],
+    "time_horizon": ["Intraday", "Short-term", "Long-term"],
+    "targets": ["Price Target", "Stop Loss", "Take Profit"]
+  },
+  
+  
+  "portfolio": {
+    "actions": [
+      "Allocation Change",
+      "Rebalancing",
+      "Risk Adjustments",
+      "Hedging"
+    ]
+  },
+  
+  
+  "sentiment": ["Positive", "Negative", "Neutral", "Uncertain"],
+  "urgency": ["High", "Medium", "Low"],
+  "email_type": ["Analyst Report", "Broker Recommendation"],
+  "source": ["Internal", "External (Broker, Counterparty)"],
+  "politics": ["Yes", "No"]
+}
