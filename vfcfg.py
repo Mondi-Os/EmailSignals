@@ -15,7 +15,7 @@ expected_schema = {
                 "type": "array",
                 "description": "List of top solutions, up to 5 items",
                 "minItems": 1,
-                "maxItems": 5,
+                "maxItems": 3, # default=5
                 "items": {
                     "type": "object",
                     "properties": {
