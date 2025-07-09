@@ -41,11 +41,10 @@ email_info = [{"_id": doc["_id"],
                } for doc in parsed_docs]
 
 # Access the first document’s body
-email_body = email_info[0]["body"]
+#email_body = email_info[0]["body"]
 
 #TODO remove printing statements
 
-# print(email_body)
 # Print the email information
-# for info in email_info:
-#     print(info)
+for info in email_info:
+    print(info)

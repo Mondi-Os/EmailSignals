@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import networkx as nx
 import os
 import json
-from datetime import datetime
 
 class LLMPipeline:
     def __init__(self):
@@ -15,14 +14,18 @@ class LLMPipeline:
 
     def run_batch(self, email_docs, enable_tree_for=None):
         """
-        Run LLM pipeline for multiple emails (parsed_docs).
+        Run LLM pipeline for multiple emails (parsed_docs), save each email separately.
         """
-        # Get start execution time
+        from datetime import datetime
+        import os
+        import json
+
         start_time = datetime.now()
         print(f"Pipeline started at: {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
 
         enable_tree_for = set(enable_tree_for or [])
-        all_outputs = []
+        output_dir = "review_results"
+        os.makedirs(output_dir, exist_ok=True)
 
         for email in email_docs:
             email_id = str(email["_id"])
@@ -30,26 +33,30 @@ class LLMPipeline:
             print(f"Processing email ID: {email_id}")
 
             output = self.run_single(email_id, context)
-            output["email_id"] = email_id
-            output["email_date"] = email.get("date")
-            output["email_from"] = email.get("from")
-            all_outputs.append(output)
 
-            # Generate tree if email_id is in the list to enable tree generation
+            # Wrap each result in its own file with metadata
+            email_result = {
+                "email_info": {
+                    "_id": email_id,
+                    "date": email.get("date"),
+                    "from": email.get("from")
+                },
+                "main": output["main"],
+                "sub": output["sub"]
+            }
+
+            # Generate tree only if requested
             if email_id in enable_tree_for:
                 self.generate_tree_diagram(output)
 
-        # Save all results
-        output_dir = "review_results"
-        os.makedirs(output_dir, exist_ok=True)
-        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        filename = f"{timestamp}__results.json"
-        output_path = os.path.join(output_dir, filename)
+            # Save per-email result
+            timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+            filename = f"{timestamp}--{email_id}.json"
+            output_path = os.path.join(output_dir, filename)
 
-        with open(output_path, "w", encoding="utf-8") as f:
-            json.dump(all_outputs, f, indent=2, ensure_ascii=False)
+            with open(output_path, "w", encoding="utf-8") as f:
+                json.dump(email_result, f, indent=2, ensure_ascii=False)
 
-        # Runtime
         end_time = datetime.now()
         print(f"Pipeline finished at: {end_time.strftime('%Y-%m-%d %H:%M:%S')}")
         print(f"Total duration: {end_time - start_time}")
@@ -182,10 +189,3 @@ class LLMPipeline:
 
 pipeline = LLMPipeline()
 pipeline.run_batch(email_info) # additioanl param enable_tree_for=["686e0cb099a8bf938dc2aab1", "686cd28040209effb126ac8d"]
-
-#TODO
-# 1. Create a new JSON file with email info --> Done
-# 2. Create test 2-3 emails --> Done
-# 3. Add revision to all json questions/prompts --> Done
-# 4. Develop the tree --> WIP
-# 5. Make a visualisation of the tree --> WIP
