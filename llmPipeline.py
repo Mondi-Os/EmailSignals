@@ -66,6 +66,7 @@ class LLMPipeline:
         for i, response in enumerate(main_responses):
             enriched = {
                 "question_id": self.main_questions[i]["question_id"],
+                "revision": self.main_questions[i]["revision"],
                 "ref": self.main_questions[i]["ref"],
                 "question": self.main_questions[i]["question"],
                 "email_id": email_id,
@@ -97,6 +98,7 @@ class LLMPipeline:
             enriched = {
                 "question_id": subq_to_ask[i].get("id") or subq_to_ask[i].get("question_id"),
                 "parent_id": subq_to_ask[i].get("parent_id") or subq_to_ask[i].get("question_parent_id"),
+                "revision": subq_to_ask[i]["revision"],
                 "ref": subq_to_ask[i]["ref"],
                 "question": subq_to_ask[i]["question"],
                 "email_id": email_id,
@@ -179,7 +181,7 @@ class LLMPipeline:
                 response.pop("usage", None)
 
 pipeline = LLMPipeline()
-pipeline.run_batch(email_info, enable_tree_for=["686e0cb099a8bf938dc2aab1", "686cd28040209effb126ac8d"])
+pipeline.run_batch(email_info) # additioanl param enable_tree_for=["686e0cb099a8bf938dc2aab1", "686cd28040209effb126ac8d"]
 
 #TODO
 # 1. Create a new JSON file with email info --> Done
