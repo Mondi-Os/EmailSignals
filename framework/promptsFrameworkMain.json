@@ -1,17 +1,23 @@
 [
   {
 	"question_id": 1,
+    "email_id": "",
     "ref": "macro_event",
+    "revision": 1,
     "question": "Are there any macro events in this email? Answer with only a single word (Yes/No)"
   },
   {
     "question_id": 2,
+    "email_id": "",
     "ref": "asset_reference",
+    "revision": 1,
     "question": "Does this email talk about specific assets or financial products? Answer with only a single word (Yes/No)"
   },
   {
     "question_id": 3,
+    "email_id": "",
     "ref": "trading_signal",
+    "revision": 1,
     "question": "Does this email contain any trading signals? Please answer with a single word (Yes/No)."
   }
 ]

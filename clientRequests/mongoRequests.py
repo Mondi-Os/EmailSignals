@@ -14,7 +14,7 @@ last_2_docs = collection.find({"from": "ewan.gordon@socgen.com"}, { #filter here
     "date": 1,
     "from": 1,
     "body": 1,
-    }).sort("_id", -1).limit(5)
+    }).sort("_id", -1).limit(2)
 
 # Build cleaned JSON
 cleaned_docs = []
@@ -46,6 +46,6 @@ email_body = email_info[0]["body"]
 #TODO remove printing statements
 
 # print(email_body)
-# # Print the email information
+# Print the email information
 # for info in email_info:
 #     print(info)
