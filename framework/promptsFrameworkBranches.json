@@ -1,0 +1,78 @@
+[
+  {
+    "id": 101,
+    "parent_id": 1,
+    "ref": "macro_event_type",
+    "question": "What macro events are there?"
+  },
+  {
+    "question_id": 102,
+    "question_parent_id": 1,
+    "ref": "macro_event_countries",
+    "question": "Which countries are involved or affected by these macro events?"
+  },
+  {
+    "id": 103,
+    "parent_id": 1,
+    "ref": "macro_event_timing",
+    "question": "Are the macro events in the past, present, or future? Answer shortly."
+  },
+  {
+    "id": 104,
+    "parent_id": 1,
+    "ref": "macro_event_market_impact",
+    "question": "Do the macro events affect financial markets? If yes, how?"
+  },
+  {
+    "id": 105,
+    "parent_id": 1,
+    "ref": "macro_event_policy_change",
+    "question": "Do the macro events imply any change in monetary or fiscal policy?"
+  },
+  {
+    "id": 106,
+    "parent_id": 1,
+    "ref": "macro_event_significance",
+    "question": "How significant are the macro events? Use one word: Minor, Moderate, Major."
+  },
+
+
+  {
+    "question_id": 201,
+    "question_parent_id": 2,
+    "ref": "asset_reference_class",
+    "question": "What asset class(es) does this email talk about?"
+  },
+  {
+    "question_id": 202,
+    "question_parent_id": 2,
+    "ref": "asset_reference_products",
+    "question": "What specific financial products are mentioned? Answer shortly."
+  },
+  {
+    "question_id": 203,
+    "question_parent_id": 2,
+    "ref": "asset_reference_geography",
+    "question": "Which regions are associated with these assets or products? Answer shortly."
+  },
+
+
+  {
+    "question_id": 301,
+    "question_parent_id": 3,
+    "ref": "trading_signal_trade_bias",
+    "question": "Does the email suggest any trading bias? Signal(s) (Buy/Sell) along with the financial product(s)."
+  },
+  {
+    "question_id": 302,
+    "question_parent_id": 3,
+    "ref": "trading_signal_time_horizon",
+    "question": "Is the trading view short-term, medium-term, or long-term?. Answer shortly."
+  },
+  {
+    "question_id": 303,
+    "question_parent_id": 3,
+    "ref": "trading_signal_rationale",
+    "question": "What is the rationale or reason for the trading view?"
+  }
+]
