@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 import json
-from vfcfg import *
-from dataPreprocessing import *
+from credentials.vfcfg import *
+from clientRequests.dataPreprocessing import *
 
 # Connect to MongoDB
 client = MongoClient(mongo_uri)
@@ -42,8 +42,10 @@ email_info = [{"_id": doc["_id"],
 
 # Access the first document’s body
 email_body = email_info[0]["body"]
-# print(email_body)
 
-# Print the email information
-for info in email_info:
-    print(info)
+#TODO remove printing statements
+
+# print(email_body)
+# # Print the email information
+# for info in email_info:
+#     print(info)

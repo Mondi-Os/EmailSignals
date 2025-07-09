@@ -9,6 +9,7 @@ def clean_email_body(text: str) -> str:
     if unsubscribe_index != -1:
         text = text[:unsubscribe_index]
 
+    #TODO if more data preprocessing could be added would be great for data dimensionality/run time
     # Replace non-breaking spaces and line breaks
     text = text.replace('\xa0', ' ')
     text = text.replace('-----------------------------------------------------------------------------', '---')
