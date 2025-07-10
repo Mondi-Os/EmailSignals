@@ -14,7 +14,7 @@ last_2_docs = collection.find({"from": "ewan.gordon@socgen.com"}, { #filter here
     "date": 1,
     "from": 1,
     "body": 1,
-    }).sort("_id", -1).limit(1)
+    }).sort("_id", -1).limit(3)
 
 # Build cleaned JSON
 cleaned_docs = []
