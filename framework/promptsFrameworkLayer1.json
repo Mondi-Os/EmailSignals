@@ -1,0 +1,44 @@
+[
+  {
+	"question_id": 1,
+    "email_id": "",
+    "ref": "macro_event",
+    "revision": 1,
+    "question": "Are there any macro or geopolitical events in this email? Answer with only a single word (Yes/No)"
+  },
+  {
+    "question_id": 2,
+    "email_id": "",
+    "ref": "asset_reference",
+    "revision": 1,
+    "question": "Does this email talk about specific assets or financial products? Answer with only a single word (Yes/No)"
+  },
+  {
+    "question_id": 3,
+    "email_id": "",
+    "ref": "trading_signal",
+    "revision": 1,
+    "question": "Does this email contain any trading signals? Please answer with a single word (Yes/No)."
+  },
+  {
+    "question_id": 4,
+    "email_id": "",
+    "ref": "trade_record",
+    "revision": 1,
+    "question": "Does this email talk about an executed trade record (or trade confirmation)? Please answer with a single word (Yes/No)."
+  },
+  {
+    "question_id": 5,
+    "email_id": "",
+    "ref": "sector_focus",
+    "revision": 1,
+    "question": "Does the email focus on or highlight any specific sectors or industries? Answer with only a single word (Yes/No)."
+  },
+  {
+    "question_id": 6,
+    "email_id": "",
+    "ref": "risk_factors",
+    "revision": 1,
+    "question": "Does this email mention any market risk factors or uncertainties? Answer with only a single word (Yes/No)."
+  }
+]

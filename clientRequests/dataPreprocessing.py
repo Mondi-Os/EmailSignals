@@ -10,7 +10,8 @@ def clean_email_body(text: str) -> str:
         text = text[:unsubscribe_index]
 
     #TODO if more data preprocessing could be added would be great for data dimensionality/run time
-    # Replace non-breaking spaces and line breaks
+
+    # Remove specific patterns and unwanted characters
     text = text.replace('\xa0', ' ')
     text = text.replace('-----------------------------------------------------------------------------', '---')
     text = text.replace('This Message originated outside your organization.', ' ')

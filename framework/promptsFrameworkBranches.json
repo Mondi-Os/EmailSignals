@@ -5,7 +5,7 @@
     "email_id": "",
     "ref": "macro_event_type",
     "revision": 1,
-    "question": "What macro events are there?"
+    "question": "What macro events are there? Classify them as Economic, Geopolitical, or Environmental. Answer shortly."
   },
   {
     "question_id": 102,

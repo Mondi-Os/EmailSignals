@@ -7,4 +7,5 @@ TOKEN = 'ZNMmSyIpxHUSobVGIkHKQLaXe/XWGn00WiQZj2RXKi1uI5yS0dmIqeYnDj4Mz5CeaBU0xy5
 # MongoDB connection details
 mongo_uri = "mongodb://vernvlxpddec001.veritionfund.cloud"
 db_name = "research"
-collection_name = "mail"
+collection_name = "mail" # Email from Outlook
+collection_result = "result" # Update results
