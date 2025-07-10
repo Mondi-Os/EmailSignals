@@ -7,18 +7,18 @@ import sys
 
 class LLMPipeline:
     def __init__(self):
-        # with open("framework/promptsFrameworkLayer1.json") as f:
-        #     self.layer1 = json.load(f)
-        # with open("framework/promptsFrameworkLayer2.json") as f:
-        #     self.layer2 = json.load(f)
-        # with open("framework/promptsFrameworkLayer3.json") as f:
-        #     self.layer3 = json.load(f)
-        with open("framework/test1.json") as f:
+        with open("framework/promptsFrameworkLayer1.json") as f:
             self.layer1 = json.load(f)
-        with open("framework/test2.json") as f:
+        with open("framework/promptsFrameworkLayer2.json") as f:
             self.layer2 = json.load(f)
-        with open("framework/test3.json") as f:
+        with open("framework/promptsFrameworkLayer3.json") as f:
             self.layer3 = json.load(f)
+        # with open("framework/test1.json") as f:
+        #     self.layer1 = json.load(f)
+        # with open("framework/test2.json") as f:
+        #     self.layer2 = json.load(f)
+        # with open("framework/test3.json") as f:
+        #     self.layer3 = json.load(f)
 
     def run_batch(self, email_docs):
         """
@@ -148,14 +148,13 @@ class LLMPipeline:
 
         # ========= Layer 3 =========
         subsub_results = []
-        subsub_to_ask = []
+        subsub_to_ask = [
+            q for q in self.layer3
+            if sub_answer_map.get(q["question_parent_id"]) == q.get("parent_answer", "").strip().lower()
+            ]
 
-        for q in self.layer3:
-            sub_ans = sub_answer_map.get(q["question_parent_id"])
-            if sub_ans and sub_ans == q.get("parent_answer", "").strip().lower():
-                q_copy = q.copy()
-                q_copy["email_id"] = email_id
-                subsub_to_ask.append(q_copy)
+        for q in subsub_to_ask:
+            q["email_id"] = email_id
 
         subsub_question_texts = [q["question"] for q in subsub_to_ask]
         print(f"subsub_question_texts: {subsub_question_texts}")  # TODO remove (debug print)
@@ -167,7 +166,6 @@ class LLMPipeline:
         subsub_answered_ids = set()
         for i, response in enumerate(subsub_responses):
             q_meta = subsub_to_ask[i]
-            print(f"q_meta:    {q_meta}") #TODO remove (debug print)
             print(f"response:    {response}") #TODO remove (debug print)
             enriched = {
                 "question_id": q_meta.get("id") or q_meta.get("question_id"),
