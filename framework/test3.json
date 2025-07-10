@@ -16,22 +16,6 @@
     "question": "Does the email mention any central bank decisions, rate changes, or monetary policy shifts? If no, answer with a single word: 'No'. If 'Yes', explain briefly."
   },
   {
-    "question_id": 100103,
-    "question_parent_id": 101,
-    "email_id": "",
-    "ref": "fiscal_policy_action",
-    "parent_answer": "Economic",
-    "question": "Is there any mention of fiscal policy, government spending, or tax measures? If no, answer with a single word: 'No'. If 'Yes', explain briefly."
-  },
-  {
-    "question_id": 100104,
-    "question_parent_id": 101,
-    "email_id": "",
-    "ref": "geopolitical_event_entities",
-    "parent_answer": "Geopolitical",
-    "question": "Which countries, governments, or regions are involved in the geopolitical events mentioned? List them."
-  },
-  {
     "question_id": 100105,
     "question_parent_id": 101,
     "email_id": "",
@@ -46,14 +30,6 @@
     "ref": "election_or_vote",
     "parent_answer": "Geopolitical",
     "question": "Is there any reference to upcoming or recent elections, votes, or leadership changes? If no, answer with a single word: 'No'. If 'Yes', explain briefly."
-  },
-  {
-    "question_id": 100107,
-    "question_parent_id": 101,
-    "email_id": "",
-    "ref": "climate_or_natural_event",
-    "parent_answer": "Environmental",
-    "question": "Does the email mention any climate events, natural disasters, or ESG-related risks? If no, answer with a single word: 'No'. If 'Yes', explain briefly."
   },
   {
     "question_id": 100108,
