@@ -4,8 +4,7 @@ import json
 
 # Load JSON files
 json_paths = [
-    "C:/Users/mosmena/Desktop/Project/LLM_Project/EmailSignals/review_results/2025-07-09_16-48-21--686e0cb099a8bf938dc2aab1.json",
-    "C:/Users/mosmena/Desktop/Project/LLM_Project/EmailSignals/review_results/2025-07-09_16-50-34--686cd28040209effb126ac8d.json"
+    "C:/Users/mosmena/Desktop/Project/LLM_Project/EmailSignals/review_results/2025-07-10_16-50-34--686cd28040209effb126ac8d.json",
 ]
 
 client = MongoClient(mongo_uri)
