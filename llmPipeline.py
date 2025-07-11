@@ -1,9 +1,6 @@
 from clientRequests.VFModelsRequest import *
 from datetime import datetime
-import os
-import json
-import sys
-
+from llmCache import *
 
 class LLMPipeline:
     def __init__(self):
@@ -27,27 +24,45 @@ class LLMPipeline:
         start_time = datetime.now()
         print(f"Pipeline started at: {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
 
-        output_dir = "review_results"
-        os.makedirs(output_dir, exist_ok=True)
+        all_questions = load_all_questions_from_json_files(
+            "C:/Users/mosmena/Desktop/Project/LLM_Project/EmailSignals/framework/promptsFrameworkLayer1.json",
+            "C:/Users/mosmena/Desktop/Project/LLM_Project/EmailSignals/framework/promptsFrameworkLayer2.json",
+            "C:/Users/mosmena/Desktop/Project/LLM_Project/EmailSignals/framework/promptsFrameworkLayer3.json"
+            )
 
         for email in email_docs:
             email_id = str(email["_id"])
             context = str(email["body"])
             print(f"Processing email ID: {email_id}")
 
-            output = self.run_single(email_id, context)
+            # Load from LLM cache if exists
+            cached_output = llm_simulation(
+                questions=all_questions,
+                email_body=context
+            )
 
-            # Combine all questions with a 'layer' label
-            all_questions = output.get("main", []) + output.get("sub", []) + output.get("subsub", [])
-
-            # Final result format
-            email_result = {
-                "email_info": {
+            if cached_output:
+                output_dir = "review_results/simulator_results"
+                output_questions = cached_output["questions"]
+                email_info = {
                     "_id": email_id,
                     "date": email.get("date"),
                     "from": email.get("from")
-                },
-                "questions": all_questions
+                }
+            else:
+                output_dir = "review_results"
+                result = self.run_single(email_id, context)
+                output_questions = result["main"] + result["sub"] + result["subsub"]
+                email_info = {
+                    "_id": email_id,
+                    "date": email.get("date"),
+                    "from": email.get("from")
+                }
+
+            # Final result format
+            email_result = {
+                "email_info": email_info,
+                "questions": output_questions
             }
 
             # Save per-email result

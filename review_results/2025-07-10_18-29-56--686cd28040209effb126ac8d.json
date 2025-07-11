@@ -1,5 +1,4 @@
 {
-  "hash": "866b71d969ca8da8348700b2e375056661f86e38172e465c2d45e5959870ff7d",
   "email_info": {
     "_id": "686cd28040209effb126ac8d",
     "date": "2025-04-07T06:46:16Z",
@@ -43,7 +42,8 @@
         }
       },
       "processed": true,
-      "layer": 1
+      "layer": 1,
+      "hash": "7f14ad1f395a156000f0c60582ecd5d633512d2ca07062931539e0d5ed103670"
     },
     {
       "question_id": 2,
@@ -82,7 +82,8 @@
         }
       },
       "processed": true,
-      "layer": 1
+      "layer": 1,
+      "hash": "3553d7e066317f7ac339912283d22a4edc12b3c535a35b0226b505603fe7174a"
     },
     {
       "question_id": 3,
@@ -121,7 +122,8 @@
         }
       },
       "processed": true,
-      "layer": 1
+      "layer": 1,
+      "hash": "d9d04a87b7d3dfb72b3d171d3bb6fc906b2a3c1dfe09e12d80ab1f37f2e2aaa3"
     },
     {
       "question_id": 4,
@@ -160,7 +162,8 @@
         }
       },
       "processed": true,
-      "layer": 1
+      "layer": 1,
+      "hash": "efd23404698ed98f6960fcca24f6826c0ae1a53ed035bdfcd6e4016adda8c7d0"
     },
     {
       "question_id": 5,
@@ -199,7 +202,8 @@
         }
       },
       "processed": true,
-      "layer": 1
+      "layer": 1,
+      "hash": "01353bfbbcce315032c4970c7c8519bc56d5e8f48ebf475ed77bb7020d2399a8"
     },
     {
       "question_id": 6,
@@ -238,7 +242,8 @@
         }
       },
       "processed": true,
-      "layer": 1
+      "layer": 1,
+      "hash": "e40d17a589252d6c5294fb8e305faa7c5a0a0a4a3d3d518290247d44b2feee4d"
     },
     {
       "question_id": 101,
@@ -278,7 +283,8 @@
         }
       },
       "processed": true,
-      "layer": 2
+      "layer": 2,
+      "hash": "4e90433a0e34e3b3cfe4444dab8f500cb64276cc7f5a536bbf3dd92e34d55aaf"
     },
     {
       "question_id": 102,
@@ -318,7 +324,8 @@
         }
       },
       "processed": true,
-      "layer": 2
+      "layer": 2,
+      "hash": "4599b03906496f228db3e0179ef03dadd91b84e93c4570d3bb9153c161f6742b"
     },
     {
       "question_id": 103,
@@ -358,7 +365,8 @@
         }
       },
       "processed": true,
-      "layer": 2
+      "layer": 2,
+      "hash": "c3cf15ce0086fcabf518ade21a5ceb1e739270672acf01ef436505e68f2fb277"
     },
     {
       "question_id": 104,
@@ -398,7 +406,8 @@
         }
       },
       "processed": true,
-      "layer": 2
+      "layer": 2,
+      "hash": "9c5fa2f44e293c33b7c5be530360e99f074de6beaa6494c290efa3c1b31f5b3d"
     },
     {
       "question_id": 105,
@@ -438,7 +447,8 @@
         }
       },
       "processed": true,
-      "layer": 2
+      "layer": 2,
+      "hash": "1ff70732c9716b1cca17828df5b405b5a8f4af81a7437a41d44b127dc98338c1"
     },
     {
       "question_id": 106,
@@ -484,7 +494,8 @@
         }
       },
       "processed": true,
-      "layer": 2
+      "layer": 2,
+      "hash": "db2d89bdb6373832cb0b13bdcc0211db8c8e2727771fed0aab84b7495670858d"
     },
     {
       "question_id": 201,
@@ -524,7 +535,8 @@
         }
       },
       "processed": true,
-      "layer": 2
+      "layer": 2,
+      "hash": "84fb647ee8e54bbbfde96643a0880ab2681f5247e3c627abb26118eb3a82857a"
     },
     {
       "question_id": 202,
@@ -564,7 +576,8 @@
         }
       },
       "processed": true,
-      "layer": 2
+      "layer": 2,
+      "hash": "12043b229bd4bf76a83b5266ef248655d9500725de097bb87fd3cfa700f5027d"
     },
     {
       "question_id": 203,
@@ -604,7 +617,8 @@
         }
       },
       "processed": true,
-      "layer": 2
+      "layer": 2,
+      "hash": "75bbc9f0e16172bf47c96a2de923f7bacc3af1504a715de4b550cc766112a18a"
     },
     {
       "question_id": 501,
@@ -687,7 +701,8 @@
         }
       },
       "processed": true,
-      "layer": 2
+      "layer": 2,
+      "hash": "784a3de345b4eda4dd95d5d7ec94223b3514ab9dd92057a517ef5911a6b88667"
     },
     {
       "question_id": 601,
@@ -727,7 +742,8 @@
         }
       },
       "processed": true,
-      "layer": 2
+      "layer": 2,
+      "hash": "362aedf687de860bc6487a9380739bbcb11cfabe07775bc7e4b618e9887a3d94"
     },
     {
       "question_id": 602,
@@ -767,7 +783,8 @@
         }
       },
       "processed": true,
-      "layer": 2
+      "layer": 2,
+      "hash": "fb2d6a9826b0fa430ac64ce10a4d92c33190b135d15d2b41cf2c7b0954884bce"
     },
     {
       "question_id": 603,
@@ -807,7 +824,8 @@
         }
       },
       "processed": true,
-      "layer": 2
+      "layer": 2,
+      "hash": "bdcc90b3b6a5e2d1a8811635e25a98acd138ded241c640a3072dcd656a99d899"
     },
     {
       "question_id": 604,
@@ -847,7 +865,8 @@
         }
       },
       "processed": true,
-      "layer": 2
+      "layer": 2,
+      "hash": "0b0ac0dc1981ac1379530cc9ee9a6b1c82eede8e4d27361649f714f087f280cf"
     },
     {
       "question_id": 301,
@@ -856,7 +875,8 @@
       "question": "Does the email suggest any trading bias? Answer: Signal(s) (Buy/Sell) along with the financial product(s).",
       "email_id": "686cd28040209effb126ac8d",
       "processed": false,
-      "layer": 2
+      "layer": 2,
+      "hash": "52ea4cdd95db67ec3802df770b6e1d3df710591e36bdc7db3b2ac579f3cf578b"
     },
     {
       "question_id": 302,
@@ -865,7 +885,8 @@
       "question": "Is the trading view short-term, medium-term, or long-term?. Answer shortly.",
       "email_id": "686cd28040209effb126ac8d",
       "processed": false,
-      "layer": 2
+      "layer": 2,
+      "hash": "9cc0dc44920cab6f15830d26bf56595fb1bd7565f00b924aa8441e2e6e3f3e6b"
     },
     {
       "question_id": 401,
@@ -874,7 +895,8 @@
       "question": "What are the executed trade records or trade confirmation within this email? Give any details available from the following: Datetime, Financial Product, Trade Type (Buy/Sell), Quantity, Price, Counterparty, and any other relevant information.",
       "email_id": "686cd28040209effb126ac8d",
       "processed": false,
-      "layer": 2
+      "layer": 2,
+      "hash": "429884b6f3b060b7570e6ff0a7f5b06c6fbec4412ecb6ed056bf503c36f60606"
     },
     {
       "question_id": 100104,
@@ -992,7 +1014,8 @@
         }
       },
       "processed": true,
-      "layer": 3
+      "layer": 3,
+      "hash": "089ef69459715400c9fb3f98c9c3244893284f87432d40ff1a9216a6bc9d9e8f"
     },
     {
       "question_id": 100105,
@@ -1023,7 +1046,8 @@
         }
       },
       "processed": true,
-      "layer": 3
+      "layer": 3,
+      "hash": "09710937043fd91d458aa9aa165fce1e102c0cbca14e1fa0f29139caadae9761"
     },
     {
       "question_id": 100106,
@@ -1054,7 +1078,8 @@
         }
       },
       "processed": true,
-      "layer": 3
+      "layer": 3,
+      "hash": "279f0164c45f954916adae8c615da4fe276ae09901b8a0c428554684b0c84473"
     },
     {
       "question_id": 100201,
@@ -1085,7 +1110,8 @@
         }
       },
       "processed": true,
-      "layer": 3
+      "layer": 3,
+      "hash": "e143464bb448d2a5ddfd4f8a9e6f35d9e00e672ea6f17913d4a3d61f71349e63"
     },
     {
       "question_id": 100202,
@@ -1116,7 +1142,8 @@
         }
       },
       "processed": true,
-      "layer": 3
+      "layer": 3,
+      "hash": "51da74c947e2f4d62c2afcca7fac4fbe360695aad943ac310c395bee7fa40d87"
     },
     {
       "question_id": 100401,
@@ -1166,7 +1193,8 @@
         }
       },
       "processed": true,
-      "layer": 3
+      "layer": 3,
+      "hash": "bb3a4d8d039b63e5ec721b0fd569e1b6684e41eac9a0fb9e7a5445968574862a"
     },
     {
       "question_id": 100402,
@@ -1197,7 +1225,8 @@
         }
       },
       "processed": true,
-      "layer": 3
+      "layer": 3,
+      "hash": "16e048083162e24b9b5cfe2fdf8a99be49bf14e72869c4477bddf9374f51b069"
     },
     {
       "question_id": 100403,
@@ -1228,7 +1257,8 @@
         }
       },
       "processed": true,
-      "layer": 3
+      "layer": 3,
+      "hash": "bcb8e779fde03146be5d08ef82af8e2daf1b64406ab3e27af4a8443791340cb1"
     },
     {
       "question_id": 100404,
@@ -1259,7 +1289,8 @@
         }
       },
       "processed": true,
-      "layer": 3
+      "layer": 3,
+      "hash": "441ef84e9dcf38daccbcae0e6d8b2309336b77c028dccbbae76231b229ab864c"
     },
     {
       "question_id": 100405,
@@ -1290,7 +1321,8 @@
         }
       },
       "processed": true,
-      "layer": 3
+      "layer": 3,
+      "hash": "0dbd68353c6b2be0f74feae5c860724a80878930932bd0ef0500471be62b5987"
     },
     {
       "question_id": 100406,
@@ -1321,7 +1353,8 @@
         }
       },
       "processed": true,
-      "layer": 3
+      "layer": 3,
+      "hash": "6e08e5c4057f0237ea8ffea154007bd82e397615c676f90680378c823b03fde1"
     },
     {
       "question_id": 200301,
@@ -1352,7 +1385,8 @@
         }
       },
       "processed": true,
-      "layer": 3
+      "layer": 3,
+      "hash": "ad2c709135961c568026cf58f279795bad7071777f82f9c0e589b6b3054d9367"
     },
     {
       "question_id": 200302,
@@ -1383,7 +1417,8 @@
         }
       },
       "processed": true,
-      "layer": 3
+      "layer": 3,
+      "hash": "5e22f7d2e95953bdf5d262795494dcaf7144d366aac30f8ecb78fdb1616edd77"
     },
     {
       "question_id": 200303,
@@ -1414,7 +1449,8 @@
         }
       },
       "processed": true,
-      "layer": 3
+      "layer": 3,
+      "hash": "7b05730e67a84e5e2de984cd7148dfdd9b9392ee8c3691b45003769ee08155d6"
     },
     {
       "question_id": 200304,
@@ -1445,7 +1481,8 @@
         }
       },
       "processed": true,
-      "layer": 3
+      "layer": 3,
+      "hash": "3bf4154b8bdaf36d5ca718e27c390e973a072e02746e8d6a51519bee672ec4ea"
     },
     {
       "question_id": 100101,
@@ -1454,7 +1491,8 @@
       "question": "Which economic indicators are mentioned (e.g., CPI, GDP, UNRATE, PMI, interest rate etc.)? List them briefly.",
       "email_id": "686cd28040209effb126ac8d",
       "processed": false,
-      "layer": 3
+      "layer": 3,
+      "hash": "6159500813db23bd8ede7fbcb2ffb6fd6d5219a86b6e7572c58b3c4cebfa7822"
     },
     {
       "question_id": 100102,
@@ -1463,7 +1501,8 @@
       "question": "Does the email mention any central bank decisions, rate changes, or monetary policy shifts? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
       "email_id": "686cd28040209effb126ac8d",
       "processed": false,
-      "layer": 3
+      "layer": 3,
+      "hash": "07d7e398b8677705f07b969ed6ff843157116cfdb0425c6afcab0c950bfe2fa4"
     },
     {
       "question_id": 100103,
@@ -1472,7 +1511,8 @@
       "question": "Is there any mention of fiscal policy, government spending, or tax measures? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
       "email_id": "686cd28040209effb126ac8d",
       "processed": false,
-      "layer": 3
+      "layer": 3,
+      "hash": "1575a6002ce3163d0002ea3d59efe2064315b4536aa8dfd6cca5b924bcac2bde"
     },
     {
       "question_id": 100107,
@@ -1481,7 +1521,8 @@
       "question": "Does the email mention any climate events, natural disasters, or ESG-related risks? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
       "email_id": "686cd28040209effb126ac8d",
       "processed": false,
-      "layer": 3
+      "layer": 3,
+      "hash": "abb7bc30d9d03c87a0855ff04ece4ea1b7bcc569966edc5533fd2fc4c344b473"
     },
     {
       "question_id": 100108,
@@ -1490,7 +1531,8 @@
       "question": "Are there environmental regulations or climate policies being discussed? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
       "email_id": "686cd28040209effb126ac8d",
       "processed": false,
-      "layer": 3
+      "layer": 3,
+      "hash": "6cf0dc477646f723735eeb72f69bb90cbceca15e945eb7cc6535c0cb379642e0"
     }
   ]
 }
