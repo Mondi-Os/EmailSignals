@@ -226,4 +226,4 @@ class LLMPipeline:
                 response.pop("usage", None)
 
 pipeline = LLMPipeline()
-pipeline.run_batch(fetch_emails_from_database(filter_dict={"from": "ewan.gordon@socgen.com"}, limit=1))
+pipeline.run_batch(fetch_emails_from_database(filter_dict={}, limit=5))

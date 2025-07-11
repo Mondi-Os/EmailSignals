@@ -1,0 +1,396 @@
+{
+  "email_info": {
+    "_id": "687126e999a8bf938dc2acdf",
+    "date": "2025-07-11T14:49:21Z",
+    "from": "marketinsights@email.lloydsbankcommercial.com"
+  },
+  "questions": [
+    {
+      "hash": "6df9487224bf9b44123a432f941b4bf002d5f153de6a0e7a0630bd2c3e86b205",
+      "question": "Are there any macro or geopolitical events in this email? Answer with only a single word (Yes/No)",
+      "answer": "Yes",
+      "question_id": 1,
+      "parent_id": null,
+      "layer": 1,
+      "processed": true
+    },
+    {
+      "hash": "3801869e1027c3c45489003900091784bcac0c12fc0ba49f6b0c1339144d613c",
+      "question": "Does this email talk about specific assets or financial products? Answer with only a single word (Yes/No)",
+      "answer": "No",
+      "question_id": 2,
+      "parent_id": null,
+      "layer": 1,
+      "processed": true
+    },
+    {
+      "hash": "7a5f1a4b641669c33009fa23c5e9594caa70f2913cfad0d5a41d18f67c246054",
+      "question": "Does this email contain any trading signals? Please answer with a single word (Yes/No).",
+      "answer": "No",
+      "question_id": 3,
+      "parent_id": null,
+      "layer": 1,
+      "processed": true
+    },
+    {
+      "hash": "d0204013e91d5a669de0fb81dd4b5245b74551fcec9e0fb3e63953336cd2bc0a",
+      "question": "Does this email talk about an executed trade record (or trade confirmation)? Please answer with a single word (Yes/No).",
+      "answer": "No",
+      "question_id": 4,
+      "parent_id": null,
+      "layer": 1,
+      "processed": true
+    },
+    {
+      "hash": "9a70901358718ddd34ed5ef1ca2a0c4145d4ef6257546d1a1671fa5f18a02a2e",
+      "question": "Does the email focus on or highlight any specific sectors or industries? Answer with only a single word (Yes/No).",
+      "answer": "Yes",
+      "question_id": 5,
+      "parent_id": null,
+      "layer": 1,
+      "processed": true
+    },
+    {
+      "hash": "73d4417d59c544ff888c3ae4f20f01765e7e63bfb6aa8d3a060509d309654b20",
+      "question": "Does this email mention any market risk factors or uncertainties? Answer with only a single word (Yes/No).",
+      "answer": "Yes",
+      "question_id": 6,
+      "parent_id": null,
+      "layer": 1,
+      "processed": true
+    },
+    {
+      "hash": "2eda23c1677792c1cfa9908a68c233f69bffde2a43e968f3f4e8c2d9848a497a",
+      "question": "What macro events are there? Answer with a single word: Economic, Geopolitical, or Environmental.",
+      "answer": "",
+      "question_id": 101,
+      "parent_id": 1,
+      "layer": 2,
+      "processed": false
+    },
+    {
+      "hash": "8888508f4f4f016e1c7ec5fc321392666ce1a1a30c3351fa10310b791f496449",
+      "question": "Are there are any specific regions or countries mentioned in relation to the macro events? Answer with a single word: Yes or No",
+      "answer": "Yes",
+      "question_id": 102,
+      "parent_id": 1,
+      "layer": 2,
+      "processed": true
+    },
+    {
+      "hash": "29cf47e27f91cf064b8023b9d6b9517ae2fdf7fc617b5158215a1e80774d347d",
+      "question": "Are the macro events in the past, present, or future? Answer shortly.",
+      "answer": "",
+      "question_id": 103,
+      "parent_id": 1,
+      "layer": 2,
+      "processed": false
+    },
+    {
+      "hash": "4dc9f943f192493d645d70b600ba8208134583f239a1c2978501da635fff1b05",
+      "question": "Do the macro events affect financial markets? Answer with a single word: Yes or No",
+      "answer": "",
+      "question_id": 104,
+      "parent_id": 1,
+      "layer": 2,
+      "processed": false
+    },
+    {
+      "hash": "24f194e86b9f731b1f668b37c3c29b1a7b89f43bcd5253da62111a0787011b6c",
+      "question": "Do the macro events imply any change in monetary or fiscal policy? If no, answer with a single word: 'No'. If 'Yes', briefly explain.",
+      "answer": "",
+      "question_id": 105,
+      "parent_id": 1,
+      "layer": 2,
+      "processed": false
+    },
+    {
+      "hash": "0dc1f09f01e762cec3a352a3b7db9c360ee40bc02c459e241b0ba9b815fac970",
+      "question": "How significant are the macro events? Use one word: Minor, Moderate, Major.",
+      "answer": "",
+      "question_id": 106,
+      "parent_id": 1,
+      "layer": 2,
+      "processed": false
+    },
+    {
+      "hash": "c745031b37484093f2e5f4af6ab7aa0bbdb10f250d5ab9f9141edcc783618860",
+      "question": "Does this email talk about any asset class(es)? Answer with a single word: Yes or No. If yes, please list them",
+      "answer": "",
+      "question_id": 201,
+      "parent_id": 2,
+      "layer": 2,
+      "processed": false
+    },
+    {
+      "hash": "9ee165a7f211b254be6b524ce6b7a5f39269129cf55d7051acee24a55169c461",
+      "question": "Are there any specific financial products mentioned; if so what are those? Answer with a single word: Yes or No. If yes, please list them",
+      "answer": "",
+      "question_id": 202,
+      "parent_id": 2,
+      "layer": 2,
+      "processed": false
+    },
+    {
+      "hash": "799287a5b8f66e6c42bde8600415a64eccd4523a5798a9e036dbd798a42c1ce8",
+      "question": "Are derivatives or structured products (e.g., options, swaps, futures, CDS, swaptions etc.) mentioned? Answer with a single word: Yes or No.",
+      "answer": "",
+      "question_id": 203,
+      "parent_id": 2,
+      "layer": 2,
+      "processed": false
+    },
+    {
+      "hash": "9f9f71766bda7c0352f75a7ebec2cfba817c3e5cb9c784c78456a4d3e78ec30d",
+      "question": "Does the email suggest any trading bias? Answer: Signal(s) (Buy/Sell) along with the financial product(s).",
+      "answer": "",
+      "question_id": 301,
+      "parent_id": 3,
+      "layer": 2,
+      "processed": false
+    },
+    {
+      "hash": "5d79e198450a24b197df96448b5316239d57c218100c3681b0809224e6f074a1",
+      "question": "Is the trading view short-term, medium-term, or long-term?. Answer shortly.",
+      "answer": "",
+      "question_id": 302,
+      "parent_id": 3,
+      "layer": 2,
+      "processed": false
+    },
+    {
+      "hash": "d74835831438a2531eeaeabbc627fa26f8534f8ae750e0b6d94f882192eb028c",
+      "question": "What are the executed trade records or trade confirmation within this email? Give any details available from the following: Datetime, Financial Product, Trade Type (Buy/Sell), Quantity, Price, Counterparty, and any other relevant information.",
+      "answer": "",
+      "question_id": 401,
+      "parent_id": 4,
+      "layer": 2,
+      "processed": false
+    },
+    {
+      "hash": "551950f6d1c009ca4fe9b9cac48ca25ea7c5d9cc66085e906078444f6b2e1198",
+      "question": "What sectors or industries are mentioned in the email, and what is the expressed view on them?",
+      "answer": "",
+      "question_id": 501,
+      "parent_id": 5,
+      "layer": 2,
+      "processed": false
+    },
+    {
+      "hash": "ed06f825b170e3bd64d690c5e954cf0f466ba7d00f4c490ffc9cc0fc1c70d240",
+      "question": "Are macroeconomic risks mentioned or policy related risks (e.g., inflation, recession, growth slowdown, central bank action, fiscal policy shifts etc.)? If no, answer with a single word: 'No'. If 'Yes', list them and explain briefly.",
+      "answer": "",
+      "question_id": 601,
+      "parent_id": 6,
+      "layer": 2,
+      "processed": false
+    },
+    {
+      "hash": "2e572b4db3df462cc129cfc07c9683bb5065f8c5f3715aa5b2b9a1d2fc081eea",
+      "question": "Are geopolitical risks discussed (e.g., elections, wars, trade disputes)? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
+      "answer": "",
+      "question_id": 602,
+      "parent_id": 6,
+      "layer": 2,
+      "processed": false
+    },
+    {
+      "hash": "a9f13e034e37032e601ac2b2d4b5da3d5b27d32e190962a4590c62b680d380c0",
+      "question": "Does the email reference market-related risks (e.g., volatility, liquidity, positioning)? If no, answer with a single word: 'No'. If 'Yes', describe them briefly.",
+      "answer": "",
+      "question_id": 603,
+      "parent_id": 6,
+      "layer": 2,
+      "processed": false
+    },
+    {
+      "hash": "591b55d097d66c38df69184865d982079c392cc6a821dbb44a49776d0a180d9b",
+      "question": "Are any sector-specific or industry-specific risks mentioned? If no, answer with a single word: 'No'. If 'Yes', identify the sectors and explain briefly.",
+      "answer": "",
+      "question_id": 604,
+      "parent_id": 6,
+      "layer": 2,
+      "processed": false
+    },
+    {
+      "hash": "c7576dd4bd00383ecd79f810b4c5805c39ad9faf7b14380931f6723346af3f41",
+      "question": "Which economic indicators are mentioned (e.g., CPI, GDP, UNRATE, PMI, interest rate etc.)? List them briefly.",
+      "answer": "",
+      "question_id": 100101,
+      "parent_id": 101,
+      "layer": 3,
+      "processed": false
+    },
+    {
+      "hash": "dc17498e511f520e2ce312d5d8c8111d08fbe1897d43e3ff37c90fecc7b5878b",
+      "question": "Does the email mention any central bank decisions, rate changes, or monetary policy shifts? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
+      "answer": "",
+      "question_id": 100102,
+      "parent_id": 101,
+      "layer": 3,
+      "processed": false
+    },
+    {
+      "hash": "8a7f844f04f4517afe28950d1b50bc8ecfba5c49ec2dd25de5bdebe819b7b29e",
+      "question": "Is there any mention of fiscal policy, government spending, or tax measures? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
+      "answer": "",
+      "question_id": 100103,
+      "parent_id": 101,
+      "layer": 3,
+      "processed": false
+    },
+    {
+      "hash": "5c5138d18f51c7bc1b835262fd2ae0cde89d1111e8234b6c8d364bedca4f0d6c",
+      "question": "Which countries, governments, or regions are involved in the geopolitical events mentioned? List them.",
+      "answer": "",
+      "question_id": 100104,
+      "parent_id": 101,
+      "layer": 3,
+      "processed": false
+    },
+    {
+      "hash": "d693da9ad1b03c81a8a15e98181e4469573686dbfc010aa5ac900b810668cff8",
+      "question": "Is the email referring to any conflict, diplomatic negotiations, or sanctions? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
+      "answer": "",
+      "question_id": 100105,
+      "parent_id": 101,
+      "layer": 3,
+      "processed": false
+    },
+    {
+      "hash": "8a3d41f83edd1b662fb3a701a7925d1ac0a5042f4412c3d0dc81479163ab37ad",
+      "question": "Is there any reference to upcoming or recent elections, votes, or leadership changes? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
+      "answer": "",
+      "question_id": 100106,
+      "parent_id": 101,
+      "layer": 3,
+      "processed": false
+    },
+    {
+      "hash": "0eb4044209ed682a76c5d8700bb89dfaff544323894bc497ab36a792407d02db",
+      "question": "Does the email mention any climate events, natural disasters, or ESG-related risks? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
+      "answer": "",
+      "question_id": 100107,
+      "parent_id": 101,
+      "layer": 3,
+      "processed": false
+    },
+    {
+      "hash": "0486dd9129e8012fc3da20bc1adf36bec5dfca4409a34ac9da000ce1acf10156",
+      "question": "Are there environmental regulations or climate policies being discussed? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
+      "answer": "",
+      "question_id": 100108,
+      "parent_id": 101,
+      "layer": 3,
+      "processed": false
+    },
+    {
+      "hash": "788ed4772883e1f4a01506735dd6e959b5e6b9f59d471e7d262fcbbb6c5229d3",
+      "question": "Are there are any specific countries mentioned in relation to the macro events? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
+      "answer": "",
+      "question_id": 100201,
+      "parent_id": 102,
+      "layer": 3,
+      "processed": false
+    },
+    {
+      "hash": "ff1d2f2f4eda86fe8725b41a7619775470f804366bbeda8902988bd2db4bb961",
+      "question": "Are there are any specific regions mentioned in relation to the macro events? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
+      "answer": "",
+      "question_id": 100202,
+      "parent_id": 102,
+      "layer": 3,
+      "processed": false
+    },
+    {
+      "hash": "b8e30ed853fd79fb5b71ecad4bc2506bfed21088c437f033fbb1949792ab27e6",
+      "question": "Are specific asset classes impacted (e.g., equities, bonds, commodities, FX)? If no, answer with a single word: 'No'. If 'Yes', list them and explain briefly.",
+      "answer": "",
+      "question_id": 100401,
+      "parent_id": 104,
+      "layer": 3,
+      "processed": false
+    },
+    {
+      "hash": "ed3b812e425a2c0cb26e156c9ffaa43d4af97555c9127528c5d3f33140fe3d66",
+      "question": "Are safe haven assets (e.g., USD, gold, Treasuries) discussed in relation to the macro events? If no, answer with a single word: 'No'. If 'Yes', list them and explain briefly.",
+      "answer": "",
+      "question_id": 100402,
+      "parent_id": 104,
+      "layer": 3,
+      "processed": false
+    },
+    {
+      "hash": "5986f6e416fb95339834df222b279904d8423d639582b290b4c070253ac52bac",
+      "question": "Are specific financial products impacted? If no, answer with a single word: 'No'. If 'Yes', list them.",
+      "answer": "",
+      "question_id": 100403,
+      "parent_id": 104,
+      "layer": 3,
+      "processed": false
+    },
+    {
+      "hash": "01d3b8a42890bde216e52d2295304a15f8f1bf7bdb7ca741f79eb15e1b4e77f2",
+      "question": "Is there any directional market impact indicated (e.g., bullish, bearish, volatility)? If no, answer with a single word: 'No'. If 'Yes', indicate the financial market(s) and the financial impact(s).",
+      "answer": "",
+      "question_id": 100404,
+      "parent_id": 104,
+      "layer": 3,
+      "processed": false
+    },
+    {
+      "hash": "785d24f40fa0bf67db197616f25fcc3efb1a1c576c14ac0a27eee8628bfa4bb4",
+      "question": "Does the email suggest a trading response or positioning due to macro events? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
+      "answer": "",
+      "question_id": 100405,
+      "parent_id": 104,
+      "layer": 3,
+      "processed": false
+    },
+    {
+      "hash": "bb2268e1a42230a72f5d9447b54163596c8ba0907875a5f32bcebfc3167ddc18",
+      "question": "Are risk assets (e.g., EM, high yield) mentioned as affected by the macro events? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
+      "answer": "",
+      "question_id": 100406,
+      "parent_id": 104,
+      "layer": 3,
+      "processed": false
+    },
+    {
+      "hash": "46c2b68fae810fd72c6296b44669d928bdc3eeaedee45c2868e6b0a37b30cb8e",
+      "question": "What derivative or structured products are mentioned? If none, answer with a single word: 'No'. If 'Yes', list them and explain briefly.",
+      "answer": "",
+      "question_id": 200301,
+      "parent_id": 203,
+      "layer": 3,
+      "processed": false
+    },
+    {
+      "hash": "654a7370f3800bad24fe93cd49c01a0655242ee950d91946453c54e0d814e99a",
+      "question": "Is there any pricing information provided for any of the mentioned products? If no, answer with a single word: 'No'. If 'Yes', list the products with pricing and describe briefly the mentioned pricing.",
+      "answer": "",
+      "question_id": 200302,
+      "parent_id": 203,
+      "layer": 3,
+      "processed": false
+    },
+    {
+      "hash": "c9e198a0cb042cd55b0c9f89426582938409b407e362b3bd2d5954e6ac26323f",
+      "question": "Are any specific maturities or tenors mentioned for the derivatives (e.g., 3m, 10y etc.)? If no, answer with a single word: 'No'. If 'Yes', list them and explain briefly.",
+      "answer": "",
+      "question_id": 200303,
+      "parent_id": 203,
+      "layer": 3,
+      "processed": false
+    },
+    {
+      "hash": "52a49de7223892c80d206328b9378ae72074f77578efeb9d67e878539c5f52ae",
+      "question": "Is there any mention of structured product strategies (e.g., callable notes, range accruals, spread trades etc.)? If no, answer with a single word: 'No'. If 'Yes', name them and provide a short explanation.",
+      "answer": "",
+      "question_id": 200304,
+      "parent_id": 203,
+      "layer": 3,
+      "processed": false
+    }
+  ]
+}
