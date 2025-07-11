@@ -1,50 +1,64 @@
-from pymongo import MongoClient
 import json
 from credentials.vfcfg import *
 from clientRequests.dataPreprocessing import *
+from pymongo import MongoClient
 
-# Connect to MongoDB
-client = MongoClient(mongo_uri)
-db = client[db_name]
-collection = db[collection_name]
+def fetch_emails_from_database(filter_dict={}, limit=1):
+    """Fetch emails from MongoDB and clean the email body."""
+    # Connect to MongoDB
+    client = MongoClient(mongo_uri)
+    db = client[db_name]
+    collection = db[collection_mail]
 
-# Fetch documents - request specific keys
-last_2_docs = collection.find({"from": "ewan.gordon@socgen.com"}, { #filter here if needed: "from": "ewan.gordon@socgen.com"
-    "_id": 1,
-    "date": 1,
-    "from": 1,
-    "body": 1,
-    }).sort("_id", -1).limit(1)
+    # Fetch documents from the collection with the specified filter and limit
+    documents = collection.find(filter_dict, {
+        "_id": 1,
+        "date": 1,
+        "from": 1,
+        "body": 1
+    }).sort("_id", -1).limit(limit)
 
-# Build cleaned JSON
-cleaned_docs = []
-for doc in last_2_docs:
-    cleaned_doc = {
-        "_id": str(doc["_id"]),
-        "date": doc.get("date"),
-        "from": doc.get("from"),
-        "body": clean_email_body(doc.get("body", ""))
-    }
-    cleaned_docs.append(cleaned_doc)
+    # Clean emails and keep the relevant fields
+    cleaned_docs = []
+    for doc in documents:
+        cleaned_docs.append({
+            "_id": str(doc["_id"]),
+            "date": doc.get("date"),
+            "from": doc.get("from"),
+            "body": clean_email_body(doc.get("body", ""))
+        })
 
-# Output as JSON
-single_email_info = json.dumps(cleaned_docs, indent=2)
+    return cleaned_docs
 
-# Convert JSON string back to list of dicts
-parsed_docs = json.loads(single_email_info)
 
-# Access the first document’s body
-email_info = [{"_id": doc["_id"],
-               "date": doc["date"],
-               "from": doc["from"],
-               "body": doc["body"]
-               } for doc in parsed_docs]
+def read_collection(collection_name: str):
+    """Read and print all documents from a MongoDB collection."""
+    # Connect to MongoDB
+    client = MongoClient(mongo_uri)
+    db = client[db_name]
+    collection = db[collection_name]
 
-# Access the first document’s body
-#email_body = email_info[0]["body"]
+    # Fetch all documents
+    all_items = list(collection.find())
 
-#TODO remove printing statements
+    # Print each document
+    for item in all_items:
+        print(f"\n{item}")
+    pass
 
-# Print the email information
-# for info in email_info:
-#     print(info)
+
+# TODO --> When MongoDB software is installed - check if text preprocessing is needed (eg., '\n'.....)
+# TODO --> The code below might need to change if we want to upsert to MongoDB the records right away without saving them to JSON files first.
+def insert_into_mongo(collection_name, json_paths):
+    """Insert JSON records into a MongoDB collection."""
+    # Connect to MongoDB
+    client = MongoClient(mongo_uri)
+    db = client[db_name]
+    colection_llm_cache = db[collection_name]
+
+    # Upsert JSON records into MongoDB collection
+    for path in json_paths:
+        with open(path, "r") as f:
+            record = json.load(f)
+        colection_llm_cache.insert_one(record)
+    pass

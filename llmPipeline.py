@@ -13,15 +13,20 @@ class LLMPipeline:
             self.layer2 = json.load(f)
         with open("framework/promptsFrameworkLayer3.json") as f:
             self.layer3 = json.load(f)
+        # with open("framework/test1.json") as f:
+        #     self.layer1 = json.load(f)
+        # with open("framework/test2.json") as f:
+        #     self.layer2 = json.load(f)
+        # with open("framework/test3.json") as f:
+        #     self.layer3 = json.load(f)
 
-    def run_batch(self, email_docs, enable_tree_for=None):
+    def run_batch(self, email_docs):
         """
         Run LLM pipeline for multiple emails (parsed_docs), save each email separately.
         """
         start_time = datetime.now()
         print(f"Pipeline started at: {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
 
-        enable_tree_for = set(enable_tree_for or [])
         output_dir = "review_results"
         os.makedirs(output_dir, exist_ok=True)
 
@@ -33,22 +38,7 @@ class LLMPipeline:
             output = self.run_single(email_id, context)
 
             # Combine all questions with a 'layer' label
-            all_questions = []
-
-            for q in output.get("main", []):
-                q_copy = q.copy()
-                q_copy["layer"] = 1
-                all_questions.append(q_copy)
-
-            for q in output.get("sub", []):
-                q_copy = q.copy()
-                q_copy["layer"] = 2
-                all_questions.append(q_copy)
-
-            for q in output.get("subsub", []):
-                q_copy = q.copy()
-                q_copy["layer"] = 3
-                all_questions.append(q_copy)
+            all_questions = output.get("main", []) + output.get("sub", []) + output.get("subsub", [])
 
             # Final result format
             email_result = {
@@ -59,10 +49,6 @@ class LLMPipeline:
                 },
                 "questions": all_questions
             }
-
-            # Generate tree only if requested
-            if email_id in enable_tree_for:
-                self.generate_tree_diagram(output)
 
             # Save per-email result
             timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
@@ -82,90 +68,127 @@ class LLMPipeline:
         Run LLM pipeline for a single email body.
         """
 
-        # ========= Layer 1: Main Questions =========
+        # ========= Layer 1 =========
         main_question_texts = [q["question"] for q in self.layer1]
         main_responses = run_llm_queries(main_question_texts, context_text=context)
 
         results = []
+        main_answer_map = {}
         for i, response in enumerate(main_responses):
+            question = self.layer1[i]
+            answer = response["response"]["output"]["message"]["content"]
+
+            # Extract answer text based on the response format (sometimes LLM returns "text" and sometimes "solution")
+            if isinstance(answer, list) and "json" in answer[0]:
+                answer_text = (
+                    answer[0]["json"]["solutions"][0]["solution"].strip().lower()
+                    if answer[0]["json"].get("solutions") else ""
+                )
+            else:
+                answer_text = (
+                    (answer[0].get("text") or answer[0].get("solution") or "")
+                    .strip()
+                    .lower()
+                    if isinstance(answer, list) else str(answer).strip().lower()
+                )
+
+            main_answer_map[question["question_id"]] = answer_text
             enriched = {
-                "question_id": self.layer1[i]["question_id"],
-                "ref": self.layer1[i]["ref"],
-                "question": self.layer1[i]["question"],
+                "question_id": question["question_id"],
+                "ref": question["ref"],
+                "question": question["question"],
                 "email_id": email_id,
-                "response": response["response"]
+                "response": response,
+                "processed": True,
+                "layer": question.get("layer", 1)
             }
             results.append(enriched)
 
-        # === Layer 2: Subquestions ===
-        subq_to_ask = []
-        for result in results:
-            answer_content = result["response"]["output"]["message"]["content"]
-            answer_text = answer_content[0]["text"].strip().lower() if isinstance(answer_content, list) else str(
-                answer_content).strip().lower()
-
-            if answer_text == "yes":
-                matching_subqs = [
-                    q for q in self.layer2
-                    if q.get("question_parent_id") == result["question_id"]
-                ]
-                for q in matching_subqs:
-                    q_copy = q.copy()
-                    q_copy["email_id"] = email_id
-                    subq_to_ask.append(q_copy)
-
+        # ========= Layer 2 =========
+        sub_results = []
+        subq_to_ask = [q for q in self.layer2 if main_answer_map.get(q["question_parent_id"]) == "yes"]
         sub_question_texts = [q["question"] for q in subq_to_ask]
         sub_responses = run_llm_queries(sub_question_texts, context_text=context)
 
-        sub_results = []
+        # Answered questions in layer 2
+        sub_answer_map = {}
+        answered_ids = set()
         for i, response in enumerate(sub_responses):
+            q_meta = subq_to_ask[i]
+            answer = response["response"]["output"]["message"]["content"]
+            answer_text = (
+                (answer[0].get("text") or answer[0].get("solution") or "")
+                .strip().lower()) if isinstance(answer, list) else str(answer).strip().lower()
+            sub_answer_map[q_meta["question_id"]] = answer_text
+
             enriched = {
-                "question_id": subq_to_ask[i].get("id") or subq_to_ask[i].get("question_id"),
-                "parent_id": subq_to_ask[i].get("parent_id") or subq_to_ask[i].get("question_parent_id"),
-                "ref": subq_to_ask[i]["ref"],
-                "question": subq_to_ask[i]["question"],
+                "question_id": q_meta.get("id") or q_meta.get("question_id"),
+                "parent_id": q_meta.get("parent_id") or q_meta.get("question_parent_id"),
+                "ref": q_meta["ref"],
+                "question": q_meta["question"],
                 "email_id": email_id,
-                "response": response["response"]
+                "response": response,
+                "processed": True,
+                "layer": q_meta.get("layer", 2)
             }
             sub_results.append(enriched)
+            answered_ids.add(q_meta["question_id"])
 
-        # ========= Layer 3: Conditional Subsubquestions =========
-        subsub_to_ask = []
-        for sub in sub_results:
-            # Safely extract L2 answer (text or solution)
-            sub_answer_raw = sub["response"]["output"]["message"]["content"]
-            if isinstance(sub_answer_raw, list):
-                content = sub_answer_raw[0]
-                sub_answer = (content.get("text") or content.get("solution") or "").strip().lower()
-            else:
-                sub_answer = str(sub_answer_raw).strip().lower()
+        # Ananswered question in layer 2
+        for q in self.layer2:
+            if q["question_id"] not in answered_ids:
+                sub_results.append({
+                    "question_id": q["question_id"],
+                    "parent_id": q.get("question_parent_id"),
+                    "ref": q["ref"],
+                    "question": q["question"],
+                    "email_id": email_id,
+                    "processed": False,
+                    "layer": q.get("layer", 2)
+                })
 
-            # Match Layer 3 questions where:
-            for q in self.layer3:
-                q_parent_id = str(q.get("question_parent_id") or q.get("parent_id"))
-                q_parent_answer = str(q.get("parent_answer", "")).strip().lower()
+        # ========= Layer 3 =========
+        subsub_results = []
+        subsub_to_ask = [
+            q for q in self.layer3
+            if sub_answer_map.get(q["question_parent_id"]) == q.get("parent_answer", "").strip().lower()
+            ]
 
-                if q_parent_id == str(sub["question_id"]) and q_parent_answer == str(sub_answer):
-                    q_copy = q.copy()
-                    q_copy["email_id"] = email_id
-                    subsub_to_ask.append(q_copy)
+        for q in subsub_to_ask:
+            q["email_id"] = email_id
 
-        # Ask all matched Layer 3 questions
         subsub_question_texts = [q["question"] for q in subsub_to_ask]
         subsub_responses = run_llm_queries(subsub_question_texts, context_text=context)
 
-        # Build enriched Layer 3 results
-        subsub_results = []
+        # Answered questions in layer 3
+        subsub_answered_ids = set()
         for i, response in enumerate(subsub_responses):
+            q_meta = subsub_to_ask[i]
             enriched = {
-                "question_id": subsub_to_ask[i].get("id") or subsub_to_ask[i].get("question_id"),
-                "parent_id": subsub_to_ask[i].get("parent_id") or subsub_to_ask[i].get("question_parent_id"),
-                "ref": subsub_to_ask[i]["ref"],
-                "question": subsub_to_ask[i]["question"],
+                "question_id": q_meta.get("id") or q_meta.get("question_id"),
+                "parent_id": q_meta.get("parent_id") or q_meta.get("question_parent_id"),
+                "ref": q_meta["ref"],
+                "question": q_meta["question"],
                 "email_id": email_id,
-                "response": response
+                "response": response,
+                "processed": True,
+                "layer": q_meta.get("layer", 3)
             }
             subsub_results.append(enriched)
+            subsub_answered_ids.add(q_meta["question_id"])
+
+        # Not answered question in layer 3
+        for q in self.layer3:
+            if q["question_id"] not in subsub_answered_ids:
+                subsub_results.append({
+                    "question_id": q["question_id"],
+                    "parent_id": q.get("question_parent_id"),
+                    "ref": q["ref"],
+                    "question": q["question"],
+                    "email_id": email_id,
+                    "processed": False,
+                    "layer": q.get("layer", 3)
+                })
 
         # ======== Clean responses =========
         self.clean_response_fields(results)
@@ -188,4 +211,4 @@ class LLMPipeline:
                 response.pop("usage", None)
 
 pipeline = LLMPipeline()
-pipeline.run_batch(email_info)
+pipeline.run_batch(fetch_emails_from_database(filter_dict={"from": "ewan.gordon@socgen.com"}, limit=1))
