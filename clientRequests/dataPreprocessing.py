@@ -13,7 +13,7 @@ def clean_email_body(text: str) -> str:
 
     # Remove specific patterns and unwanted characters
     text = text.replace('\xa0', ' ')
-    text = text.replace('-----------------------------------------------------------------------------', '---')
+    text = text.replace('-----------------------------------------------------------------------------', '-')
     text = text.replace('This Message originated outside your organization.', ' ')
     text = text.replace('\r', ' ')  # Handle carriage returns
     text = text.replace('\n', ' ')  # Flatten line breaks

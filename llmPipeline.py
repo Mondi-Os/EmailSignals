@@ -77,10 +77,22 @@ class LLMPipeline:
         for i, response in enumerate(main_responses):
             question = self.layer1[i]
             answer = response["response"]["output"]["message"]["content"]
-            answer_text = answer[0].get("text", "").strip().lower() if isinstance(answer, list) else str(
-                answer).strip().lower()
-            main_answer_map[question["question_id"]] = answer_text
 
+            # Extract answer text based on the response format (sometimes LLM returns "text" and sometimes "solution")
+            if isinstance(answer, list) and "json" in answer[0]:
+                answer_text = (
+                    answer[0]["json"]["solutions"][0]["solution"].strip().lower()
+                    if answer[0]["json"].get("solutions") else ""
+                )
+            else:
+                answer_text = (
+                    (answer[0].get("text") or answer[0].get("solution") or "")
+                    .strip()
+                    .lower()
+                    if isinstance(answer, list) else str(answer).strip().lower()
+                )
+
+            main_answer_map[question["question_id"]] = answer_text
             enriched = {
                 "question_id": question["question_id"],
                 "ref": question["ref"],
@@ -104,8 +116,9 @@ class LLMPipeline:
         for i, response in enumerate(sub_responses):
             q_meta = subq_to_ask[i]
             answer = response["response"]["output"]["message"]["content"]
-            answer_text = answer[0].get("text", "").strip().lower() if isinstance(answer, list) else str(
-                answer).strip().lower()
+            answer_text = (
+                (answer[0].get("text") or answer[0].get("solution") or "")
+                .strip().lower()) if isinstance(answer, list) else str(answer).strip().lower()
             sub_answer_map[q_meta["question_id"]] = answer_text
 
             enriched = {
@@ -145,16 +158,12 @@ class LLMPipeline:
             q["email_id"] = email_id
 
         subsub_question_texts = [q["question"] for q in subsub_to_ask]
-        print(f"subsub_question_texts: {subsub_question_texts}")  # TODO remove (debug print)
-
         subsub_responses = run_llm_queries(subsub_question_texts, context_text=context)
-        print(f"subsub_responses: {subsub_responses}") #TODO remove (debug print)
 
         # Answered questions in layer 3
         subsub_answered_ids = set()
         for i, response in enumerate(subsub_responses):
             q_meta = subsub_to_ask[i]
-            print(f"response:    {response}") #TODO remove (debug print)
             enriched = {
                 "question_id": q_meta.get("id") or q_meta.get("question_id"),
                 "parent_id": q_meta.get("parent_id") or q_meta.get("question_parent_id"),
@@ -168,7 +177,7 @@ class LLMPipeline:
             subsub_results.append(enriched)
             subsub_answered_ids.add(q_meta["question_id"])
 
-        # Ananswered question in layer 3
+        # Not answered question in layer 3
         for q in self.layer3:
             if q["question_id"] not in subsub_answered_ids:
                 subsub_results.append({
@@ -178,7 +187,7 @@ class LLMPipeline:
                     "question": q["question"],
                     "email_id": email_id,
                     "processed": False,
-                    "layer": q_meta.get("layer", 3)
+                    "layer": q.get("layer", 3)
                 })
 
         # ======== Clean responses =========
@@ -202,4 +211,4 @@ class LLMPipeline:
                 response.pop("usage", None)
 
 pipeline = LLMPipeline()
-pipeline.run_batch(email_info)
+pipeline.run_batch(fetch_emails_from_database(filter_dict={"from": "ewan.gordon@socgen.com"}, limit=1))
