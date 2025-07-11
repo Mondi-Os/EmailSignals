@@ -5,7 +5,8 @@
     "email_id": "",
     "ref": "macro_event_type",
     "question": "What macro events are there? Answer with a single word: Economic, Geopolitical, or Environmental.",
-    "processed": false
+    "processed": false,
+    "layer": 2
   },
   {
     "question_id": 102,
@@ -13,7 +14,8 @@
     "email_id": "",
     "ref": "macro_event_regions",
     "question": "Are there are any specific regions or countries mentioned in relation to the macro events? Answer with a single word: Yes or No",
-    "processed": false
+    "processed": false,
+    "layer": 2
   },
   {
     "question_id": 103,
@@ -21,7 +23,8 @@
     "email_id": "",
     "ref": "macro_event_timing",
     "question": "Are the macro events in the past, present, or future? Answer shortly.",
-    "processed": false
+    "processed": false,
+    "layer": 2
   },
   {
     "question_id": 104,
@@ -29,7 +32,8 @@
     "email_id": "",
     "ref": "macro_event_market_impact",
     "question": "Do the macro events affect financial markets? Answer with a single word: Yes or No",
-    "processed": false
+    "processed": false,
+    "layer": 2
   },
   {
     "question_id": 105,
@@ -37,7 +41,8 @@
     "email_id": "",
     "ref": "macro_event_policy_change",
     "question": "Do the macro events imply any change in monetary or fiscal policy? If no, answer with a single word: 'No'. If 'Yes', briefly explain.",
-    "processed": false
+    "processed": false,
+    "layer": 2
   },
   {
     "question_id": 106,
@@ -45,7 +50,8 @@
     "email_id": "",
     "ref": "macro_event_significance",
     "question": "How significant are the macro events? Use one word: Minor, Moderate, Major.",
-    "processed": false
+    "processed": false,
+    "layer": 2
   },
 
 
@@ -55,7 +61,8 @@
     "email_id": "",
     "ref": "asset_reference_class",
     "question": "Does this email talk about any asset class(es)? Answer with a single word: Yes or No. If yes, please list them",
-    "processed": false
+    "processed": false,
+    "layer": 2
   },
   {
     "question_id": 202,
@@ -63,7 +70,8 @@
     "email_id": "",
     "ref": "asset_reference_products",
     "question": "Are there any specific financial products mentioned; if so what are those? Answer with a single word: Yes or No. If yes, please list them",
-    "processed": false
+    "processed": false,
+    "layer": 2
   },
   {
     "question_id": 203,
@@ -71,7 +79,8 @@
     "email_id": "",
     "ref": "asset_reference_derivatives_or_structured",
     "question": "Are derivatives or structured products (e.g., options, swaps, futures, CDS, swaptions etc.) mentioned? Answer with a single word: Yes or No.",
-    "processed": false
+    "processed": false,
+    "layer": 2
   },
 
 
@@ -81,7 +90,8 @@
     "email_id": "",
     "ref": "trading_signal_trade_bias",
     "question": "Does the email suggest any trading bias? Answer: Signal(s) (Buy/Sell) along with the financial product(s).",
-    "processed": false
+    "processed": false,
+    "layer": 2
   },
   {
     "question_id": 302,
@@ -89,7 +99,8 @@
     "email_id": "",
     "ref": "trading_signal_time_horizon",
     "question": "Is the trading view short-term, medium-term, or long-term?. Answer shortly.",
-    "processed": false
+    "processed": false,
+    "layer": 2
   },
 
 
@@ -99,7 +110,8 @@
     "email_id": "",
     "ref": "trade_record_details",
     "question": "What are the executed trade records or trade confirmation within this email? Give any details available from the following: Datetime, Financial Product, Trade Type (Buy/Sell), Quantity, Price, Counterparty, and any other relevant information.",
-    "processed": false
+    "processed": false,
+    "layer": 2
   },
 
 
@@ -109,7 +121,8 @@
     "email_id": "",
     "ref": "sector_focus_details",
     "question": "What sectors or industries are mentioned in the email, and what is the expressed view on them?",
-    "processed": false
+    "processed": false,
+    "layer": 2
   },
 
 
@@ -120,7 +133,8 @@
     "ref": "risk_factor_macro",
     "parent_answer": "Yes",
     "question": "Are macroeconomic risks mentioned or policy related risks (e.g., inflation, recession, growth slowdown, central bank action, fiscal policy shifts etc.)? If no, answer with a single word: 'No'. If 'Yes', list them and explain briefly.",
-    "processed": false
+    "processed": false,
+    "layer": 2
   },
   {
     "question_id": 602,
@@ -129,7 +143,8 @@
     "ref": "risk_factor_geopolitical",
     "parent_answer": "Yes",
     "question": "Are geopolitical risks discussed (e.g., elections, wars, trade disputes)? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
-    "processed": false
+    "processed": false,
+    "layer": 2
   },
   {
     "question_id": 603,
@@ -138,7 +153,8 @@
     "ref": "risk_factor_market",
     "parent_answer": "Yes",
     "question": "Does the email reference market-related risks (e.g., volatility, liquidity, positioning)? If no, answer with a single word: 'No'. If 'Yes', describe them briefly.",
-    "processed": false
+    "processed": false,
+    "layer": 2
   },
   {
     "question_id": 604,
@@ -147,6 +163,7 @@
     "ref": "risk_factor_sector_specific",
     "parent_answer": "Yes",
     "question": "Are any sector-specific or industry-specific risks mentioned? If no, answer with a single word: 'No'. If 'Yes', identify the sectors and explain briefly.",
-    "processed": false
+    "processed": false,
+    "layer": 2
   }
 ]

@@ -5,7 +5,8 @@
     "email_id": "",
     "ref": "economic_indicator_type",
     "parent_answer": "Economic",
-    "question": "Which economic indicators are mentioned (e.g., CPI, GDP, UNRATE, PMI, interest rate etc.)? List them briefly."
+    "question": "Which economic indicators are mentioned (e.g., CPI, GDP, UNRATE, PMI, interest rate etc.)? List them briefly.",
+    "layer": 3
   },
   {
     "question_id": 100102,
@@ -13,7 +14,8 @@
     "email_id": "",
     "ref": "central_bank_policy",
     "parent_answer": "Economic",
-    "question": "Does the email mention any central bank decisions, rate changes, or monetary policy shifts? If no, answer with a single word: 'No'. If 'Yes', explain briefly."
+    "question": "Does the email mention any central bank decisions, rate changes, or monetary policy shifts? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
+    "layer": 3
   },
   {
     "question_id": 100103,
@@ -21,7 +23,8 @@
     "email_id": "",
     "ref": "fiscal_policy_action",
     "parent_answer": "Economic",
-    "question": "Is there any mention of fiscal policy, government spending, or tax measures? If no, answer with a single word: 'No'. If 'Yes', explain briefly."
+    "question": "Is there any mention of fiscal policy, government spending, or tax measures? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
+    "layer": 3
   },
   {
     "question_id": 100104,
@@ -29,7 +32,8 @@
     "email_id": "",
     "ref": "geopolitical_event_entities",
     "parent_answer": "Geopolitical",
-    "question": "Which countries, governments, or regions are involved in the geopolitical events mentioned? List them."
+    "question": "Which countries, governments, or regions are involved in the geopolitical events mentioned? List them.",
+    "layer": 3
   },
   {
     "question_id": 100105,
@@ -37,7 +41,8 @@
     "email_id": "",
     "ref": "conflict_or_diplomacy",
     "parent_answer": "Geopolitical",
-    "question": "Is the email referring to any conflict, diplomatic negotiations, or sanctions? If no, answer with a single word: 'No'. If 'Yes', explain briefly."
+    "question": "Is the email referring to any conflict, diplomatic negotiations, or sanctions? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
+    "layer": 3
   },
   {
     "question_id": 100106,
@@ -45,7 +50,8 @@
     "email_id": "",
     "ref": "election_or_vote",
     "parent_answer": "Geopolitical",
-    "question": "Is there any reference to upcoming or recent elections, votes, or leadership changes? If no, answer with a single word: 'No'. If 'Yes', explain briefly."
+    "question": "Is there any reference to upcoming or recent elections, votes, or leadership changes? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
+    "layer": 3
   },
   {
     "question_id": 100107,
@@ -53,7 +59,8 @@
     "email_id": "",
     "ref": "climate_or_natural_event",
     "parent_answer": "Environmental",
-    "question": "Does the email mention any climate events, natural disasters, or ESG-related risks? If no, answer with a single word: 'No'. If 'Yes', explain briefly."
+    "question": "Does the email mention any climate events, natural disasters, or ESG-related risks? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
+    "layer": 3
   },
   {
     "question_id": 100108,
@@ -61,7 +68,8 @@
     "email_id": "",
     "ref": "environmental_policy",
     "parent_answer": "Environmental",
-    "question": "Are there environmental regulations or climate policies being discussed? If no, answer with a single word: 'No'. If 'Yes', explain briefly."
+    "question": "Are there environmental regulations or climate policies being discussed? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
+    "layer": 3
   },
 
 
@@ -71,7 +79,8 @@
     "email_id": "",
     "ref": "macro_event_regions_countries",
     "parent_answer": "Yes",
-    "question": "Are there are any specific countries mentioned in relation to the macro events? If no, answer with a single word: 'No'. If 'Yes', explain briefly."
+    "question": "Are there are any specific countries mentioned in relation to the macro events? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
+    "layer": 3
   },
   {
     "question_id": 100202,
@@ -79,7 +88,8 @@
     "email_id": "",
     "ref": "environmental_policy",
     "parent_answer": "Yes",
-    "question": "Are there are any specific regions mentioned in relation to the macro events? If no, answer with a single word: 'No'. If 'Yes', explain briefly."
+    "question": "Are there are any specific regions mentioned in relation to the macro events? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
+    "layer": 3
   },
 
 
@@ -89,7 +99,8 @@
     "email_id": "",
     "ref": "macro_event_asset_classes",
     "parent_answer": "Yes",
-    "question": "Are specific asset classes impacted (e.g., equities, bonds, commodities, FX)? If no, answer with a single word: 'No'. If 'Yes', list them and explain briefly."
+    "question": "Are specific asset classes impacted (e.g., equities, bonds, commodities, FX)? If no, answer with a single word: 'No'. If 'Yes', list them and explain briefly.",
+    "layer": 3
   },
   {
     "question_id": 100402,
@@ -97,7 +108,8 @@
     "email_id": "",
     "ref": "macro_event_safe_havens",
     "parent_answer": "Yes",
-    "question": "Are safe haven assets (e.g., USD, gold, Treasuries) discussed in relation to the macro events? If no, answer with a single word: 'No'. If 'Yes', list them and explain briefly."
+    "question": "Are safe haven assets (e.g., USD, gold, Treasuries) discussed in relation to the macro events? If no, answer with a single word: 'No'. If 'Yes', list them and explain briefly.",
+    "layer": 3
   },
   {
     "question_id": 100403,
@@ -105,7 +117,8 @@
     "email_id": "",
     "ref": "macro_event_asset_classes",
     "parent_answer": "Yes",
-    "question": "Are specific financial products impacted? If no, answer with a single word: 'No'. If 'Yes', list them."
+    "question": "Are specific financial products impacted? If no, answer with a single word: 'No'. If 'Yes', list them.",
+    "layer": 3
   },
   {
     "question_id": 100404,
@@ -113,7 +126,8 @@
     "email_id": "",
     "ref": "macro_event_market_direction",
     "parent_answer": "Yes",
-    "question": "Is there any directional market impact indicated (e.g., bullish, bearish, volatility)? If no, answer with a single word: 'No'. If 'Yes', indicate the financial market(s) and the financial impact(s)."
+    "question": "Is there any directional market impact indicated (e.g., bullish, bearish, volatility)? If no, answer with a single word: 'No'. If 'Yes', indicate the financial market(s) and the financial impact(s).",
+    "layer": 3
   },
   {
     "question_id": 100405,
@@ -121,7 +135,8 @@
     "email_id": "",
     "ref": "macro_event_trading_response",
     "parent_answer": "Yes",
-    "question": "Does the email suggest a trading response or positioning due to macro events? If no, answer with a single word: 'No'. If 'Yes', explain briefly."
+    "question": "Does the email suggest a trading response or positioning due to macro events? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
+    "layer": 3
   },
   {
     "question_id": 100406,
@@ -130,6 +145,7 @@
     "ref": "macro_event_risk_assets",
     "parent_answer": "Yes",
     "question": "Are risk assets (e.g., EM, high yield) mentioned as affected by the macro events? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
+    "layer": 3,
     "processed": false
   },
   {
@@ -139,6 +155,7 @@
     "ref": "derivatives_listed",
     "parent_answer": "Yes",
     "question": "What derivative or structured products are mentioned? If none, answer with a single word: 'No'. If 'Yes', list them and explain briefly.",
+    "layer": 3,
     "processed": false
   },
   {
@@ -148,6 +165,7 @@
     "ref": "derivatives_pricing_mentioned",
     "parent_answer": "Yes",
     "question": "Is there any pricing information provided for any of the mentioned products? If no, answer with a single word: 'No'. If 'Yes', list the products with pricing and describe briefly the mentioned pricing.",
+    "layer": 3,
     "processed": false
   },
   {
@@ -157,6 +175,7 @@
     "ref": "derivatives_maturity_reference",
     "parent_answer": "Yes",
     "question": "Are any specific maturities or tenors mentioned for the derivatives (e.g., 3m, 10y etc.)? If no, answer with a single word: 'No'. If 'Yes', list them and explain briefly.",
+    "layer": 3,
     "processed": false
   },
   {
@@ -166,6 +185,7 @@
     "ref": "derivatives_strategy_type",
     "parent_answer": "Yes",
     "question": "Is there any mention of structured product strategies (e.g., callable notes, range accruals, spread trades etc.)? If no, answer with a single word: 'No'. If 'Yes', name them and provide a short explanation.",
+    "layer": 3,
     "processed": false
   }
 ]

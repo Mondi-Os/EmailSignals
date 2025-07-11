@@ -38,22 +38,7 @@ class LLMPipeline:
             output = self.run_single(email_id, context)
 
             # Combine all questions with a 'layer' label
-            all_questions = []
-
-            for q in output.get("main", []):
-                q_copy = q.copy()
-                q_copy["layer"] = 1
-                all_questions.append(q_copy)
-
-            for q in output.get("sub", []):
-                q_copy = q.copy()
-                q_copy["layer"] = 2
-                all_questions.append(q_copy)
-
-            for q in output.get("subsub", []):
-                q_copy = q.copy()
-                q_copy["layer"] = 3
-                all_questions.append(q_copy)
+            all_questions = output.get("main", []) + output.get("sub", []) + output.get("subsub", [])
 
             # Final result format
             email_result = {
@@ -102,7 +87,8 @@ class LLMPipeline:
                 "question": question["question"],
                 "email_id": email_id,
                 "response": response,
-                "processed": True
+                "processed": True,
+                "layer": question.get("layer", 1)
             }
             results.append(enriched)
 
@@ -129,7 +115,8 @@ class LLMPipeline:
                 "question": q_meta["question"],
                 "email_id": email_id,
                 "response": response,
-                "processed": True
+                "processed": True,
+                "layer": q_meta.get("layer", 2)
             }
             sub_results.append(enriched)
             answered_ids.add(q_meta["question_id"])
@@ -143,7 +130,8 @@ class LLMPipeline:
                     "ref": q["ref"],
                     "question": q["question"],
                     "email_id": email_id,
-                    "processed": False
+                    "processed": False,
+                    "layer": q.get("layer", 2)
                 })
 
         # ========= Layer 3 =========
@@ -173,8 +161,9 @@ class LLMPipeline:
                 "ref": q_meta["ref"],
                 "question": q_meta["question"],
                 "email_id": email_id,
-                "response": response["response"],
-                "processed": True
+                "response": response,
+                "processed": True,
+                "layer": q_meta.get("layer", 3)
             }
             subsub_results.append(enriched)
             subsub_answered_ids.add(q_meta["question_id"])
@@ -188,7 +177,8 @@ class LLMPipeline:
                     "ref": q["ref"],
                     "question": q["question"],
                     "email_id": email_id,
-                    "processed": False
+                    "processed": False,
+                    "layer": q_meta.get("layer", 3)
                 })
 
         # ======== Clean responses =========
