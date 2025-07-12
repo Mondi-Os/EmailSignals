@@ -19,7 +19,7 @@ def run_llm_queries(questions, model_name: str="valt-chat-rr-deepseek-r1-full-aw
 
     try:
         client = vip.VIPClient(
-            api_key="498c67ab-1003-4f24-b07a-85e54cd202ac", #TODO Replace this securely in prod
+            api_key="498c67ab-1003-4f24-b07a-85e54cd202ac",
             user_name=USER,
             vftoken=TOKEN,
             env='prd'

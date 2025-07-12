@@ -1,4 +1,5 @@
 import json
+import os
 from credentials.vfcfg import *
 from clientRequests.dataPreprocessing import *
 from pymongo import MongoClient
@@ -40,25 +41,57 @@ def read_collection(collection_name: str):
 
     # Fetch all documents
     all_items = list(collection.find())
+    print(all_items)
 
-    # Print each document
-    for item in all_items:
-        print(f"\n{item}")
-    pass
+    return all_items
 
 
-# TODO --> When MongoDB software is installed - check if text preprocessing is needed (eg., '\n'.....)
-# TODO --> The code below might need to change if we want to upsert to MongoDB the records right away without saving them to JSON files first.
-def insert_into_mongo(collection_name, json_paths):
-    """Insert JSON records into a MongoDB collection."""
-    # Connect to MongoDB
+def upsert_into_mongo_based_on_question_hashes(collection_name, json_paths):
+    """Upsert each question from the JSON file into MongoDB based on its unique hash."""
     client = MongoClient(mongo_uri)
     db = client[db_name]
-    colection_llm_cache = db[collection_name]
+    col_llm_cache = db[collection_name]
 
-    # Upsert JSON records into MongoDB collection
     for path in json_paths:
-        with open(path, "r") as f:
-            record = json.load(f)
-        colection_llm_cache.insert_one(record)
-    pass
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                record = json.load(f)
+
+            questions = record.get("questions", [])
+
+            for q in questions:
+                q_hash = q.get("hash")
+                if not q_hash:
+                    print(f"Skipping question (missing hash) in: {os.path.basename(path)}")
+                    continue
+
+                # Extract answer
+                answer_content = q.get("response", {}).get("response", {}) \
+                    .get("output", {}).get("message", {}).get("content", [])
+
+                if isinstance(answer_content, list) and len(answer_content) > 0:
+                    first = answer_content[0]
+                    if isinstance(first, dict):
+                        answer = first.get("text") or first.get("solution") or ""
+                    else:
+                        answer = str(first)
+                else:
+                    answer = ""
+                # Upsert each question individually based on its hash
+                result = col_llm_cache.update_one(
+                    {"hash": q_hash},
+                    {"$set": {
+                        "hash": q_hash,
+                        "question": q["question"],
+                        "answer": answer
+                    }},
+                    upsert=True
+                )
+
+                if result.matched_count:
+                    print(f" Updated question with hash: {q_hash}")
+                else:
+                    print(f" Inserted new question with hash: {q_hash}")
+
+        except Exception as e:
+            print(f"Failed to process {path}: {e}")

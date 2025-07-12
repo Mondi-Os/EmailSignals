@@ -1,9 +1,7 @@
 from clientRequests.VFModelsRequest import *
+from credentials.llmSchema import *
 from datetime import datetime
-import os
-import json
-import sys
-
+from llmCache import *
 
 class LLMPipeline:
     def __init__(self):
@@ -20,44 +18,68 @@ class LLMPipeline:
         # with open("framework/test3.json") as f:
         #     self.layer3 = json.load(f)
 
-    def run_batch(self, email_docs):
+    def run_batch(self, email_docs, upsert_to_mongo=False):
         """
         Run LLM pipeline for multiple emails (parsed_docs), save each email separately.
         """
         start_time = datetime.now()
         print(f"Pipeline started at: {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
 
-        output_dir = "review_results"
-        os.makedirs(output_dir, exist_ok=True)
-
         for email in email_docs:
-            email_id = str(email["_id"])
             context = str(email["body"])
+            email_id = str(email["_id"])
+            email_info = {
+                "_id": email_id,
+                "date": email.get("date"),
+                "from": email.get("from")
+            }
             print(f"Processing email ID: {email_id}")
 
-            output = self.run_single(email_id, context)
+            if not upsert_to_mongo: # Load from LLM cache if exists
+                cached_output = llm_simulation(
+                    questions=all_questions,
+                    email_body=context
+                )
 
-            # Combine all questions with a 'layer' label
-            all_questions = output.get("main", []) + output.get("sub", []) + output.get("subsub", [])
+                if cached_output:
+                    output_dir = "review_results/simulator_results"
+                    output_questions = cached_output["questions"]
 
-            # Final result format
-            email_result = {
-                "email_info": {
-                    "_id": email_id,
-                    "date": email.get("date"),
-                    "from": email.get("from")
-                },
-                "questions": all_questions
-            }
+                else:
+                    output_dir = "review_results"
+                    result = self.run_single(email_id, context)
+                    output_questions = result["main"] + result["sub"] + result["subsub"]
 
-            # Save per-email result
-            timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-            filename = f"{timestamp}--{email_id}.json"
-            output_path = os.path.join(output_dir, filename)
+                # Final result format
+                email_result = {
+                    "email_info": email_info,
+                    "questions": output_questions
+                }
 
-            #TODO Here to plug the MongoDB upsert code instead of saving to JSON files
-            with open(output_path, "w", encoding="utf-8") as f:
-                json.dump(email_result, f, indent=2, ensure_ascii=False)
+                # Save per-email result
+                timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+                filename = f"{timestamp}--{email_id}.json"
+                output_path = os.path.join(output_dir, filename)
+                print(f"Saved into path: review_results/{filename}")
+                with open(output_path, "w", encoding="utf-8") as f:
+                    json.dump(email_result, f, indent=2, ensure_ascii=False)
+
+            else: # Upsert to MongoDB
+                result = self.run_single(email_id, context)
+                output_questions = result["main"] + result["sub"] + result["subsub"]
+
+                email_result = {
+                    "email_info": email_info,
+                    "questions": output_questions
+                }
+
+                client = MongoClient(mongo_uri)
+                db = client[db_name]
+                collection_result_mongo = db[collection_result]
+                filter_query = {"_id": ObjectId(email_id)}
+                update_doc = {"$set": email_result}
+                collection_result_mongo.update_one(filter_query, update_doc, upsert=True)
+                print(f"Upserted email ID {email_id} into MongoDB.")
 
         end_time = datetime.now()
         print(f"Pipeline finished at: {end_time.strftime('%Y-%m-%d %H:%M:%S')}")
@@ -211,4 +233,4 @@ class LLMPipeline:
                 response.pop("usage", None)
 
 pipeline = LLMPipeline()
-pipeline.run_batch(fetch_emails_from_database(filter_dict={"from": "ewan.gordon@socgen.com"}, limit=1))
+pipeline.run_batch(fetch_emails_from_database(filter_dict={}, limit=5))

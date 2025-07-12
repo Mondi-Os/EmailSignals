@@ -1,0 +1,741 @@
+{
+  "email_info": {
+    "_id": "6871311599a8bf938dc2ace4",
+    "date": "2025-07-11T15:43:02Z",
+    "from": "ICRVRECAP@TPICAP.COM"
+  },
+  "questions": [
+    {
+      "question_id": 1,
+      "ref": "macro_event",
+      "question": "Are there any macro or geopolitical events in this email? Answer with only a single word (Yes/No)",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "response": {
+        "question": "Are there any macro or geopolitical events in this email? Answer with only a single word (Yes/No)",
+        "response": {
+          "ResponseMetadata": {
+            "date": "2025-07-11T17:52:12",
+            "model": "valt-chat-rr-deepseek-r1-full-aws"
+          },
+          "output": {
+            "message": {
+              "role": "assistant",
+              "content": [
+                {
+                  "json": {
+                    "solutions": [
+                      {
+                        "solution": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "reasoningContent": "Okay, let's see. The user provided an email and a question asking if there are any macro or geopolitical events mentioned in it. The answer needs to be just \"Yes\" or \"No\". \n\nFirst, I'll read through the email content carefully. The email starts with some numbers and abbreviations like \"PDC.DIRST.RATES @ BOA -10 ESU5 @ 6309.25000\". That might be financial jargon or internal codes, but I don't see any mention of events like elections, economic policies, international conflicts, or anything geopolitical. \n\nThen there's a list of values: Accountability, Adaptability, Authenticity. Those are more about personal or corporate values rather than events. The rest of the email is a standard confidentiality disclaimer and information about the sender, TP ICAP Group. It includes legal statements about not disclosing the email and virus disclaimers.\n\nNo part of the email discusses any specific events, whether macroeconomic (like interest rate changes, inflation reports) or geopolitical (such as elections, trade wars, or conflicts). The content is administrative and related to communication protocols. \n\nSo the answer should be \"No\" because there's no mention of any such events in the email.\n"
+                }
+              ]
+            }
+          },
+          "stop_reason": "end_turn",
+          "usage": {
+            "inputTokens": 459,
+            "outputTokens": 265,
+            "totalTokens": 724
+          },
+          "metrics": {
+            "latencyMs": 1800
+          }
+        }
+      },
+      "processed": true,
+      "layer": 1
+    },
+    {
+      "question_id": 2,
+      "ref": "asset_reference",
+      "question": "Does this email talk about specific assets or financial products? Answer with only a single word (Yes/No)",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "response": {
+        "question": "Does this email talk about specific assets or financial products? Answer with only a single word (Yes/No)",
+        "response": {
+          "ResponseMetadata": {
+            "date": "2025-07-11T17:52:14",
+            "model": "valt-chat-rr-deepseek-r1-full-aws"
+          },
+          "output": {
+            "message": {
+              "role": "assistant",
+              "content": [
+                {
+                  "json": {
+                    "solutions": [
+                      {
+                        "solution": "Yes",
+                        "reason": "The email references specific financial products such as 'PDC.DIRST.RATES' and 'ESU5', which are likely financial indices or instruments."
+                      }
+                    ]
+                  }
+                },
+                {
+                  "reasoningContent": "Okay, let's tackle this. The user is asking if the email mentions specific assets or financial products. The email has some context lines. Let me read through them again.\n\nFirst, there's a line that says \"Index 6309.25 100% for PDC.DIRST.RATES @ BOA -10 ESU5 @ 6309.25000\". Hmm, \"PDC.DIRST.RATES\" looks like a financial product code or abbreviation. \"BOA\" might be Bank of America, and \"ESU5\" could refer to E-mini S&P 500 futures contracts, where the '5' might denote the year or month. The numbers and symbols here seem to indicate specific financial indices or rates. \n\nThe rest of the email is a confidentiality notice and standard disclaimers, which don't mention any assets. But the key part is that first line with the codes and numbers. Those are likely references to specific financial instruments or products. So the answer should be \"Yes\" because those codes are specific to financial assets.\n"
+                }
+              ]
+            }
+          },
+          "stop_reason": "end_turn",
+          "usage": {
+            "inputTokens": 459,
+            "outputTokens": 270,
+            "totalTokens": 729
+          },
+          "metrics": {
+            "latencyMs": 1712
+          }
+        }
+      },
+      "processed": true,
+      "layer": 1
+    },
+    {
+      "question_id": 3,
+      "ref": "trading_signal",
+      "question": "Does this email contain any trading signals? Please answer with a single word (Yes/No).",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "response": {
+        "question": "Does this email contain any trading signals? Please answer with a single word (Yes/No).",
+        "response": {
+          "ResponseMetadata": {
+            "date": "2025-07-11T17:52:19",
+            "model": "valt-chat-rr-deepseek-r1-full-aws"
+          },
+          "output": {
+            "message": {
+              "role": "assistant",
+              "content": [
+                {
+                  "json": {
+                    "solutions": [
+                      {
+                        "solution": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "reasoningContent": "Okay, let's tackle this. The user is asking if the provided email contains any trading signals. First, I need to understand what a trading signal is. Typically, a trading signal is an indication to buy or sell a security based on a set of criteria, like technical indicators or news events.\n\nLooking at the email content, there's some technical data at the beginning: \"Index 6309.25 100% for PDC.DIRST.RATES @ BOA -10 ESU5 @ 6309.25000\". This seems to mention an index value, a percentage, and some codes like PDC.DIRST.RATES, BOA (maybe Bank of America?), ESU5 which could be a futures contract symbol (E-mini S&P 500 September 2025?). The numbers here might represent specific financial instruments or rates. However, the question is whether this constitutes a trading signal. \n\nA trading signal would usually suggest an action, like buying or selling. The data here looks more like a report or a status update rather than a recommendation or signal to trade. The rest of the email is a confidentiality notice and standard disclaimer, which doesn't contain any actionable financial advice or signals. \n\nThe user also provided a JSON schema that expects a list of solutions. But the question requires a Yes/No answer. However, the instructions say to return JSON according to the schema. Wait, the JSON schema's input_schema has a \"solutions\" array where each item has a \"solution\" string. So maybe the answer needs to be structured as a solution in that array. \n\nBut the user's question is a Yes/No. The assistant needs to answer with a single word, but the JSON schema expects an object with \"solutions\" array. However, the user's input to analyze is the email, and the task is to determine if it contains trading signals. The answer should be Yes or No, but according to the JSON schema provided, the output should be a JSON object with \"solutions\" array containing up to 100 items, each with a \"solution\" string. \n\nWait, maybe the user is confused. The initial part says \"Please answer with a single word (Yes/No).\" But the JSON schema expects a list of solutions. This might be conflicting. However, the user provided the JSON schema and instructions to extract information matching the schema. So perhaps the correct approach is to structure the answer as per the schema, even if the question seems to ask for a single word. \n\nBut the JSON schema's input_schema requires an object with a \"solutions\" array. Each solution has a \"solution\" string. So the answer should be a JSON object with \"solutions\" array where each item's \"solution\" is either \"Yes\" or \"No\". But the question is a Yes/No question. So maybe the answer is a single solution item with \"solution\": \"No\". \n\nLooking back at the email content, the main part is the technical data. However, there's no explicit recommendation or signal to buy or sell. The codes and numbers might be part of a report or a reference, but without context indicating an action, it's not a trading signal. The rest is legal disclaimers. Therefore, the answer is \"No\". \n\nSo the correct JSON response would be a \"solutions\" array with one item where \"solution\" is \"No\". The other fields (method, reason) are optional. But since the user's instructions say to return only valid JSON, and the schema allows for optional fields, including a reason might be helpful. However, the user's example in the problem statement (the assistant's previous response) just had \"solution\": \"No\" without method or reason. \n\nTherefore, the final answer should be a JSON object with \"solutions\" array containing one object with \"solution\": \"No\".\n"
+                }
+              ]
+            }
+          },
+          "stop_reason": "end_turn",
+          "usage": {
+            "inputTokens": 456,
+            "outputTokens": 819,
+            "totalTokens": 1275
+          },
+          "metrics": {
+            "latencyMs": 4905
+          }
+        }
+      },
+      "processed": true,
+      "layer": 1
+    },
+    {
+      "question_id": 4,
+      "ref": "trade_record",
+      "question": "Does this email talk about an executed trade record (or trade confirmation)? Please answer with a single word (Yes/No).",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "response": {
+        "question": "Does this email talk about an executed trade record (or trade confirmation)? Please answer with a single word (Yes/No).",
+        "response": {
+          "ResponseMetadata": {
+            "date": "2025-07-11T17:52:21",
+            "model": "valt-chat-rr-deepseek-r1-full-aws"
+          },
+          "output": {
+            "message": {
+              "role": "assistant",
+              "content": [
+                {
+                  "json": {
+                    "solutions": [
+                      {
+                        "solution": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "reasoningContent": "Okay, let's tackle this. The user is asking if the email talks about an executed trade record or trade confirmation. The input provided is an email that includes some numbers like 6309.25 and mentions \"PDC.DIRST.RATES @ BOA -10 ESU5 @ 6309.25000\". There's also a confidentiality notice and some standard email disclaimers.\n\nFirst, I need to check if there's any indication of a trade execution. The numbers and terms like \"BOA\" (Bank of America?) and \"ESU5\" might refer to financial instruments or trades. The mention of rates and specific figures could suggest a trade confirmation. However, the email doesn't explicitly state that a trade was executed. It might be a reference or a quote rather than a confirmation. The rest of the email is standard legal disclaimers, which are common in financial communications but don't confirm a trade. Without explicit terms like \"executed\", \"trade confirmation\", or details like settlement instructions, it's hard to say definitively. The answer should be \"No\" because the email doesn't clearly state an executed trade or provide confirmation details.\n"
+                }
+              ]
+            }
+          },
+          "stop_reason": "end_turn",
+          "usage": {
+            "inputTokens": 462,
+            "outputTokens": 266,
+            "totalTokens": 728
+          },
+          "metrics": {
+            "latencyMs": 1800
+          }
+        }
+      },
+      "processed": true,
+      "layer": 1
+    },
+    {
+      "question_id": 5,
+      "ref": "sector_focus",
+      "question": "Does the email focus on or highlight any specific sectors or industries? Answer with only a single word (Yes/No).",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "response": {
+        "question": "Does the email focus on or highlight any specific sectors or industries? Answer with only a single word (Yes/No).",
+        "response": {
+          "ResponseMetadata": {
+            "date": "2025-07-11T17:52:23",
+            "model": "valt-chat-rr-deepseek-r1-full-aws"
+          },
+          "output": {
+            "message": {
+              "role": "assistant",
+              "content": [
+                {
+                  "json": {
+                    "solutions": [
+                      {
+                        "solution": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "reasoningContent": "Okay, let's tackle this. The user is asking if the email focuses on or highlights any specific sectors or industries. The email provided seems to be a standard confidentiality notice. Let me read through it again.\n\nThe context includes some numbers and codes like \"PDC.DIRST.RATES @ BOA -10 ESU5 @ 6309.25000\". Maybe those are financial instruments or codes related to trading? But the main body of the email is about confidentiality, viruses, and legal disclaimers. There's no mention of specific industries like healthcare, technology, or manufacturing. The sectors like finance might be implied by terms like \"BOA\" (Bank of America?) and \"TP ICAP Group\", which is a financial services company. However, the email itself doesn't discuss or highlight any sector; it's just a disclaimer. The question is whether the email focuses on any sector. Since the content is about confidentiality and not discussing any industry specifics, the answer should be No.\n"
+                }
+              ]
+            }
+          },
+          "stop_reason": "end_turn",
+          "usage": {
+            "inputTokens": 461,
+            "outputTokens": 230,
+            "totalTokens": 691
+          },
+          "metrics": {
+            "latencyMs": 1817
+          }
+        }
+      },
+      "processed": true,
+      "layer": 1
+    },
+    {
+      "question_id": 6,
+      "ref": "risk_factors",
+      "question": "Does this email mention any market risk factors or uncertainties? Answer with only a single word (Yes/No).",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "response": {
+        "question": "Does this email mention any market risk factors or uncertainties? Answer with only a single word (Yes/No).",
+        "response": {
+          "ResponseMetadata": {
+            "date": "2025-07-11T17:52:25",
+            "model": "valt-chat-rr-deepseek-r1-full-aws"
+          },
+          "output": {
+            "message": {
+              "role": "assistant",
+              "content": [
+                {
+                  "json": {
+                    "solutions": [
+                      {
+                        "solution": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "reasoningContent": "Okay, let's tackle this. The user is asking if the provided email mentions any market risk factors or uncertainties. First, I need to carefully read through the email content.\n\nLooking at the email, the subject line has some numbers and abbreviations like PDC.DIRST.RATES @ BOA -10 ESU5 @ 6309.25000. That might be related to financial instruments or rates, but it's not explicitly stating any risks or uncertainties. The rest of the email is about confidentiality notices, standard disclaimers about viruses, and company information for TP ICAP Group. \n\nThe body mentions accountability, adaptability, and authenticity, which are more about company values. The confidentiality part is standard legal language, not related to market risks. The disclaimers about internet communications not being secure and not accepting liability are general IT and legal terms, not specific to market uncertainties. \n\nThere's no mention of market conditions, potential risks, economic factors, or any uncertainties that could affect investments or market performance. So, the answer should be \"No\".\n"
+                }
+              ]
+            }
+          },
+          "stop_reason": "end_turn",
+          "usage": {
+            "inputTokens": 459,
+            "outputTokens": 242,
+            "totalTokens": 701
+          },
+          "metrics": {
+            "latencyMs": 1655
+          }
+        }
+      },
+      "processed": true,
+      "layer": 1
+    },
+    {
+      "question_id": 201,
+      "parent_id": 2,
+      "ref": "asset_reference_class",
+      "question": "Does this email talk about any asset class(es)? Answer with a single word: Yes or No. If yes, please list them",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "response": {
+        "question": "Does this email talk about any asset class(es)? Answer with a single word: Yes or No. If yes, please list them",
+        "response": {
+          "ResponseMetadata": {
+            "date": "2025-07-11T17:52:29",
+            "model": "valt-chat-rr-deepseek-r1-full-aws"
+          },
+          "output": {
+            "message": {
+              "role": "assistant",
+              "content": [
+                {
+                  "json": {
+                    "solutions": [
+                      {
+                        "solution": "Yes",
+                        "method": "Identified asset class references in trading instrument codes",
+                        "reason": "Email contains 'PDC.DIRST.RATES' (interest rates) and 'ESU5' (E-mini S&P 500 futures contract)"
+                      },
+                      {
+                        "solution": "Fixed Income",
+                        "method": "Analysis of 'RATES' abbreviation",
+                        "reason": "'RATES' typically refers to interest rate products in financial markets"
+                      },
+                      {
+                        "solution": "Equities",
+                        "method": "Interpretation of 'ESU5' futures contract code",
+                        "reason": "ESU is the ticker symbol for E-mini S&P 500 futures contracts"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "reasoningContent": "Okay, let's tackle this. The user is asking if the email mentions any asset classes and to answer Yes or No. If yes, list them.\n\nLooking at the email content provided, the key part is \"PDC.DIRST.RATES @ BOA -10 ESU5 @ 6309.25000\". The term \"RATES\" here likely refers to interest rates, which are part of fixed income or rates markets. \"ESU5\" might be a futures contract code, where ESU typically stands for E-mini S&P 500 futures, and the '5' could denote the year or month. However, the exact asset class for ESU5 would be equities or equity indices. But the main mention here is \"RATES\", which is an asset class under fixed income. The email seems to be discussing trading or rates related to these instruments. So the asset classes involved are likely Fixed Income (from RATES) and possibly Equities (from ESU5). However, the user's example JSON schema expects a list of solutions, each with a solution string. So each asset class should be a separate solution. Therefore, the answer is Yes, and the asset classes are Fixed Income and Equities.\n"
+                }
+              ]
+            }
+          },
+          "stop_reason": "end_turn",
+          "usage": {
+            "inputTokens": 465,
+            "outputTokens": 422,
+            "totalTokens": 887
+          },
+          "metrics": {
+            "latencyMs": 2878
+          }
+        }
+      },
+      "processed": true,
+      "layer": 2
+    },
+    {
+      "question_id": 202,
+      "parent_id": 2,
+      "ref": "asset_reference_products",
+      "question": "Are there any specific financial products mentioned; if so what are those? Answer with a single word: Yes or No. If yes, please list them",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "response": {
+        "question": "Are there any specific financial products mentioned; if so what are those? Answer with a single word: Yes or No. If yes, please list them",
+        "response": {
+          "ResponseMetadata": {
+            "date": "2025-07-11T17:52:35",
+            "model": "valt-chat-rr-deepseek-r1-full-aws"
+          },
+          "output": {
+            "message": {
+              "role": "assistant",
+              "content": [
+                {
+                  "json": {
+                    "solutions": [
+                      {
+                        "solution": "PDC.DIRST.RATES"
+                      },
+                      {
+                        "solution": "ESU5"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "reasoningContent": "Okay, let's tackle this. The user is asking if there are any specific financial products mentioned in the input provided. The input includes some context with terms like \"PDC.DIRST.RATES @ BOA -10 ESU5 @ 6309.25000\". \n\nFirst, I need to parse that context. The key part here is \"PDC.DIRST.RATES\" and \"ESU5\". \"BOA\" likely refers to Bank of America. \"PDC.DIRST.RATES\" might be a specific financial product or a reference code. \"ESU5\" could be a ticker symbol for a futures contract, where ESU typically stands for E-mini S&P 500 futures, and the '5' might indicate the year or month.\n\nThe user's question is whether any financial products are mentioned. Given that ESU5 is a futures contract and PDC.DIRST.RATES could be a rate product offered by BOA, these are specific financial instruments. Therefore, the answer should be \"Yes\". \n\nNow, according to the JSON schema provided, the assistant needs to return a list of solutions. Each solution should have a \"solution\" field, and optionally \"method\" and \"reason\". The answer to the user's question is \"Yes\", but they also want the products listed if yes. However, the JSON schema seems to require an array of solutions, each with a \"solution\" string. \n\nWait, the user's instructions say to answer with a single word: Yes or No. If yes, list them. But the JSON schema expects an array of solutions. So perhaps the assistant should structure the answer as a list where each solution is a product mentioned. \n\nLooking back at the input, the specific products are \"PDC.DIRST.RATES\" and \"ESU5\". So the JSON should have two items in the solutions array. Each with the solution as the product name, and maybe method/reason explaining what they are. \n\nBut the user's final instruction is to \"Answer with a single word: Yes or No. If yes, please list them\". However, the JSON schema provided requires the response to be in a specific format with solutions array. So the assistant needs to comply with the schema. \n\nTherefore, the correct approach is to set \"solutions\" array with each product as a solution. So the JSON would include both \"PDC.DIRST.RATES\" and \"ESU5\" as solutions. The answer to the yes/no question is \"Yes\", but the JSON structure requires listing them as solutions. \n\nBut wait, the user's question is a yes/no, but the JSON schema is for extracting information matching the schema. The schema is for \"top solutions\", but in this case, the user's input is a question that requires a yes/no answer followed by a list. However, the assistant is supposed to extract information that fits the schema. \n\nWait, maybe the user is using the JSON schema to structure the answer. The schema's input is an object with a \"solutions\" array. Each solution has a \"solution\" string. So the assistant should return a JSON object with \"solutions\" array where each element is a product mentioned. \n\nIn the context, the products are \"PDC.DIRST.RATES\" and \"ESU5\". So the JSON should list these as solutions. Therefore, the answer is \"Yes\", and the solutions array contains these two products. \n\nBut the user's instruction says to answer with a single word: Yes or No. Then, if yes, list them. However, the JSON schema requires the response to be in the specified format. So perhaps the assistant should structure the answer as per the schema, which would list the products in the solutions array. The yes/no is part of the user's question, but the output must conform to the JSON schema provided. \n\nWait, the JSON schema is for the input, but the user is asking a question. Wait, looking back, the user provided a JSON schema and instructions to extract information matching the schema from the user input. The user input is the context and question. Wait, maybe the user is trying to get the assistant to process the input (the context and question) and return the answer in the JSON schema format. \n\nWait, the instructions say: \"Analyze the input thoroughly. Extract information matching the json schema. Return ONLY valid JSON (no markdown/text).\" The user input to analyze is the context and the question. But the JSON schema is for a list of solutions. So perhaps the assistant is supposed to generate a list of solutions (financial products) as per the schema. \n\nIn that case, the answer would be a JSON object with \"solutions\" array containing each product. The user's question is part of the input to analyze, but the task is to extract the financial products mentioned. \n\nSo the correct JSON response would list \"PDC.DIRST.RATES\" and \"ESU5\" as solutions. Therefore, the JSON output should have those two entries in the solutions array.\n"
+                }
+              ]
+            }
+          },
+          "stop_reason": "end_turn",
+          "usage": {
+            "inputTokens": 468,
+            "outputTokens": 1068,
+            "totalTokens": 1536
+          },
+          "metrics": {
+            "latencyMs": 6312
+          }
+        }
+      },
+      "processed": true,
+      "layer": 2
+    },
+    {
+      "question_id": 203,
+      "parent_id": 2,
+      "ref": "asset_reference_derivatives_or_structured",
+      "question": "Are derivatives or structured products (e.g., options, swaps, futures, CDS, swaptions etc.) mentioned? Answer with a single word: Yes or No.",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "response": {
+        "question": "Are derivatives or structured products (e.g., options, swaps, futures, CDS, swaptions etc.) mentioned? Answer with a single word: Yes or No.",
+        "response": {
+          "ResponseMetadata": {
+            "date": "2025-07-11T17:52:38",
+            "model": "valt-chat-rr-deepseek-r1-full-aws"
+          },
+          "output": {
+            "message": {
+              "role": "assistant",
+              "content": [
+                {
+                  "json": {
+                    "solutions": [
+                      {
+                        "solution": "Yes",
+                        "method": "Identified 'ESU5' as E-mini S&P 500 futures contract ticker symbol",
+                        "reason": "Futures contracts are derivatives, meeting the criteria for structured products/derivatives mentioned in the question"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "reasoningContent": "Okay, let's tackle this. The user is asking if derivatives or structured products like options, swaps, futures, CDS, or swaptions are mentioned in the provided input.\n\nFirst, I need to look through the input carefully. The main content seems to be an email with some context lines. The key part here is \"PDC.DIRST.RATES @ BOA -10 ESU5 @ 6309.25000\". Let me break that down. \n\n\"PDC.DIRST.RATES\" might be a reference to some financial product or rate. \"BOA\" likely stands for Bank of America. The \"-10 ESU5\" part is a bit cryptic. \"ESU\" is commonly used as a ticker symbol for E-mini S&P 500 futures contracts. The \"U5\" could denote the expiration year and month, but I'm not entirely sure. However, the presence of \"ESU\" suggests it's related to futures, which are a type of derivative. \n\nThe rest of the email is mostly confidentiality notices and standard disclaimers, which don't mention any financial products. There's also a list of values like Accountability, Adaptability, etc., which aren't relevant here. \n\nThe question specifically asks about derivatives or structured products. Since futures (like ESU) are derivatives, the mention of ESU5 here points to a futures contract. Therefore, the answer should be \"Yes\".\n"
+                }
+              ]
+            }
+          },
+          "stop_reason": "end_turn",
+          "usage": {
+            "inputTokens": 472,
+            "outputTokens": 377,
+            "totalTokens": 849
+          },
+          "metrics": {
+            "latencyMs": 2697
+          }
+        }
+      },
+      "processed": true,
+      "layer": 2
+    },
+    {
+      "question_id": 101,
+      "parent_id": 1,
+      "ref": "macro_event_type",
+      "question": "What macro events are there? Answer with a single word: Economic, Geopolitical, or Environmental.",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "processed": false,
+      "layer": 2
+    },
+    {
+      "question_id": 102,
+      "parent_id": 1,
+      "ref": "macro_event_regions",
+      "question": "Are there are any specific regions or countries mentioned in relation to the macro events? Answer with a single word: Yes or No",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "processed": false,
+      "layer": 2
+    },
+    {
+      "question_id": 103,
+      "parent_id": 1,
+      "ref": "macro_event_timing",
+      "question": "Are the macro events in the past, present, or future? Answer shortly.",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "processed": false,
+      "layer": 2
+    },
+    {
+      "question_id": 104,
+      "parent_id": 1,
+      "ref": "macro_event_market_impact",
+      "question": "Do the macro events affect financial markets? Answer with a single word: Yes or No",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "processed": false,
+      "layer": 2
+    },
+    {
+      "question_id": 105,
+      "parent_id": 1,
+      "ref": "macro_event_policy_change",
+      "question": "Do the macro events imply any change in monetary or fiscal policy? If no, answer with a single word: 'No'. If 'Yes', briefly explain.",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "processed": false,
+      "layer": 2
+    },
+    {
+      "question_id": 106,
+      "parent_id": 1,
+      "ref": "macro_event_significance",
+      "question": "How significant are the macro events? Use one word: Minor, Moderate, Major.",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "processed": false,
+      "layer": 2
+    },
+    {
+      "question_id": 301,
+      "parent_id": 3,
+      "ref": "trading_signal_trade_bias",
+      "question": "Does the email suggest any trading bias? Answer: Signal(s) (Buy/Sell) along with the financial product(s).",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "processed": false,
+      "layer": 2
+    },
+    {
+      "question_id": 302,
+      "parent_id": 3,
+      "ref": "trading_signal_time_horizon",
+      "question": "Is the trading view short-term, medium-term, or long-term?. Answer shortly.",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "processed": false,
+      "layer": 2
+    },
+    {
+      "question_id": 401,
+      "parent_id": 4,
+      "ref": "trade_record_details",
+      "question": "What are the executed trade records or trade confirmation within this email? Give any details available from the following: Datetime, Financial Product, Trade Type (Buy/Sell), Quantity, Price, Counterparty, and any other relevant information.",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "processed": false,
+      "layer": 2
+    },
+    {
+      "question_id": 501,
+      "parent_id": 5,
+      "ref": "sector_focus_details",
+      "question": "What sectors or industries are mentioned in the email, and what is the expressed view on them?",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "processed": false,
+      "layer": 2
+    },
+    {
+      "question_id": 601,
+      "parent_id": 6,
+      "ref": "risk_factor_macro",
+      "question": "Are macroeconomic risks mentioned or policy related risks (e.g., inflation, recession, growth slowdown, central bank action, fiscal policy shifts etc.)? If no, answer with a single word: 'No'. If 'Yes', list them and explain briefly.",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "processed": false,
+      "layer": 2
+    },
+    {
+      "question_id": 602,
+      "parent_id": 6,
+      "ref": "risk_factor_geopolitical",
+      "question": "Are geopolitical risks discussed (e.g., elections, wars, trade disputes)? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "processed": false,
+      "layer": 2
+    },
+    {
+      "question_id": 603,
+      "parent_id": 6,
+      "ref": "risk_factor_market",
+      "question": "Does the email reference market-related risks (e.g., volatility, liquidity, positioning)? If no, answer with a single word: 'No'. If 'Yes', describe them briefly.",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "processed": false,
+      "layer": 2
+    },
+    {
+      "question_id": 604,
+      "parent_id": 6,
+      "ref": "risk_factor_sector_specific",
+      "question": "Are any sector-specific or industry-specific risks mentioned? If no, answer with a single word: 'No'. If 'Yes', identify the sectors and explain briefly.",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "processed": false,
+      "layer": 2
+    },
+    {
+      "question_id": 100101,
+      "parent_id": 101,
+      "ref": "economic_indicator_type",
+      "question": "Which economic indicators are mentioned (e.g., CPI, GDP, UNRATE, PMI, interest rate etc.)? List them briefly.",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "processed": false,
+      "layer": 3
+    },
+    {
+      "question_id": 100102,
+      "parent_id": 101,
+      "ref": "central_bank_policy",
+      "question": "Does the email mention any central bank decisions, rate changes, or monetary policy shifts? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "processed": false,
+      "layer": 3
+    },
+    {
+      "question_id": 100103,
+      "parent_id": 101,
+      "ref": "fiscal_policy_action",
+      "question": "Is there any mention of fiscal policy, government spending, or tax measures? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "processed": false,
+      "layer": 3
+    },
+    {
+      "question_id": 100104,
+      "parent_id": 101,
+      "ref": "geopolitical_event_entities",
+      "question": "Which countries, governments, or regions are involved in the geopolitical events mentioned? List them.",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "processed": false,
+      "layer": 3
+    },
+    {
+      "question_id": 100105,
+      "parent_id": 101,
+      "ref": "conflict_or_diplomacy",
+      "question": "Is the email referring to any conflict, diplomatic negotiations, or sanctions? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "processed": false,
+      "layer": 3
+    },
+    {
+      "question_id": 100106,
+      "parent_id": 101,
+      "ref": "election_or_vote",
+      "question": "Is there any reference to upcoming or recent elections, votes, or leadership changes? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "processed": false,
+      "layer": 3
+    },
+    {
+      "question_id": 100107,
+      "parent_id": 101,
+      "ref": "climate_or_natural_event",
+      "question": "Does the email mention any climate events, natural disasters, or ESG-related risks? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "processed": false,
+      "layer": 3
+    },
+    {
+      "question_id": 100108,
+      "parent_id": 101,
+      "ref": "environmental_policy",
+      "question": "Are there environmental regulations or climate policies being discussed? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "processed": false,
+      "layer": 3
+    },
+    {
+      "question_id": 100201,
+      "parent_id": 102,
+      "ref": "macro_event_regions_countries",
+      "question": "Are there are any specific countries mentioned in relation to the macro events? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "processed": false,
+      "layer": 3
+    },
+    {
+      "question_id": 100202,
+      "parent_id": 102,
+      "ref": "environmental_policy",
+      "question": "Are there are any specific regions mentioned in relation to the macro events? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "processed": false,
+      "layer": 3
+    },
+    {
+      "question_id": 100401,
+      "parent_id": 104,
+      "ref": "macro_event_asset_classes",
+      "question": "Are specific asset classes impacted (e.g., equities, bonds, commodities, FX)? If no, answer with a single word: 'No'. If 'Yes', list them and explain briefly.",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "processed": false,
+      "layer": 3
+    },
+    {
+      "question_id": 100402,
+      "parent_id": 104,
+      "ref": "macro_event_safe_havens",
+      "question": "Are safe haven assets (e.g., USD, gold, Treasuries) discussed in relation to the macro events? If no, answer with a single word: 'No'. If 'Yes', list them and explain briefly.",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "processed": false,
+      "layer": 3
+    },
+    {
+      "question_id": 100403,
+      "parent_id": 104,
+      "ref": "macro_event_asset_classes",
+      "question": "Are specific financial products impacted? If no, answer with a single word: 'No'. If 'Yes', list them.",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "processed": false,
+      "layer": 3
+    },
+    {
+      "question_id": 100404,
+      "parent_id": 104,
+      "ref": "macro_event_market_direction",
+      "question": "Is there any directional market impact indicated (e.g., bullish, bearish, volatility)? If no, answer with a single word: 'No'. If 'Yes', indicate the financial market(s) and the financial impact(s).",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "processed": false,
+      "layer": 3
+    },
+    {
+      "question_id": 100405,
+      "parent_id": 104,
+      "ref": "macro_event_trading_response",
+      "question": "Does the email suggest a trading response or positioning due to macro events? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "processed": false,
+      "layer": 3
+    },
+    {
+      "question_id": 100406,
+      "parent_id": 104,
+      "ref": "macro_event_risk_assets",
+      "question": "Are risk assets (e.g., EM, high yield) mentioned as affected by the macro events? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "processed": false,
+      "layer": 3
+    },
+    {
+      "question_id": 200301,
+      "parent_id": 203,
+      "ref": "derivatives_listed",
+      "question": "What derivative or structured products are mentioned? If none, answer with a single word: 'No'. If 'Yes', list them and explain briefly.",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "processed": false,
+      "layer": 3
+    },
+    {
+      "question_id": 200302,
+      "parent_id": 203,
+      "ref": "derivatives_pricing_mentioned",
+      "question": "Is there any pricing information provided for any of the mentioned products? If no, answer with a single word: 'No'. If 'Yes', list the products with pricing and describe briefly the mentioned pricing.",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "processed": false,
+      "layer": 3
+    },
+    {
+      "question_id": 200303,
+      "parent_id": 203,
+      "ref": "derivatives_maturity_reference",
+      "question": "Are any specific maturities or tenors mentioned for the derivatives (e.g., 3m, 10y etc.)? If no, answer with a single word: 'No'. If 'Yes', list them and explain briefly.",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "processed": false,
+      "layer": 3
+    },
+    {
+      "question_id": 200304,
+      "parent_id": 203,
+      "ref": "derivatives_strategy_type",
+      "question": "Is there any mention of structured product strategies (e.g., callable notes, range accruals, spread trades etc.)? If no, answer with a single word: 'No'. If 'Yes', name them and provide a short explanation.",
+      "email_id": "6871311599a8bf938dc2ace4",
+      "processed": false,
+      "layer": 3
+    }
+  ]
+}
