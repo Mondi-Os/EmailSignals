@@ -1,4 +1,3 @@
-
 # expected schema for LLM response format
 expected_schema = {
     "name": "test_schema",
@@ -31,3 +30,9 @@ expected_schema = {
         "required": ["solutions"],
     }
 }
+
+all_questions = load_all_questions_from_json_files(
+    "C:/Users/mosmena/Desktop/Project/LLM_Project/EmailSignals/framework/promptsFrameworkLayer1.json",
+    "C:/Users/mosmena/Desktop/Project/LLM_Project/EmailSignals/framework/promptsFrameworkLayer2.json",
+    "C:/Users/mosmena/Desktop/Project/LLM_Project/EmailSignals/framework/promptsFrameworkLayer3.json"
+)
