@@ -1,16 +1,6 @@
 import hashlib
 from clientRequests.mongoRequests import *
 from bson import ObjectId
-import os
-
-def list_json_files(folder_path="C:/Users/mosmena/Desktop/Project/LLM_Project/EmailSignals/review_results/"):
-    """Return a list of full paths to all .json files in the specified folder."""
-    json_paths = [
-        os.path.join(folder_path, filename)
-        for filename in os.listdir(folder_path)
-        if filename.endswith(".json")
-        ]
-    return json_paths
 
 
 def load_all_questions_from_json_files(layer1_path, layer2_path, layer3_path):
@@ -41,52 +31,58 @@ def load_all_questions_from_json_files(layer1_path, layer2_path, layer3_path):
     return all_questions
 
 
-def add_hash_to_questions(json_paths):
+def process_questions_and_upsert(email_result_dicts):
     """
-    Add a hash to each question in the JSON file based on:
-    - the question text
-    - the email body retrieved via fetch_emails_from_database()
+    Process email result dicts:
+    - Compute question hash using question + email body
+    - Keep only: hash, emailBody, question, response
+    - Save results in a dictionary keyed by email_id
+    - Upsert each record into the llm_cache collection using the hash
     """
-    for path in json_paths:
+    for record in email_result_dicts:
         try:
-            with open(path, "r", encoding="utf-8") as f:
-                data = json.load(f)
+            email_info = record.get("email_info", {})
+            questions = record.get("questions", [])
 
-            email_info = data.get("email_info", {})
             email_id = email_info.get("_id", "").strip().lower()
+            if not email_id:
+                print("Missing email ID.")
+                continue
 
-            # Fetch body from DB using your standard function
-            result = fetch_emails_from_database(
+            email_result = fetch_emails_from_database(
                 filter_dict={"_id": ObjectId(email_id)},
                 limit=1
             )
 
-            if not result:
+            if not email_result:
                 print(f"No email found in DB for: {email_id}")
                 continue
 
-            email_body = result[0].get("body", "").strip().lower()
-            questions = data.get("questions", [])
-            modified = False
+            email_body = email_result[0].get("body", "").strip().lower()
 
             for q in questions:
                 question_text = q.get("question", "").strip().lower()
+
+                # Compute hash
                 hash_input = f"{question_text}|{email_body}"
                 q_hash = hashlib.sha256(hash_input.encode("utf-8")).hexdigest()
 
-                if q.get("hash") != q_hash:
-                    q["hash"] = q_hash
-                    modified = True
+                # Add the hash to the question object
+                q_with_hash = q.copy()
+                q_with_hash["hash"] = q_hash
+                q_with_hash["emailBody"] = email_body  # Optionally add context to cache for visibility
 
-            if modified:
-                with open(path, "w", encoding="utf-8") as f:
-                    json.dump(data, f, indent=2, ensure_ascii=False)
-                print(f"Updated question hashes in: {os.path.basename(path)}")
-            else:
-                print(f"No changes needed for: {os.path.basename(path)}")
+                # Upsert the entire question record into cache
+                cache_collection.update_one(
+                    {"hash": q_hash},
+                    {"$set": q_with_hash},
+                    upsert=True
+                )
 
         except Exception as e:
-            print(f"Failed to process {path}: {e}")
+            print(f"Failed to process record: {e}")
+    print("All questions processed and upserted into the cache collection.")
+    pass
 
 
 def compute_question_hash(question, email_body):
@@ -105,9 +101,6 @@ def llm_simulation(questions, email_body):
     If ALL exist: returns structured result.
     If ANY are missing: returns None (LLM should run).
     """
-    client = MongoClient(mongo_uri)
-    db = client[db_name]
-    collection = db[collection_llm_cache]
 
     # Step 1: Compute all question hashes for this email
     hash_to_question = {}
@@ -118,7 +111,7 @@ def llm_simulation(questions, email_body):
     all_hashes = list(hash_to_question.keys())
 
     # Step 2: Query DB for matching hashes
-    db_records = list(collection.find({ "hash": { "$in": all_hashes } }))
+    db_records = list(cache_collection.find({ "hash": { "$in": all_hashes } }))
 
     # Step 3: Validate if ALL required hashes are found
     found_hashes = {doc["hash"] for doc in db_records}
@@ -170,3 +163,56 @@ def llm_simulation(questions, email_body):
 
 ## 3rd step: Read collection
 # print(f"length: {len(read_collection(collection_llm_cache))}")
+
+def process_questions_to_cache(email_result_dicts):
+    if isinstance(email_result_dicts, dict):
+        email_result_dicts = [email_result_dicts]
+
+    for record in email_result_dicts:
+        try:
+            email_info = record.get("email_info", {})
+            questions = record.get("questions", [])
+            email_id = email_info.get("_id", "").strip().lower()
+
+            if not email_id:
+                print("Missing email ID.")
+                continue
+
+            email_result = fetch_emails_from_database(
+                filter_dict={"_id": ObjectId(email_id)},
+                limit=1
+            )
+            if not email_result:
+                print(f"No email found in DB for: {email_id}")
+                continue
+
+            email_body = email_result[0].get("body", "").strip().lower()
+
+            for q in questions:
+                question_text = q.get("question", "").strip().lower()
+                q_hash = hashlib.sha256(f"{question_text}|{email_body}".encode("utf-8")).hexdigest()
+
+                flat = {
+                    "question_id": q.get("question_id"),
+                    "ref": q.get("ref"),
+                    "question": q.get("question"),
+                    "email_id": email_id,
+                    "response": q.get("response"),
+                    "processed": q.get("processed"),
+                    "layer": q.get("layer"),
+                    "hash": q_hash,
+                    "emailBody": email_body
+                }
+
+                # Upsert into llm_collection
+                cache_collection.update_one(
+                    {"hash": q_hash},
+                    {"$set": flat},
+                    upsert=True
+                )
+
+        except Exception as e:
+            print(f"Failed to process record: {e}")
+
+    print("All questions processed and upserted to llm_collection.")
+    pass

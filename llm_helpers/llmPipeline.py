@@ -5,11 +5,11 @@ from llm_helpers.llmCache import *
 
 class LLMPipeline:
     def __init__(self):
-        with open("/framework/promptsFrameworkLayer1.json") as f:
+        with open("C:/Users/mosmena/Desktop/Project/LLM_Project/EmailSignals/framework/promptsFrameworkLayer1.json") as f:
             self.layer1 = json.load(f)
-        with open("/framework/promptsFrameworkLayer2.json") as f:
+        with open("C:/Users/mosmena/Desktop/Project/LLM_Project/EmailSignals/framework/promptsFrameworkLayer2.json") as f:
             self.layer2 = json.load(f)
-        with open("/framework/promptsFrameworkLayer3.json") as f:
+        with open("C:/Users/mosmena/Desktop/Project/LLM_Project/EmailSignals/framework/promptsFrameworkLayer3.json") as f:
             self.layer3 = json.load(f)
         # with open("framework/test1.json") as f:
         #     self.layer1 = json.load(f)
@@ -35,6 +35,10 @@ class LLMPipeline:
             }
             print(f"Processing email ID: {email_id}")
 
+            #TODO change this part here
+            # This should create a hash for each question in the email body
+            # Afterwards, it should check whether this hash exists in the cache_col
+            # If it exists, do not run the llm_querrries but rather retrieve the answer from the cache_col
             if not upsert_to_mongo: # Load from LLM cache if exists
                 cached_output = llm_simulation(
                     questions=all_questions,
@@ -75,12 +79,10 @@ class LLMPipeline:
                 }
                 email_result = normalize_solutions_structure(email_result_dict)
 
-                client = MongoClient(mongo_uri)
-                db = client[db_name]
-                collection_result_mongo = db[collection_result]
                 filter_query = {"_id": ObjectId(email_id)}
                 update_doc = {"$set": email_result}
-                collection_result_mongo.update_one(filter_query, update_doc, upsert=True)
+                result_collection.update_one(filter_query, update_doc, upsert=True) # Update result collection
+                process_questions_to_cache(email_result_dict) # Update llm_cache collection
                 print(f"Upserted email ID {email_id} into MongoDB.")
 
         end_time = datetime.now()
@@ -234,3 +236,7 @@ class LLMPipeline:
             if isinstance(response, dict):
                 response.pop("stop_reason", None)
                 response.pop("usage", None)
+
+pipeline = LLMPipeline()
+pipeline.run_batch(fetch_emails_from_database(filter_dict={"from": "ewan.gordon@socgen.com"}, limit=1),
+                   upsert_to_mongo=True)

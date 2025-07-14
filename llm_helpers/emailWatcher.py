@@ -10,18 +10,14 @@ seen_lock = threading.Lock()
 
 def get_recent_unprocessed_emails():
     """Fetches emails from the last 3 days that have not been processed by the LLM."""
-    client = MongoClient(mongo_uri)
-    db = client[db_name]
-    mail_col = db[collection_mail]
-    llm_col = db[collection_result]
 
     # Calculate timestamp 3 days ago (set 3 days to include weekends)
     cutoff_str = (datetime.now() - timedelta(days=1)).isoformat()
 
-    recent_emails = list(mail_col.find({"date": {"$gte": cutoff_str}}, {"_id": 1}))
+    recent_emails = list(email_collection.find({"date": {"$gte": cutoff_str}}, {"_id": 1}))
 
     # Fetch processed IDs
-    processed_ids = set(doc["_id"] for doc in llm_col.find(
+    processed_ids = set(doc["_id"] for doc in result_collection.find(
         {"_id": {"$in": [doc["_id"] for doc in recent_emails]}},
         {"_id": 1}
     ))
@@ -33,10 +29,8 @@ def get_recent_unprocessed_emails():
 
 def fetch_emails_by_ids(ids):
     """Fetches emails by their IDs from the email collection."""
-    client = MongoClient(mongo_uri)
-    db = client[db_name]
-    collection = db[collection_mail]
-    documents = collection.find({"_id": {"$in": ids}})
+
+    documents = email_collection.find({"_id": {"$in": ids}})
     return [{
         "_id": str(doc["_id"]),
         "date": doc.get("date"),
@@ -62,11 +56,8 @@ def email_worker():
 
 def change_listener():
     """Listens for changes in the 'email' collection and queues new emails."""
-    client = MongoClient(mongo_uri)
-    db = client[db_name]
-    mail_col = db[collection_mail]
 
-    with mail_col.watch(full_document="updateLookup") as stream:
+    with email_collection.watch(full_document="updateLookup") as stream:
         print("Listening for changes in the 'mail' collection...\n")
         for change in stream:
             op_type = change.get("operationType")
