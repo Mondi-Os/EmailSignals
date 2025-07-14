@@ -35,10 +35,6 @@ class LLMPipeline:
             }
             print(f"Processing email ID: {email_id}")
 
-            #TODO change this part here
-            # This should create a hash for each question in the email body
-            # Afterwards, it should check whether this hash exists in the cache_col
-            # If it exists, do not run the llm_querrries but rather retrieve the answer from the cache_col
             if not upsert_to_mongo: # Load from LLM cache if exists
                 cached_output = llm_simulation(
                     questions=all_questions,

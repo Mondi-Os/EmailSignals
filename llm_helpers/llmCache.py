@@ -31,60 +31,6 @@ def load_all_questions_from_json_files(layer1_path, layer2_path, layer3_path):
     return all_questions
 
 
-def process_questions_and_upsert(email_result_dicts):
-    """
-    Process email result dicts:
-    - Compute question hash using question + email body
-    - Keep only: hash, emailBody, question, response
-    - Save results in a dictionary keyed by email_id
-    - Upsert each record into the llm_cache collection using the hash
-    """
-    for record in email_result_dicts:
-        try:
-            email_info = record.get("email_info", {})
-            questions = record.get("questions", [])
-
-            email_id = email_info.get("_id", "").strip().lower()
-            if not email_id:
-                print("Missing email ID.")
-                continue
-
-            email_result = fetch_emails_from_database(
-                filter_dict={"_id": ObjectId(email_id)},
-                limit=1
-            )
-
-            if not email_result:
-                print(f"No email found in DB for: {email_id}")
-                continue
-
-            email_body = email_result[0].get("body", "").strip().lower()
-
-            for q in questions:
-                question_text = q.get("question", "").strip().lower()
-
-                # Compute hash
-                hash_input = f"{question_text}|{email_body}"
-                q_hash = hashlib.sha256(hash_input.encode("utf-8")).hexdigest()
-
-                # Add the hash to the question object
-                q_with_hash = q.copy()
-                q_with_hash["hash"] = q_hash
-                q_with_hash["emailBody"] = email_body  # Optionally add context to cache for visibility
-
-                # Upsert the entire question record into cache
-                cache_collection.update_one(
-                    {"hash": q_hash},
-                    {"$set": q_with_hash},
-                    upsert=True
-                )
-
-        except Exception as e:
-            print(f"Failed to process record: {e}")
-    print("All questions processed and upserted into the cache collection.")
-    pass
-
-
 def compute_question_hash(question, email_body):
     """Compute a hash from the question text and email body. Must match how `add_hash_to_questions()` generates it."""
     question_text = question.get("question", "").strip().lower()
@@ -155,14 +101,6 @@ def llm_simulation(questions, email_body):
     print(f"Cache hit for all {len(all_hashes)} questions.")
     return response
 
-## 1st step before inserting into MongoDB
-# add_hash_to_questions(list_json_files())
-
-## 2nd step: Upsert collection
-# upsert_into_mongo_based_on_question_hashes(collection_llm_cache, list_json_files())
-
-## 3rd step: Read collection
-# print(f"length: {len(read_collection(collection_llm_cache))}")
 
 def process_questions_to_cache(email_result_dicts):
     if isinstance(email_result_dicts, dict):
