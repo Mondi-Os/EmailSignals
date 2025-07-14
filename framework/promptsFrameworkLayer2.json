@@ -89,7 +89,7 @@
     "question_parent_id": 3,
     "email_id": "",
     "ref": "trading_signal_trade_bias",
-    "question": "Does the email suggest any trading bias? Answer: Signal(s) (Buy/Sell) along with the financial product(s).",
+    "question": "Does the email suggest any trading bias? Answer: Signal(s) (Buy/Sell) along with the financial product(s). Also indicate whether the trade is still valid (i.e., current/active view) or if it refers to a past trade or expired view.",
     "processed": false,
     "layer": 2
   },
@@ -99,6 +99,15 @@
     "email_id": "",
     "ref": "trading_signal_time_horizon",
     "question": "Is the trading view short-term, medium-term, or long-term?. Answer shortly.",
+    "processed": false,
+    "layer": 2
+  },
+  {
+    "question_id": 303,
+    "question_parent_id": 3,
+    "email_id": "",
+    "ref": "trading_signal_trend",
+    "question": "Is there any indication of a momentum, trend-following, or swing trading signal in the email? If yes, describe briefly the direction (e.g., upward/downward) and the financial product involved. If no, answer with a single word: 'No'.",
     "processed": false,
     "layer": 2
   },

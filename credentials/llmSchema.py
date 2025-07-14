@@ -1,3 +1,5 @@
+from llm_helpers.llmCache import load_all_questions_from_json_files
+
 # expected schema for LLM response format
 expected_schema = {
     "name": "test_schema",

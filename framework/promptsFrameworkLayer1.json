@@ -1,6 +1,7 @@
 [
   {
 	"question_id": 1,
+    "question_parent_id": null,
     "email_id": "",
     "ref": "macro_event",
     "question": "Are there any macro or geopolitical events in this email? Answer with only a single word (Yes/No)",
@@ -9,6 +10,7 @@
   },
   {
     "question_id": 2,
+    "question_parent_id": null,
     "email_id": "",
     "ref": "asset_reference",
     "question": "Does this email talk about specific assets or financial products? Answer with only a single word (Yes/No)",
@@ -17,6 +19,7 @@
   },
   {
     "question_id": 3,
+    "question_parent_id": null,
     "email_id": "",
     "ref": "trading_signal",
     "question": "Does this email contain any trading signals? Please answer with a single word (Yes/No).",
@@ -25,6 +28,7 @@
   },
   {
     "question_id": 4,
+    "question_parent_id": null,
     "email_id": "",
     "ref": "trade_record",
     "question": "Does this email talk about an executed trade record (or trade confirmation)? Please answer with a single word (Yes/No).",
@@ -33,6 +37,7 @@
   },
   {
     "question_id": 5,
+    "question_parent_id": null,
     "email_id": "",
     "ref": "sector_focus",
     "question": "Does the email focus on or highlight any specific sectors or industries? Answer with only a single word (Yes/No).",
@@ -41,6 +46,7 @@
   },
   {
     "question_id": 6,
+    "question_parent_id": null,
     "email_id": "",
     "ref": "risk_factors",
     "question": "Does this email mention any market risk factors or uncertainties? Answer with only a single word (Yes/No).",

@@ -1,13 +1,8 @@
-import json
 import networkx as nx
 import matplotlib.pyplot as plt
 
-#TODO remove file_path as it will be given within the llmPipeline run_batch()
-def build_question_tree(file_path, email_result):
-    # Load JSON data
-    with open(file_path, 'r') as file:
-        data = json.load(file)
-
+def build_question_tree(email_result=None):
+    """Simulate the question tree from the email analysis result."""
     # Extract questions from the provided dictionary
     questions = email_result['questions']
 
@@ -50,6 +45,3 @@ def build_question_tree(file_path, email_result):
     )
     plt.title('Hierarchical Question Tree (Green=Processed, Red=Unprocessed)', fontsize=16)
     plt.show()
-
-# Call the function with the provided file
-build_question_tree("C:/Users/modio/Desktop/EmailSignals/review_results/2025-07-10_18-18-14--686f602699a8bf938dc2ab37.json")

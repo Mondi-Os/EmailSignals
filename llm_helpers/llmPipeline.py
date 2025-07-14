@@ -1,15 +1,15 @@
 from clientRequests.VFModelsRequest import *
 from credentials.llmSchema import *
 from datetime import datetime
-from llmCache import *
+from llm_helpers.llmCache import *
 
 class LLMPipeline:
     def __init__(self):
-        with open("framework/promptsFrameworkLayer1.json") as f:
+        with open("/framework/promptsFrameworkLayer1.json") as f:
             self.layer1 = json.load(f)
-        with open("framework/promptsFrameworkLayer2.json") as f:
+        with open("/framework/promptsFrameworkLayer2.json") as f:
             self.layer2 = json.load(f)
-        with open("framework/promptsFrameworkLayer3.json") as f:
+        with open("/framework/promptsFrameworkLayer3.json") as f:
             self.layer3 = json.load(f)
         # with open("framework/test1.json") as f:
         #     self.layer1 = json.load(f)
@@ -42,19 +42,20 @@ class LLMPipeline:
                 )
 
                 if cached_output:
-                    output_dir = "review_results/simulator_results"
+                    output_dir = "../review_results/simulator_results"
                     output_questions = cached_output["questions"]
 
                 else:
-                    output_dir = "review_results"
+                    output_dir = "../review_results"
                     result = self.run_single(email_id, context)
                     output_questions = result["main"] + result["sub"] + result["subsub"]
 
                 # Final result format
-                email_result = {
+                email_result_dict = {
                     "email_info": email_info,
                     "questions": output_questions
                 }
+                email_result = normalize_solutions_structure(email_result_dict)
 
                 # Save per-email result
                 timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
@@ -68,10 +69,11 @@ class LLMPipeline:
                 result = self.run_single(email_id, context)
                 output_questions = result["main"] + result["sub"] + result["subsub"]
 
-                email_result = {
+                email_result_dict = {
                     "email_info": email_info,
                     "questions": output_questions
                 }
+                email_result = normalize_solutions_structure(email_result_dict)
 
                 client = MongoClient(mongo_uri)
                 db = client[db_name]
@@ -83,7 +85,7 @@ class LLMPipeline:
 
         end_time = datetime.now()
         print(f"Pipeline finished at: {end_time.strftime('%Y-%m-%d %H:%M:%S')}")
-        print(f"Total duration: {end_time - start_time}")
+        print(f"Total duration: {end_time - start_time}\n")
 
     def run_single(self, email_id, context):
         """
@@ -117,6 +119,7 @@ class LLMPipeline:
             main_answer_map[question["question_id"]] = answer_text
             enriched = {
                 "question_id": question["question_id"],
+                "parent_id": question["question_parent_id"],
                 "ref": question["ref"],
                 "question": question["question"],
                 "email_id": email_id,
@@ -144,8 +147,8 @@ class LLMPipeline:
             sub_answer_map[q_meta["question_id"]] = answer_text
 
             enriched = {
-                "question_id": q_meta.get("id") or q_meta.get("question_id"),
-                "parent_id": q_meta.get("parent_id") or q_meta.get("question_parent_id"),
+                "question_id": q_meta["question_id"],
+                "parent_id": q_meta["question_parent_id"],
                 "ref": q_meta["ref"],
                 "question": q_meta["question"],
                 "email_id": email_id,
@@ -161,7 +164,7 @@ class LLMPipeline:
             if q["question_id"] not in answered_ids:
                 sub_results.append({
                     "question_id": q["question_id"],
-                    "parent_id": q.get("question_parent_id"),
+                    "parent_id": q["question_parent_id"],
                     "ref": q["ref"],
                     "question": q["question"],
                     "email_id": email_id,
@@ -187,8 +190,8 @@ class LLMPipeline:
         for i, response in enumerate(subsub_responses):
             q_meta = subsub_to_ask[i]
             enriched = {
-                "question_id": q_meta.get("id") or q_meta.get("question_id"),
-                "parent_id": q_meta.get("parent_id") or q_meta.get("question_parent_id"),
+                "question_id": q_meta["question_id"],
+                "parent_id": q_meta["question_parent_id"],
                 "ref": q_meta["ref"],
                 "question": q_meta["question"],
                 "email_id": email_id,
@@ -204,7 +207,7 @@ class LLMPipeline:
             if q["question_id"] not in subsub_answered_ids:
                 subsub_results.append({
                     "question_id": q["question_id"],
-                    "parent_id": q.get("question_parent_id"),
+                    "parent_id": q["question_parent_id"],
                     "ref": q["ref"],
                     "question": q["question"],
                     "email_id": email_id,
@@ -231,6 +234,3 @@ class LLMPipeline:
             if isinstance(response, dict):
                 response.pop("stop_reason", None)
                 response.pop("usage", None)
-
-pipeline = LLMPipeline()
-pipeline.run_batch(fetch_emails_from_database(filter_dict={}, limit=5))
