@@ -11,7 +11,7 @@ seen_lock = threading.Lock()
 def get_recent_unprocessed_emails():
     """Fetches emails from the last 3 days that have not been processed by the LLM."""
 
-    # Calculate timestamp 3 days ago (set 3 days to include weekends)
+    # Calculate timestamp 1 day(s) ago
     cutoff_str = (datetime.now() - timedelta(days=1)).isoformat()
 
     recent_emails = list(email_collection.find({"date": {"$gte": cutoff_str}}, {"_id": 1}))
@@ -47,7 +47,7 @@ def email_worker():
             email = fetch_emails_by_ids([email_id])
             if email:
                 pipeline = LLMPipeline()
-                pipeline.run_batch(email, upsert_to_mongo=True)
+                pipeline.run_batch(email)
         except Exception as e:
             print(f"Error processing email {email_id}: {e}")
         finally:
@@ -73,7 +73,7 @@ def change_listener():
                 print("Updated fields:", updated_fields)
 
             # Queue for processing
-            if op_type in {"insert", "update", "replace"}:
+            if op_type in {"insert"}:
                 with seen_lock:
                     if email_id not in seen_ids:
                         seen_ids.add(email_id)

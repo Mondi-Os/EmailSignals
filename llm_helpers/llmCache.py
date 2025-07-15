@@ -32,74 +32,15 @@ def load_all_questions_from_json_files(layer1_path, layer2_path, layer3_path):
 
 
 def compute_question_hash(question, email_body):
-    """Compute a hash from the question text and email body. Must match how `add_hash_to_questions()` generates it."""
-    question_text = question.get("question", "").strip().lower()
+    """Compute a hash from the question text and email body."""
+    if isinstance(question, dict):
+        question_text = question.get("question", "")
+    else:
+        question_text = str(question)
+
     body = email_body.strip().lower()
-    hash_input = f"{question_text}|{body}"
+    hash_input = f"{question_text.strip().lower()}|{body}"
     return hashlib.sha256(hash_input.encode("utf-8")).hexdigest()
-
-
-def llm_simulation(questions, email_body):
-    """
-    Simulates LLM logic by checking if all question hashes (based on question + email_body)
-    exist in the MongoDB 'cache_llm' collection.
-
-    If ALL exist: returns structured result.
-    If ANY are missing: returns None (LLM should run).
-    """
-
-    # Step 1: Compute all question hashes for this email
-    hash_to_question = {}
-    for q in questions:
-        h = compute_question_hash(q, email_body)
-        hash_to_question[h] = q
-
-    all_hashes = list(hash_to_question.keys())
-
-    # Step 2: Query DB for matching hashes
-    db_records = list(cache_collection.find({ "hash": { "$in": all_hashes } }))
-
-    # Step 3: Validate if ALL required hashes are found
-    found_hashes = {doc["hash"] for doc in db_records}
-    missing = [h for h in all_hashes if h not in found_hashes]
-
-    if missing:
-        print(f"Missing {len(missing)} hash(es). Triggering LLM.")
-        return None  # Trigger LLM
-
-    if not db_records:
-        print("No matching question hashes found in DB — triggering LLM.")
-        return None
-
-    # Step 4: Assemble output structure
-    print(db_records)
-    response = {
-        "questions": []
-    }
-
-    for h in all_hashes:
-        matched_doc = next((doc for doc in db_records if doc["hash"] == h), None)
-        orig_q = hash_to_question.get(h, {})
-
-        if matched_doc:
-            answer = matched_doc.get("answer", "")
-            layer = orig_q.get("layer")
-            processed = bool(answer and str(answer).strip())
-
-            response["questions"].append({
-                "hash": h,
-                "question": matched_doc.get("question"),
-                "answer": matched_doc.get("answer"),
-                "question_id": orig_q.get("question_id") or orig_q.get("id"),
-                "parent_id": orig_q.get("parent_id") or orig_q.get("question_parent_id"),
-                "layer": layer,
-                "processed": processed #TODO to be tested
-            })
-        else:
-            print("Not Matched Docs")
-
-    print(f"Cache hit for all {len(all_hashes)} questions.")
-    return response
 
 
 def process_questions_to_cache(email_result_dicts):
@@ -132,6 +73,7 @@ def process_questions_to_cache(email_result_dicts):
 
                 flat = {
                     "question_id": q.get("question_id"),
+                    "question_parent_id":q.get("parent_id") or q.get("question_parent_id"),
                     "ref": q.get("ref"),
                     "question": q.get("question"),
                     "email_id": email_id,
@@ -150,7 +92,5 @@ def process_questions_to_cache(email_result_dicts):
                 )
 
         except Exception as e:
-            print(f"Failed to process record: {e}")
-
-    print("All questions processed and upserted to llm_collection.")
+            print(f"Failed to hash record: {e}")
     pass

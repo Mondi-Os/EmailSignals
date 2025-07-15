@@ -1,5 +1,4 @@
 import re, json
-from copy import deepcopy
 
 
 def clean_email_body(text: str) -> str:
@@ -26,30 +25,51 @@ def clean_email_body(text: str) -> str:
 
 
 def normalize_solutions_structure(email_result_dict):
-    """Transforms all responses into a consistent format with ["solutions"][{"solution": "..."}]"""
+    """
+    Transforms all responses into a consistent format:
+    response["output"]["message"]["content"] = {"solutions": [{"solution": "..."}]}
+    """
     updated_questions = []
+
     for question in email_result_dict["questions"]:
         response = question.get("response", {}).get("response", {})
-        content = response.get("output", {}).get("message", {}).get("content", None)
+        output = response.get("output", {})
+        message = output.get("message", {})
+        content = message.get("content", None)
+
         if not content:
             updated_questions.append(question)
             continue
 
-        # If content is a list of dicts (e.g. [{"text": "Yes"}]), extract first text and wrap it in target structure
-        if isinstance(content, list):
+        normalized = None
+
+        if isinstance(content, dict):
+            # Already normalized?
+            if "solutions" in content:
+                normalized = content
+            elif "json" in content and "solutions" in content["json"]:
+                normalized = content["json"]
+
+        elif isinstance(content, list):
             for item in content:
                 if isinstance(item, dict):
                     if "text" in item:
-                        text = item["text"].strip()
-                        response["output"]["message"]["content"] = {
-                            "solutions": [{"solution": text}]
+                        normalized = {
+                            "solutions": [{"solution": item["text"].strip()}]
+                        }
+                        break
+                    elif "solution" in item:
+                        normalized = {
+                            "solutions": [{"solution": item["solution"].strip()}]
                         }
                         break
                     elif "json" in item and "solutions" in item["json"]:
-                        response["output"]["message"]["content"] = item["json"]
+                        normalized = item["json"]
                         break
-        elif isinstance(content, dict) and "json" in content and "solutions" in content["json"]:
-            response["output"]["message"]["content"] = content["json"]
+
+        # Apply normalized structure if valid
+        if normalized:
+            email_result_dict["questions"][email_result_dict["questions"].index(question)]["response"]["response"]["output"]["message"]["content"] = normalized
 
         updated_questions.append(question)
 
@@ -57,3 +77,22 @@ def normalize_solutions_structure(email_result_dict):
         "email_info": email_result_dict["email_info"],
         "questions": updated_questions
     }
+
+
+
+def layer_preprocessing(layer: int, question, email_id, response=None, processed=True):
+    """Used within the run_single() method to modify/enrich the dict/json format."""
+    enriched = {
+        "question_id": question["question_id"],
+        "parent_id": question["question_parent_id"],
+        "ref": question["ref"],
+        "question": question["question"],
+        "email_id": email_id,
+        "processed": processed,
+        "layer": question.get("layer", layer)
+    }
+
+    if processed:
+        enriched["response"] = response
+
+    return enriched
