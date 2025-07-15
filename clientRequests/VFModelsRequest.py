@@ -2,8 +2,9 @@ import vip
 from vip.vip_excepts import ModelAccessError,TokenLimitError, NetworkError, APIError
 from clientRequests.mongoRequests import *
 from credentials.llmSchema import *
+import json
 
-def run_llm_queries(questions, model_name: str="valt-chat-rr-deepseek-r1-full-aws", context_text: str = None):
+def run_llm_query(question, context_text, model_name: str="valt-chat-rr-deepseek-r1-full-aws"):
     """
     Run queries against a specified LLM model using the VIPClient.
 
@@ -12,11 +13,6 @@ def run_llm_queries(questions, model_name: str="valt-chat-rr-deepseek-r1-full-aw
     :param context_text: Email (or other text)
     :return: A list of dictionaries with question and response pairs.
     """
-
-    # Normalize to list if single question
-    if isinstance(questions, str):
-        questions = [questions]
-
     try:
         client = vip.VIPClient(
             api_key="498c67ab-1003-4f24-b07a-85e54cd202ac",
@@ -25,37 +21,32 @@ def run_llm_queries(questions, model_name: str="valt-chat-rr-deepseek-r1-full-aw
             env='prd'
         )
 
-        results = []
+        if context_text:
+            prompt = f"Context:\n{context_text}\n\nQuestion: {question}"
+        else:
+            prompt = question
 
-        for question in questions:
-            if context_text:
-                prompt = f"Context:\n{context_text}\n\nQuestion: {question}"
-            else:
-                prompt = question
+        response = client.chat.completions.create(
+            model=model_name,
+            messages=[{"role": "user", "content": prompt}],
+            response_format=expected_schema,
+            max_tokens=32768,
+            temperature=0
+        )
 
-            response = client.chat.completions.create(
-                model=model_name,
-                messages=[{"role": "user", "content": prompt}],
-                response_format=expected_schema,
-                max_tokens=32768,
-                temperature=0
-            )
+        raw_content = response
 
-            raw_content = response
+        try:
+            # Try to parse if it's a valid JSON string
+            parsed_content = json.loads(raw_content)
+            output = parsed_content  # already a Python object
+        except (TypeError, json.JSONDecodeError):
+            output = raw_content  # leave as-is if it's not JSON
 
-            try:
-                # Try to parse if it's a valid JSON string
-                parsed_content = json.loads(raw_content)
-                output = parsed_content  # already a Python object
-            except (TypeError, json.JSONDecodeError):
-                output = raw_content  # leave as-is if it's not JSON
-
-            results.append({
-                "question": question,
-                "response": output
-            })
-
-        return results
+        return {
+            "question": question,
+            "response": output
+        }
 
     # Catch specific exceptions and return error messages
     except ModelAccessError as e:
@@ -70,3 +61,35 @@ def run_llm_queries(questions, model_name: str="valt-chat-rr-deepseek-r1-full-aw
         return [{"error": f"Runtime error. Details: {e}"}]
     except ValueError as e:
         return [{"error": f"Invalid API key format. Details: {e}"}]
+
+
+def cache_or_llm(question,  context_text, model_name: str="valt-chat-rr-deepseek-r1-full-aws"):
+    """Check if question exists in the 'llm_cache' collection. If so, retrieve the data from the collection otherwise run the run_llm_query"""
+    # Compute hash based on (question + email body)
+    q_hash = compute_question_hash(question, context_text)
+    # Search in the 'llm_cache' collection for the hash
+    cached_doc = cache_collection.find_one({"hash": q_hash})
+
+    if cached_doc: # if hash exists in the 'llm_cache'
+        return  {
+            "question": cached_doc["question"],
+            "response": cached_doc["response"],
+            "from_cache": True
+        }
+    else: # if hash does not exist in the 'llm_cache'
+        result = run_llm_query(question, context_text, model_name)
+        cache_collection.update_one(
+            {"hash": q_hash},
+            {"$set": {
+                "hash": q_hash,
+                "question": question["question"],
+                "body": context_text,
+                "response": result["response"]
+                } },
+            upsert=True
+        )
+        return {
+            "question": result["question"],
+            "response": result["response"],
+            "from_cache": False
+        }
