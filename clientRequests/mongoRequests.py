@@ -1,4 +1,3 @@
-import json
 import os
 from credentials.vfcfg import *
 from clientRequests.dataPreprocessing import *
@@ -6,13 +5,9 @@ from pymongo import MongoClient
 
 def fetch_emails_from_database(filter_dict={}, limit=1):
     """Fetch emails from MongoDB and clean the email body."""
-    # Connect to MongoDB
-    client = MongoClient(mongo_uri)
-    db = client[db_name]
-    collection = db[collection_mail]
 
     # Fetch documents from the collection with the specified filter and limit
-    documents = collection.find(filter_dict, {
+    documents = email_collection.find(filter_dict, {
         "_id": 1,
         "date": 1,
         "from": 1,
