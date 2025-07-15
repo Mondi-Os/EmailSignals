@@ -13,7 +13,7 @@
     "question_parent_id": 1,
     "email_id": "",
     "ref": "macro_event_regions",
-    "question": "Are there are any specific regions or countries mentioned in relation to the macro events? Answer with a single word: Yes or No",
+    "question": "Are there any specific regions or countries mentioned in relation to the macro events? Answer with a single word: Yes or No",
     "processed": false,
     "layer": 2
   },

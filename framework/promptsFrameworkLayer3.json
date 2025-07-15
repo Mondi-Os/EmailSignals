@@ -199,7 +199,7 @@
     "email_id": "",
     "ref": "derivatives_strategy_type",
     "parent_answer": "Yes",
-    "question": "Is there any mention of structured product strategies (e.g., callable notes, range accruals, spread trades etc.)? If no, answer with a single word: 'No'. If 'Yes', name them and provide a short explanation.",
+    "question": "Are there any mention of structured product strategies (e.g., callable notes, range accruals, spread trades etc.)? If no, answer with a single word: 'No'. If 'Yes', name them and provide a short explanation.",
     "processed": false,
     "layer": 3
   }
