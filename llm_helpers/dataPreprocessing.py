@@ -1,4 +1,31 @@
 import re,hashlib
+from credentials.vfcfg import *
+
+
+def fetch_emails_from_database(filter_dict={}, limit=1):
+    """Fetch emails from MongoDB and clean the email body."""
+
+    # Fetch documents from the collection with the specified filter and limit
+    documents = email_collection.find(filter_dict, {
+        "_id": 1,
+        "date": 1,
+        "from": 1,
+        "body": 1,
+        "subject": 1
+    }).sort("_id", -1).limit(limit)
+
+    # Clean emails and keep the relevant fields
+    cleaned_docs = []
+    for doc in documents:
+        cleaned_docs.append({
+            "_id": str(doc["_id"]),
+            "date": doc.get("date"),
+            "from": doc.get("from"),
+            "body": clean_email_body(doc.get("body", ""),),
+            "subject": doc.get("subject")
+        })
+
+    return cleaned_docs
 
 
 def clean_email_body(text: str) -> str:
@@ -79,7 +106,7 @@ def normalize_solutions_structure(email_result_dict):
     }
 
 
-def layer_preprocessing(layer: int, question, email_id, response=None, processed=True):
+def layer_preprocessing(layer: int, question, response=None, processed=True):
     """Used within the run_single() method to modify/enrich the dict/json format."""
     enriched = {
         "question_id": question["question_id"],

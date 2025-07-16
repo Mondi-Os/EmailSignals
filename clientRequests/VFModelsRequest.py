@@ -1,8 +1,8 @@
 import vip
 from vip.vip_excepts import ModelAccessError,TokenLimitError, NetworkError, APIError
-from clientRequests.mongoRequests import *
-from credentials.llmSchema import *
 import json
+from credentials.llmSchema import *
+from llm_helpers.dataPreprocessing import *
 
 def run_llm_query(question, context_text, model_name: str="valt-chat-rr-deepseek-r1-full-aws"):
     """

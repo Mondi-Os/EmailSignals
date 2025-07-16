@@ -1,6 +1,7 @@
 from bson import ObjectId
-from clientRequests.VFModelsRequest import *
 from datetime import datetime
+from clientRequests.VFModelsRequest import *
+from credentials.vfcfg import *
 import sys
 
 class LLMPipeline:
@@ -23,7 +24,8 @@ class LLMPipeline:
             email_info = {
                 "_id": email_id,
                 "date": email.get("date"),
-                "from": email.get("from")
+                "from": email.get("from"),
+                "subject": email.get("subject")
             }
             print(f"Processing email ID: {email_id}")
 
@@ -49,7 +51,7 @@ class LLMPipeline:
         print(f"Total duration: {end_time - start_time}\n")
 
     def run_single(self, email_id, context):
-        processed_results, answer_map, cached_stats = [], {}, {}
+        processed_results, annotated_questions, answer_map, cached_stats = [], [], {}, {}
 
         # Display information: Pre-calculate total questions per layer
         for q in self.questions:
@@ -59,7 +61,7 @@ class LLMPipeline:
 
         for question in self.questions:
             parent_id = question.get("question_parent_id")
-            layer = question.get("layer", 1)
+            layer = question.get("layer", 1) # Set layer 1 for question that have no layer
 
             # Check dependency logic
             if parent_id:
@@ -68,17 +70,12 @@ class LLMPipeline:
                 if parent_answer != expected_answer:
                     continue
 
+            # Check cache or call LLM
             llm_result, answer_text = cache_or_llm(question, context)
             answer_map[question["question_id"]] = answer_text
 
             # Enrich and store result
-            enriched = layer_preprocessing(
-                layer=layer,
-                question=question,
-                email_id=email_id,
-                response=llm_result["response"],
-                processed=True
-            )
+            enriched = layer_preprocessing(layer=layer, question=question, response=llm_result["response"])
             processed_results.append(enriched)
 
             # Display information: Update cached info
@@ -106,5 +103,5 @@ class LLMPipeline:
                 response.pop("usage", None)
 
 
-# pipeline = LLMPipeline()
-# pipeline.run_batch(fetch_emails_from_database(filter_dict={}, limit=2)) # filtering: {"from": "ewan.gordon@socgen.com"}
+pipeline = LLMPipeline()
+pipeline.run_batch(fetch_emails_from_database(filter_dict={}, limit=5)) # filtering: {"from": "ewan.gordon@socgen.com"}
