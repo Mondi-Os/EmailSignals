@@ -67,7 +67,7 @@ def change_listener():
             email_id = change["documentKey"]["_id"]
             full_doc = change.get("fullDocument", {})
 
-            print(f"****** Change Detected in the 'mail' collection ({op_type.upper()}):", {"_id": str(email_id), "date": full_doc.get("date"),"from": full_doc.get("from")}, " ******")
+            print(f"Change Detected in the 'mail' collection ({op_type.upper()}):", {"_id": str(email_id), "date": full_doc.get("date"), "from": full_doc.get("from")})
 
             # Queue for processing
             if op_type in {"insert"}:

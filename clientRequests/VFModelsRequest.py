@@ -68,14 +68,18 @@ def cache_or_llm(question,  context_text, model_name: str="valt-chat-rr-deepseek
     # Compute hash based on (question + email body)
     q_hash = compute_question_hash(question, context_text)
     # Search in the 'llm_cache' collection for the hash
+    cache_collection = db["llm_cache"]  # Collection: LLM cache results
     cached_doc = cache_collection.find_one({"hash": q_hash})
 
     if cached_doc: # if hash exists in the 'llm_cache'
-        return  {
+        llm_result = {
             "question": cached_doc["question"],
             "response": cached_doc["response"],
             "from_cache": True
         }
+        answer_text = extract_answer_text(llm_result["response"]["output"]["message"]["content"])
+        return llm_result, answer_text
+
     else: # if hash does not exist in the 'llm_cache'
         result = run_llm_query(question, context_text, model_name)
         cache_collection.update_one(
@@ -88,8 +92,11 @@ def cache_or_llm(question,  context_text, model_name: str="valt-chat-rr-deepseek
                 } },
             upsert=True
         )
-        return {
+
+        llm_result = {
             "question": result["question"],
             "response": result["response"],
             "from_cache": False
         }
+        answer_text = extract_answer_text(llm_result["response"]["output"]["message"]["content"])
+        return llm_result, answer_text

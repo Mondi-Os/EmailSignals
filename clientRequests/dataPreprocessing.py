@@ -109,21 +109,40 @@ def compute_question_hash(question, email_body):
 
 
 def extract_answer_text(answer):
-    """Extracts the 'solution' string from an LLM response content."""
-    if isinstance(answer, list) and answer and "json" in answer[0]:
-        if "solutions" in answer[0]["json"]:
-            return answer[0]["json"]["solutions"][0]["solution"].strip().lower()
-        elif "answer" in answer[0]["json"]:
-            return str(answer[0]["json"]["answer"]).strip().lower()
+    """Extracts the 'solution' string from an LLM response content, handling various formats safely."""
 
-    elif isinstance(answer, list) and answer:
-        return (answer[0]["text"] if "text" in answer[0] else answer[0]["solution"]).strip().lower()
+    if isinstance(answer, list) and answer:  # answer is a list
 
+        if "json" in answer[0]:
+            json_data = answer[0]["json"] # inside {json}
+
+            # Case 1: ["json"]["solutions"]
+            if "solutions" in json_data:
+                solutions = json_data["solutions"]
+                if isinstance(solutions, list) and solutions:
+                    return solutions[0].get("solution", "").strip().lower()
+                else:
+                    return "CustomFeedback_1: Unexpected LLM structure; 'answer' to be checked"  # custom feedback
+            # Case 2: ["json"]["answer"]
+            elif "answer" in json_data:
+                return str(json_data["answer"]).strip().lower()
+
+        # Case 3: ["text"]
+        if "text" in answer[0]:
+            return answer[0]["text"].strip().lower()
+        # Case 4: ["solution"]
+        elif "solution" in answer[0]:
+            return answer[0]["solution"].strip().lower()
+
+    # Case 5: ["solutions"] (answer is a dictionary)
     elif isinstance(answer, dict) and "solutions" in answer:
-        return answer["solutions"][0]["solution"].strip().lower()
+        solutions = answer["solutions"]
+        if isinstance(solutions, list) and solutions:
+            return solutions[0].get("solution", "").strip().lower()
+        else:
+            return "CustomFeedback_2: Unexpected LLM structure; 'answer' to be checked" # custom feedback
 
-    else:
-        return str(answer).strip().lower()
+    return str(answer).strip().lower()
 
 
 def get_unprocessed(layer_questions, processed_results):
