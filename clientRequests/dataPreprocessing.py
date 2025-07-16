@@ -79,7 +79,6 @@ def normalize_solutions_structure(email_result_dict):
     }
 
 
-
 def layer_preprocessing(layer: int, question, email_id, response=None, processed=True):
     """Used within the run_single() method to modify/enrich the dict/json format."""
     enriched = {

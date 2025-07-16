@@ -136,7 +136,6 @@
   {
     "question_id": 100404,
     "question_parent_id": 104,
-    "email_id": "",
     "ref": "macro_event_market_direction",
     "parent_answer": "Yes",
     "question": "Is there any directional market impact indicated (e.g., bullish, bearish, volatility)? If no, answer with a single word: 'No'. If 'Yes', indicate the financial market(s) and the financial impact(s).",
@@ -146,7 +145,6 @@
   {
     "question_id": 100405,
     "question_parent_id": 104,
-    "email_id": "",
     "ref": "macro_event_trading_response",
     "parent_answer": "Yes",
     "question": "Does the email suggest a trading response or positioning due to macro events? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
@@ -156,7 +154,6 @@
   {
     "question_id": 100406,
     "question_parent_id": 104,
-    "email_id": "",
     "ref": "macro_event_risk_assets",
     "parent_answer": "Yes",
     "question": "Are risk assets (e.g., EM, high yield) mentioned as affected by the macro events? If no, answer with a single word: 'No'. If 'Yes', explain briefly.",
@@ -166,7 +163,6 @@
   {
     "question_id": 200301,
     "question_parent_id": 203,
-    "email_id": "",
     "ref": "derivatives_listed",
     "parent_answer": "Yes",
     "question": "What derivative or structured products are mentioned? If none, answer with a single word: 'No'. If 'Yes', list them and explain briefly.",
@@ -176,7 +172,6 @@
   {
     "question_id": 200302,
     "question_parent_id": 203,
-    "email_id": "",
     "ref": "derivatives_pricing_mentioned",
     "parent_answer": "Yes",
     "question": "Is there any pricing information provided for any of the mentioned products? If no, answer with a single word: 'No'. If 'Yes', list the products with pricing and describe briefly the mentioned pricing.",
@@ -186,7 +181,6 @@
   {
     "question_id": 200303,
     "question_parent_id": 203,
-    "email_id": "",
     "ref": "derivatives_maturity_reference",
     "parent_answer": "Yes",
     "question": "Are any specific maturities or tenors mentioned for the derivatives (e.g., 3m, 10y etc.)? If no, answer with a single word: 'No'. If 'Yes', list them and explain briefly.",
@@ -196,7 +190,6 @@
   {
     "question_id": 200304,
     "question_parent_id": 203,
-    "email_id": "",
     "ref": "derivatives_strategy_type",
     "parent_answer": "Yes",
     "question": "Are there any mention of structured product strategies (e.g., callable notes, range accruals, spread trades etc.)? If no, answer with a single word: 'No'. If 'Yes', name them and provide a short explanation.",
