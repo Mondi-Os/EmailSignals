@@ -9,27 +9,31 @@ seen_ids = set()
 seen_lock = threading.Lock()
 
 def get_recent_unprocessed_emails():
-    """Fetches emails from the last 3 days that have not been processed by the LLM."""
-
-    # Calculate timestamp 1 day(s) ago
+    """Fetches emails from the last 1 day that have not been processed by the LLM, based on _id in 'mail' and source_id in 'result'."""
     cutoff_str = (datetime.now() - timedelta(days=1)).isoformat()
 
-    recent_emails = list(email_collection.find({"date": {"$gte": cutoff_str}}, {"_id": 1}))
-
-    # Fetch processed IDs
-    processed_ids = set(doc["_id"] for doc in result_collection.find(
-        {"_id": {"$in": [doc["_id"] for doc in recent_emails]}},
+    # Get recent emails (_id from mail collection)
+    recent_emails = list(email_collection.find(
+        {"date": {"$gte": cutoff_str}},
         {"_id": 1}
     ))
 
-    # Get only unprocessed email IDs
-    unprocessed = [doc["_id"] for doc in recent_emails if doc["_id"] not in processed_ids]
+    # Extract just the _ids
+    recent_ids = [doc["_id"] for doc in recent_emails]
+
+    # Find which of these _ids already exist in result.source_id
+    processed_source_ids = set(doc["source_id"] for doc in result_collection.find(
+        {"source_id": {"$in": recent_ids}},
+        {"source_id": 1}
+    ))
+
+    # Return only those _ids not found in result
+    unprocessed = [email_id for email_id in recent_ids if email_id not in processed_source_ids]
     return unprocessed
 
 
 def fetch_emails_by_ids(ids):
     """Fetches emails by their IDs from the email collection."""
-
     documents = email_collection.find({"_id": {"$in": ids}})
     return [{
         "_id": str(doc["_id"]),
@@ -49,14 +53,13 @@ def email_worker():
                 pipeline = LLMPipeline()
                 pipeline.run_batch(email)
         except Exception as e:
-            print(f"Error processing email {email_id}: {e}")
+            print(f"\033[1;31mError processing email {email_id}: {e}\033[0m")
         finally:
             email_queue.task_done()
 
 
 def change_listener():
     """Listens for changes in the 'email' collection and queues new emails."""
-
     with email_collection.watch(full_document="updateLookup") as stream:
         print("Listening for changes in the 'mail' collection...\n")
         for change in stream:
@@ -64,13 +67,7 @@ def change_listener():
             email_id = change["documentKey"]["_id"]
             full_doc = change.get("fullDocument", {})
 
-            print(f"\nChange Detected ({op_type.upper()}):")
-            print({"_id": str(email_id), "date": full_doc.get("date"),"from": full_doc.get("from")})
-
-            # Show updated fields only for updates
-            if op_type == "update":
-                updated_fields = change.get("updateDescription", {}).get("updatedFields", {})
-                print("Updated fields:", updated_fields)
+            print(f"Change Detected in the 'mail' collection ({op_type.upper()}):", {"_id": str(email_id), "date": full_doc.get("date"), "from": full_doc.get("from")})
 
             # Queue for processing
             if op_type in {"insert"}:

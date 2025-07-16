@@ -1,4 +1,4 @@
-import re, json
+import re,hashlib
 
 
 def clean_email_body(text: str) -> str:
@@ -31,8 +31,8 @@ def normalize_solutions_structure(email_result_dict):
     """
     updated_questions = []
 
-    for question in email_result_dict["questions"]:
-        response = question.get("response", {}).get("response", {})
+    for question in email_result_dict.get("questions", []):
+        response = question.get("response", {})
         output = response.get("output", {})
         message = output.get("message", {})
         content = message.get("content", None)
@@ -44,7 +44,6 @@ def normalize_solutions_structure(email_result_dict):
         normalized = None
 
         if isinstance(content, dict):
-            # Already normalized?
             if "solutions" in content:
                 normalized = content
             elif "json" in content and "solutions" in content["json"]:
@@ -69,25 +68,24 @@ def normalize_solutions_structure(email_result_dict):
 
         # Apply normalized structure if valid
         if normalized:
-            email_result_dict["questions"][email_result_dict["questions"].index(question)]["response"]["response"]["output"]["message"]["content"] = normalized
+            # Overwrite the content in-place
+            question["response"]["output"]["message"]["content"] = normalized
 
         updated_questions.append(question)
 
     return {
-        "email_info": email_result_dict["email_info"],
+        "email_info": email_result_dict.get("email_info", {}),
         "questions": updated_questions
     }
-
 
 
 def layer_preprocessing(layer: int, question, email_id, response=None, processed=True):
     """Used within the run_single() method to modify/enrich the dict/json format."""
     enriched = {
         "question_id": question["question_id"],
-        "parent_id": question["question_parent_id"],
+        "question_parent_id": question["question_parent_id"],
         "ref": question["ref"],
         "question": question["question"],
-        "email_id": email_id,
         "processed": processed,
         "layer": question.get("layer", layer)
     }
@@ -96,3 +94,57 @@ def layer_preprocessing(layer: int, question, email_id, response=None, processed
         enriched["response"] = response
 
     return enriched
+
+
+def compute_question_hash(question, email_body):
+    """Compute a hash from the question text and email body."""
+    if isinstance(question, dict):
+        question_text = question.get("question", "")
+    else:
+        question_text = str(question)
+
+    body = email_body.strip().lower()
+    hash_input = f"{question_text.strip().lower()}|{body}"
+    return hashlib.sha256(hash_input.encode("utf-8")).hexdigest()
+
+
+def extract_answer_text(answer):
+    """Extracts the 'solution' string from an LLM response content, handling various formats safely."""
+
+    if isinstance(answer, list) and answer:  # answer is a list
+
+        if "json" in answer[0]:
+            json_data = answer[0]["json"] # inside {json}
+
+            # Case 1: ["json"]["solutions"]
+            if "solutions" in json_data:
+                solutions = json_data["solutions"]
+                if isinstance(solutions, list) and solutions:
+                    return solutions[0].get("solution", "").strip().lower()
+                else:
+                    return "CustomFeedback_1: Unexpected LLM structure; 'answer' to be checked"  # custom feedback
+            # Case 2: ["json"]["answer"]
+            elif "answer" in json_data:
+                return str(json_data["answer"]).strip().lower()
+
+        # Case 3: ["text"]
+        if "text" in answer[0]:
+            return answer[0]["text"].strip().lower()
+        # Case 4: ["solution"]
+        elif "solution" in answer[0]:
+            return answer[0]["solution"].strip().lower()
+
+    # Case 5: ["solutions"] (answer is a dictionary)
+    elif isinstance(answer, dict) and "solutions" in answer:
+        solutions = answer["solutions"]
+        if isinstance(solutions, list) and solutions:
+            return solutions[0].get("solution", "").strip().lower()
+        else:
+            return "CustomFeedback_2: Unexpected LLM structure; 'answer' to be checked" # custom feedback
+
+    return str(answer).strip().lower()
+
+
+def get_unprocessed(layer_questions, processed_results):
+    processed_ids = {q["question_id"] for q in processed_results}
+    return [q for q in layer_questions if q["question_id"] not in processed_ids]

@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 
 
-# Client credentials for Verition Fund Core API
+# Client credentials for VF Core API
 APP = 'vf.python.client'
 URI = 'vf-core-api.veritionfund.cloud:30070'
 USER = 'rjohnsonperkins'
@@ -15,4 +15,4 @@ db = client[db_name] # Access the database
 
 email_collection = db["mail"]  # Collection: Email from Outlook
 result_collection = db["result"] # Collection: LLM results
-cache_collection = db["llm_cache"]  # Collection: LLM cache results
+prompts_collection = db["promptsFramework"] # Collection: promptsFramework to ask the LLM
