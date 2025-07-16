@@ -111,7 +111,10 @@ def compute_question_hash(question, email_body):
 def extract_answer_text(answer):
     """Extracts the 'solution' string from an LLM response content."""
     if isinstance(answer, list) and answer and "json" in answer[0]:
-        return answer[0]["json"]["solutions"][0]["solution"].strip().lower()
+        if "solutions" in answer[0]["json"]:
+            return answer[0]["json"]["solutions"][0]["solution"].strip().lower()
+        elif "answer" in answer[0]["json"]:
+            return str(answer[0]["json"]["answer"]).strip().lower()
 
     elif isinstance(answer, list) and answer:
         return (answer[0]["text"] if "text" in answer[0] else answer[0]["solution"]).strip().lower()
@@ -121,6 +124,7 @@ def extract_answer_text(answer):
 
     else:
         return str(answer).strip().lower()
+
 
 
 def get_unprocessed(layer_questions, processed_results):

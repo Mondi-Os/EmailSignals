@@ -1,23 +1,23 @@
 from bson import ObjectId
 from clientRequests.VFModelsRequest import *
 from datetime import datetime
-import json
 import sys
 
 class LLMPipeline:
     def __init__(self):
-        with open("C:/Users/mosmena/Desktop/Project/LLM_Project/EmailSignals/framework/promptsFrameworkLayer1.json") as f:
-            self.layer1 = json.load(f)
-        with open("C:/Users/mosmena/Desktop/Project/LLM_Project/EmailSignals/framework/promptsFrameworkLayer2.json") as f:
-            self.layer2 = json.load(f)
-        with open("C:/Users/mosmena/Desktop/Project/LLM_Project/EmailSignals/framework/promptsFrameworkLayer3.json") as f:
-            self.layer3 = json.load(f)
-        # with open("C:/Users/mosmena/Desktop/Project/LLM_Project/EmailSignals/framework/test1.json") as f:
-        #     self.layer1 = json.load(f)
-        # with open("C:/Users/mosmena/Desktop/Project/LLM_Project/EmailSignals/framework/test2.json") as f:
-        #     self.layer2 = json.load(f)
-        # with open("C:/Users/mosmena/Desktop/Project/LLM_Project/EmailSignals/framework/test3.json") as f:
-        #     self.layer3 = json.load(f)
+        self.layer1 = []
+        self.layer2 = []
+        self.layer3 = []
+
+        prompts = prompts_collection.find({}, {"_id": 0})
+        for prompt in prompts:
+            layer = prompt.get("layer")
+            if layer == 1:
+                self.layer1.append(prompt)
+            elif layer == 2:
+                self.layer2.append(prompt)
+            elif layer == 3:
+                self.layer3.append(prompt)
 
     def run_batch(self, email_docs):
         """Run LLM pipeline for multiple emails (parsed_docs), save each email separately."""
@@ -51,7 +51,7 @@ class LLMPipeline:
             email_result = normalize_solutions_structure(email_result_dict)
 
             # Upsert into 'result' collection
-            result_collection.update_one({"_id": ObjectId(email_id)}, {"$set": email_result}, upsert=True)
+            result_collection.update_one({"source_id": ObjectId(email_id)}, {"$set": email_result}, upsert=True)
             print(f"Upserted email_id {email_id} into 'result' collection.")
 
         end_time = datetime.now()
@@ -74,7 +74,7 @@ class LLMPipeline:
             answer_text = extract_answer_text(llm_result_1["response"]["output"]["message"]["content"])
             main_answer_map[question["question_id"]] = answer_text
             results.append(layer_preprocessing(layer=1, question=question, email_id=email_id, response=llm_result_1["response"], processed=True))
-        print(f"Layer1::::  processed: {q_processed_1}/{len(self.layer1)}  |||  from_cache: {layer1_cache_hits} / {q_processed_1}  |||  email_id: {email_id}")
+        print(f"Layer1::::  processed: {q_processed_1}/{len(self.layer1)}  |||  from_cache: {layer1_cache_hits} / {q_processed_1}")
 
         # =============== Layer 2 ===============
         sub_results, sub_answer_map, answered_ids = [], {}, set()
@@ -88,7 +88,7 @@ class LLMPipeline:
             answer_text = extract_answer_text(llm_result_2["response"]["output"]["message"]["content"])
             sub_answer_map[q["question_id"]] = answer_text
             sub_results.append(layer_preprocessing(layer=2, question=q, email_id=email_id, response=llm_result_2["response"], processed=True))
-        print(f"Layer2::::  processed: {q_processed_2}/{len(self.layer2)}  |||  from_cache: {layer2_cache_hits} / {q_processed_2}  |||  email_id: {email_id}")
+        print(f"Layer2::::  processed: {q_processed_2}/{len(self.layer2)}  |||  from_cache: {layer2_cache_hits} / {q_processed_2}")
 
         # =============== Layer 3 ===============
         subsub_results = []
@@ -100,7 +100,7 @@ class LLMPipeline:
             if llm_result_3["from_cache"]:
                 layer3_cache_hits += 1
             subsub_results.append(layer_preprocessing(layer=3, question=q, email_id=email_id, response=llm_result_3["response"], processed=True))
-        print(f"Layer3::::  processed: {q_processed_3}/{len(self.layer3)}  |||  from_cache: {layer3_cache_hits} / {q_processed_3}  |||  email_id: {email_id}")
+        print(f"Layer3::::  processed: {q_processed_3}/{len(self.layer3)}  |||  from_cache: {layer3_cache_hits} / {q_processed_3}")
 
         # ============== Clean up ===============
         self.clean_response_fields(results)
@@ -129,4 +129,4 @@ class LLMPipeline:
 
 
 # pipeline = LLMPipeline()
-# pipeline.run_batch(fetch_emails_from_database(filter_dict={}, limit=3)) # filtering: {"from": "ewan.gordon@socgen.com"}
+# pipeline.run_batch(fetch_emails_from_database(filter_dict={}, limit=2)) # filtering: {"from": "ewan.gordon@socgen.com"}
