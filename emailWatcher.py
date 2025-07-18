@@ -3,6 +3,7 @@ import threading
 from datetime import timedelta
 import time
 from llm_helpers.llmPipeline import *
+from llm_helpers.dataPreprocessing import *
 
 email_queue = queue.Queue()
 seen_ids = set()
@@ -10,7 +11,7 @@ seen_lock = threading.Lock()
 
 def get_recent_unprocessed_emails():
     """Fetches emails from the last 1 day that have not been processed by the LLM, based on _id in 'mail' and source_id in 'result'."""
-    cutoff_str = (datetime.now() - timedelta(days=1)).isoformat()
+    cutoff_str = (datetime.now() - timedelta(days=.2)).isoformat()
 
     # Get recent emails (_id from mail collection)
     recent_emails = list(email_collection.find(
@@ -35,11 +36,14 @@ def get_recent_unprocessed_emails():
 def fetch_emails_by_ids(ids):
     """Fetches emails by their IDs from the email collection."""
     documents = email_collection.find({"_id": {"$in": ids}})
+
     return [{
         "_id": str(doc["_id"]),
         "date": doc.get("date"),
         "from": doc.get("from"),
-        "body": clean_email_body(doc.get("body", ""))
+        "body": clean_email_body(doc.get("body", "")),
+        "subject": doc.get("subject"),
+        "to": doc.get("to")
     } for doc in documents]
 
 
