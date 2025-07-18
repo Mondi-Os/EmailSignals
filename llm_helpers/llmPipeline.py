@@ -22,21 +22,23 @@ class LLMPipeline:
             context = str(email["body"])
             email_id = str(email["_id"])
             email_info = {
-                "_id": email_id,
-                "date": email.get("date"),
-                "from": email.get("from"),
-                "subject": email.get("subject"),
-                "to": email.get("to")
+                    "_id": email_id,
+                    "date": email.get("date"),
+                    "from": email.get("from"),
+                    "subject": email.get("subject"),
+                    "to": email.get("to")
             }
             print(f"Processing email ID: {email_id}")
 
             # Execute the run_single() to go through the question layers
             result = self.run_single(email_id, context)
             output_questions = result["questions"]
+            processed_info = result.get("layer0_fields", {})
 
-            # Email result solutions
+            # Collection Email Record
             email_result_dict = {
                 "email_info": email_info,
+                "processed_info": processed_info,
                 "questions": output_questions
             }
 
@@ -52,7 +54,7 @@ class LLMPipeline:
         print(f"Total duration: {end_time - start_time}\n")
 
     def run_single(self, email_id, context):
-        processed_results, annotated_questions, answer_map, cached_stats = [], [], {}, {}
+        processed_results, annotated_questions, answer_map, cached_stats, layer0_fields = [], [], {}, {}, {}
 
         # Display information: Pre-calculate total questions per layer
         for q in self.questions:
@@ -75,6 +77,16 @@ class LLMPipeline:
             llm_result, answer_text = cache_or_llm(question, context)
             answer_map[question["question_id"]] = answer_text
 
+            if layer == 0:
+                # Instead of getting ["text"] or ["solutions"]["solution"] get always the same structure
+                normalized_question = normalize_solutions_structure({"questions": [{"response": llm_result["response"]}]})["questions"][0]
+                try:
+                    solution = normalized_question["response"]["output"]["message"]["content"]["solutions"][0]["solution"]
+                except (KeyError, IndexError, TypeError):
+                    solution = None
+                layer0_fields[question["ref"]] = solution
+                continue  # skip appending to questions to the [questions]
+
             # Enrich and store result
             enriched = layer_preprocessing(layer=layer, question=question, response=llm_result["response"])
             processed_results.append(enriched)
@@ -92,7 +104,8 @@ class LLMPipeline:
 
         return {
             "email_id": email_id,
-            "questions": processed_results + get_unprocessed(self.questions, processed_results)
+            "questions": processed_results + get_unprocessed(self.questions, processed_results),
+            "layer0_fields": layer0_fields
         }
 
     @staticmethod
@@ -105,4 +118,4 @@ class LLMPipeline:
 
 
 # pipeline = LLMPipeline()
-# pipeline.run_batch(fetch_emails_from_database(filter_dict={"from": "rbcecoandratesstrategy@rbccm.com"}, limit=2)) # filtering: {"from": "ewan.gordon@socgen.com"}
+# pipeline.run_batch(fetch_emails_from_database(filter_dict={}, limit=2)) # filtering: {"from": "ewan.gordon@socgen.com"}

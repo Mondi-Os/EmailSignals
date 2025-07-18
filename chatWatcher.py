@@ -9,12 +9,6 @@ from datetime import datetime, timedelta
 # 5. return/write a structured answer to the collection from step 2 - this has to be a new record
 
 
-# question = "What is happening with Trump and Jerome Powell? Explain Briefly"
-#
-# test =run_llm_query(question, context_text=None)
-# print(test["response"]["output"]["message"]["content"][0]["json"]["solutions"])
-
-
 def chat_listener():
     """Listens for new inserts in the 'chat' collection and prints a message."""
 
@@ -29,36 +23,36 @@ def chat_listener():
                 print(f"New chat message inserted: _id={chat_id}, from={full_doc['question_from']}, question={full_doc['question']}")
 
 
-# Aggregation pipeline
-pipeline = [
-    {
-        "$match": {
-            "email_info.date": {"$gte": datetime.now() - timedelta(weeks=2)}
-        }
-    },
-    {
-        "$project": {
-            "_id": 0,
-            "email_info": 1,
-            "solutions": {
-                "$arrayElemAt": [
-                    "$response.output.message.content",
-                    0
-                ]
-            }
-        }
-    },
-    {
-        "$project": {
-            "email_info": 1,
-            "solutions": "$solutions.json.solutions"
-        }
-    }
-]
+def fetch_results_with_solutions(filter_dict={}, limit=1):
+    """Fetch email_info and extract solutions from the result collection. Used for the chat functionality"""
 
-# Run the aggregation
-results = list(result_collection.aggregate(pipeline))
+    documents = result_collection.find(filter_dict, {
+        "email_info": 1,
+        "questions.response.output.message.content": 1
+        }).sort("_id", -1).limit(limit)
+    cleaned_results = []
+    for doc in documents:
+        email_info = doc.get("email_info", {})
+        questions = doc.get("questions", [])
+        extracted_solutions = []
+        for q in questions:
+            if q:
+                solutions = q["response"]["output"]["message"]["content"]["solutions"]
+                if solutions[0]["solution"] not in ["Yes", "No"]: # Only processed questions and not single word answers
+                    try:
+                        sol = [sol['solution'] for sol in solutions]
+                        extracted_solutions.append(sol)
+                    except (KeyError, IndexError, TypeError) as e:
+                        print(f"{q}  -----  \033[1;31mError to retrieve question {e}\033[0m")
+                        continue
 
-# Print or process results
-for doc in results:
-    print(doc)
+        cleaned_results.append({
+            "email_info": email_info,
+            "solutions": extracted_solutions
+        })
+
+    return cleaned_results
+
+
+results = fetch_results_with_solutions(filter_dict={}, limit=1)
+print(results)

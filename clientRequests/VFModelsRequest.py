@@ -77,11 +77,14 @@ def cache_or_llm(question,  context_text, model_name: str="valt-chat-rr-deepseek
             "response": cached_doc["response"],
             "from_cache": True
         }
+        # print("Cached:   ", extract_answer_text(llm_result["response"]["output"]["message"]["content"])) #TODO remove debugging
         answer_text = extract_answer_text(llm_result["response"]["output"]["message"]["content"])
         return llm_result, answer_text
 
     else: # if hash does not exist in the 'llm_cache'
         result = run_llm_query(question, context_text, model_name)
+        # print("New LLM Query:    ", question) #TODO remove debugging
+        # print("Result:    ", result)  # TODO remove debugging
         cache_collection.update_one(
             {"hash": q_hash},
             {"$set": {

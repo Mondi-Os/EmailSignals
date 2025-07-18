@@ -104,6 +104,7 @@ def normalize_solutions_structure(email_result_dict):
 
     return {
         "email_info": email_result_dict.get("email_info", {}),
+        "processed_info": email_result_dict.get("processed_info", {}),
         "questions": updated_questions
     }
 
@@ -175,5 +176,9 @@ def extract_answer_text(answer):
 
 
 def get_unprocessed(layer_questions, processed_results):
+    """Find all unprocessed questions (excluding 0 layer)"""
     processed_ids = {q["question_id"] for q in processed_results}
-    return [q for q in layer_questions if q["question_id"] not in processed_ids]
+    return [
+        q for q in layer_questions
+        if q["question_id"] not in processed_ids and q.get("layer", 1) != 0
+    ]
