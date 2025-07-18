@@ -78,14 +78,16 @@ class LLMPipeline:
             answer_map[question["question_id"]] = answer_text
 
             if layer == 0:
-                # Instead of getting ["text"] or ["solutions"]["solution"] get always the same structure
                 normalized_question = normalize_solutions_structure({"questions": [{"response": llm_result["response"]}]})["questions"][0]
                 try:
                     solution = normalized_question["response"]["output"]["message"]["content"]["solutions"][0]["solution"]
                 except (KeyError, IndexError, TypeError):
                     solution = None
                 layer0_fields[question["ref"]] = solution
-                continue  # skip appending to questions to the [questions]
+                cached_stats[layer]["processed"] += 1
+                if llm_result["from_cache"]:
+                    cached_stats[layer]["from_cache"] += 1
+                continue  # skip appending to processed_results
 
             # Enrich and store result
             enriched = layer_preprocessing(layer=layer, question=question, response=llm_result["response"])
@@ -118,4 +120,4 @@ class LLMPipeline:
 
 
 # pipeline = LLMPipeline()
-# pipeline.run_batch(fetch_emails_from_database(filter_dict={}, limit=2)) # filtering: {"from": "ewan.gordon@socgen.com"}
+# pipeline.run_batch(fetch_emails_from_database(filter_dict={"date": "2025-07-18T12:13:35Z"}, limit=1)) # filtering: {"from": "ewan.gordon@socgen.com"}

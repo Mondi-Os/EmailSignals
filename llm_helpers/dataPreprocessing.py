@@ -94,6 +94,13 @@ def normalize_solutions_structure(email_result_dict):
                     elif "json" in item and "solutions" in item["json"]:
                         normalized = item["json"]
                         break
+                    elif "json" in item and "trading_bias" in item["json"]:
+                        trading_bias = item["json"]["trading_bias"]
+                        normalized = {
+                            "solutions": [ {"solution": f"{tb.get('signal')} - {tb.get('product')} ({tb.get('validity')})"}
+                            for tb in trading_bias if isinstance(tb, dict)]
+                             }
+                        break
 
         # Apply normalized structure if valid
         if normalized:

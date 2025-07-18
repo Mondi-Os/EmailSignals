@@ -11,7 +11,7 @@ seen_lock = threading.Lock()
 
 def get_recent_unprocessed_emails():
     """Fetches emails from the last 1 day that have not been processed by the LLM, based on _id in 'mail' and source_id in 'result'."""
-    cutoff_str = (datetime.now() - timedelta(days=.2)).isoformat()
+    cutoff_str = (datetime.now() - timedelta(days=1)).isoformat()
 
     # Get recent emails (_id from mail collection)
     recent_emails = list(email_collection.find(
