@@ -119,5 +119,5 @@ class LLMPipeline:
                 response.pop("usage", None)
 
 
-# pipeline = LLMPipeline()
-# pipeline.run_batch(fetch_emails_from_database(filter_dict={"date": "2025-07-18T12:13:35Z"}, limit=1)) # filtering: {"from": "ewan.gordon@socgen.com"}
+pipeline = LLMPipeline()
+pipeline.run_batch(fetch_emails_from_database(filter_dict={}, limit=50)) # filtering: {"from": "ewan.gordon@socgen.com"}

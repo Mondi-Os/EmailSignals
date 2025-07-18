@@ -100,10 +100,10 @@ def fetch_results_with_solutions(filter_dict={}, limit=1, question_id_prefixes=N
 
 
 #TODO structure the tree better so it has less duplicate questions
-results = fetch_results_with_solutions(filter_dict={}, limit=120, question_id_prefixes=["2_203_200301", "2_203_200302", "2_203_200303", "2_203_200304"])
+results = fetch_results_with_solutions(filter_dict={}, limit=135, question_id_prefixes=["2_203_200301", "2_203_200302", "2_203_200303", "2_203_200304"])
 
-for i in results:
-    print(i)
+# for i in results:
+#     print(i)
 # print(results)
 
 # start = datetime.now()
