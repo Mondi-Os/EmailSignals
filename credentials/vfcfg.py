@@ -13,11 +13,14 @@ db_name = "research" # Database name
 client = MongoClient(mongo_uri) # Create MongoDB client
 db = client[db_name] # Access the database
 
+email_collection = db["mail"]  # Collection: Email from Outlook
+result_collection = db["result"] # Collection: LLM results
+prompts_collection = db["promptsFramework"] # Collection: promptsFramework to ask the LLM
+
+
 # MongoDB Local
 mongo_uri_local = "mongodb://localhost:27017/"
 client_local = MongoClient(mongo_uri_local)
 db_local = client_local["admin"]
 
-email_collection = db["mail"]  # Collection: Email from Outlook
-result_collection = db["result"] # Collection: LLM results
-prompts_collection = db["promptsFramework"] # Collection: promptsFramework to ask the LLM
+llm_cache_collection_local = db_local["llm_cache"]

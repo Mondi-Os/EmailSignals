@@ -11,7 +11,8 @@ def fetch_emails_from_database(filter_dict={}, limit=1):
         "date": 1,
         "from": 1,
         "body": 1,
-        "subject": 1
+        "subject": 1,
+        "to": 1
     }).sort("_id", -1).limit(limit)
 
     # Clean emails and keep the relevant fields
@@ -22,7 +23,8 @@ def fetch_emails_from_database(filter_dict={}, limit=1):
             "date": doc.get("date"),
             "from": doc.get("from"),
             "body": clean_email_body(doc.get("body", ""),),
-            "subject": doc.get("subject")
+            "subject": doc.get("subject"),
+            "to": doc.get("to")
         })
 
     return cleaned_docs

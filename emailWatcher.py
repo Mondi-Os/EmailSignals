@@ -36,11 +36,14 @@ def get_recent_unprocessed_emails():
 def fetch_emails_by_ids(ids):
     """Fetches emails by their IDs from the email collection."""
     documents = email_collection.find({"_id": {"$in": ids}})
+
     return [{
         "_id": str(doc["_id"]),
         "date": doc.get("date"),
         "from": doc.get("from"),
-        "body": clean_email_body(doc.get("body", ""))
+        "body": clean_email_body(doc.get("body", "")),
+        "subject": doc.get("subject"),
+        "to": doc.get("to")
     } for doc in documents]
 
 

@@ -25,7 +25,8 @@ class LLMPipeline:
                 "_id": email_id,
                 "date": email.get("date"),
                 "from": email.get("from"),
-                "subject": email.get("subject")
+                "subject": email.get("subject"),
+                "to": email.get("to")
             }
             print(f"Processing email ID: {email_id}")
 
@@ -103,5 +104,5 @@ class LLMPipeline:
                 response.pop("usage", None)
 
 
-pipeline = LLMPipeline()
-pipeline.run_batch(fetch_emails_from_database(filter_dict={}, limit=5)) # filtering: {"from": "ewan.gordon@socgen.com"}
+# pipeline = LLMPipeline()
+# pipeline.run_batch(fetch_emails_from_database(filter_dict={"from": "rbcecoandratesstrategy@rbccm.com"}, limit=2)) # filtering: {"from": "ewan.gordon@socgen.com"}
